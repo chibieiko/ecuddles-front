@@ -1,0 +1,42 @@
+{
+  "name": "ecuddles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/webpack-dev-server"
+  },
+  "author": "Vili Kinnunen & Erika Sankari",
+  "license": "ISC",
+  "dependencies": {
+    "history": "^4.6.1",
+    "isomorphic-fetch": "^2.2.1",
+    "minimist": "^1.2.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-icons": "^2.2.3",
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.0",
+    "node-sass": "^4.5.2",
+    "optimize-css-assets-webpack-plugin": "^1.3.1",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
