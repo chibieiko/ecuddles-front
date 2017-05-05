@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {Router, Route, Redirect} from 'react-router';
+import {Link, HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 import RegisterPage from './RegisterPage';
 import CategoryList from './CategoryList';
 import LoginPage from './LoginPage';
@@ -25,13 +25,14 @@ export default class App extends Component {
             <Provider store={store}>
                 <Router history={ history }>
                     <div>
-                        <Route path="/login" render={() => (
-                            loggedIn ? <Redirect to="/"/> : <LoginPage/>
-                        )}/>
-                        <Route exact path="/register" component={RegisterPage}/>
-                        <Route path="/" component={CategoryList}>
-                            <Route/>
-                        </Route>
+                        <Switch>
+                            <Route path="/login" render={() => (
+                                loggedIn ? <Redirect to="/"/> : <LoginPage/>
+                            )}/>
+                            <Route path="/register" component={RegisterPage}/>
+                            <Route path="/cart" component={RegisterPage}/>
+                            <Route path="/" component={CategoryList}/>
+                        </Switch>
                     </div>
                 </Router>
             </Provider>
