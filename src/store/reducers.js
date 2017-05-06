@@ -23,15 +23,32 @@ export const shoppingCart = (state = [], action) => {
 
 export const authentication = (state = {loggedIn:false}, action) => {
     switch (action.type) {
+        case C.ATTEMPT_LOGIN:
+            return {
+                error: null,
+                fetching: true
+            };
+
         case C.LOGIN:
             return {
+                fetching: false,
+                error: null,
                 loggedIn: true,
-                user: action.payload
+                token: action.payload.token,
+                user: action.payload.user
+            };
+
+        case C.FAIL_LOGIN:
+            return {
+                error: action.payload,
+                fetching: false
             };
 
         case C.LOGOUT:
             return {
-                loggedIn: false
+                loggedIn: false,
+                token: null,
+                user: null
             };
 
         default:

@@ -1,4 +1,5 @@
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var webpack = require('webpack');
 
 module.exports = {
     entry: "./src/index.js",
@@ -44,6 +45,11 @@ module.exports = {
             cssProcessor: require('cssnano'),
             cssProcessorOptions: {discardComments: {removeAll: true}},
             canPrint: true
+        }),
+        new webpack.ProvidePlugin({
+            Tether: 'tether',
+            $: 'jquery',
+            jQuery: 'jquery',
         })
     ]
 };
