@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 export default class Navbar extends Component {
     constructor(props) {
@@ -6,32 +7,45 @@ export default class Navbar extends Component {
     };
 
     render() {
-        return <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
-                <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent">
-                    <span className="navbar-toggler-icon"/>
-                </button>
+        return <nav className="navbar navbar-default">
             <div className="container">
-                <a className="navbar-brand" href="#">Navbar</a>
-
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="#">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="#">Disabled</a>
-                        </li>
-                    </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="text" placeholder="Search"/>
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse" aria-expanded="false">
+                        <span className="sr-only">Toggle navigation</span>
+                        <span className="icon-bar"/>
+                        <span className="icon-bar"/>
+                        <span className="icon-bar"/>
+                    </button>
+                    <Link to="/" className="navbar-brand">eCuddles</Link>
+                </div>
+                <div className="collapse navbar-collapse" id="navbar-collapse">
+                        { this.props.loggedIn ?
+                            <ul className="nav navbar-nav navbar-right">
+                                <li>
+                                    <Link to="/" onClick={this.props.onLogout}>Logout <span className="sr-only">(current)</span></Link>
+                                </li>
+                            </ul>
+                            :
+                            <ul className="nav navbar-nav navbar-right">
+                                <li className={this.props.location.pathname === "/login" && "active"}>
+                                    <a><Link to="/login">Login <span className="sr-only">(current)</span></Link></a>
+                                </li>
+                                <li className={this.props.location.pathname === "/register" && "active"}>
+                                    <a><Link to="/register">Register <span className="sr-only">(current)</span></Link></a>
+                                </li>
+                            </ul>
+                        }
                 </div>
             </div>
         </nav>;
     };
+
+
+    /*<form className="navbar-form navbar-left">
+     <div className="form-group">
+     <input type="text" className="form-control" placeholder="Search"/>
+     </div>
+     <button type="submit" className="btn btn-default">Submit</button>
+     </form>*/
 };
