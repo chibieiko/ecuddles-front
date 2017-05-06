@@ -1,5 +1,6 @@
 import C from './constants';
 import fetch from 'isomorphic-fetch';
+import FlameThrower from './flameThrower';
 
 export const attemptLogin = value => dispatch => {
     dispatch({
@@ -16,14 +17,12 @@ export const attemptLogin = value => dispatch => {
 
 
     fetch(backendUrl + '/api/login', request)
-        .then(response => response.json())
+        .then(response => {
+            FlameThrower.burn(response);
+            return response.json()
+        })
         .then(response => {
             console.log(response);
-
-            if (response.error) {
-                throw new Error("Bad credentials");
-            }
-
             dispatch(login(response));
         })
         .catch(error => {

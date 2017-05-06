@@ -13,7 +13,6 @@ export default class LoginPage extends Component {
 
     submitForm = (event) => {
         event.preventDefault();
-
         this.props.onLogin(this.state);
     };
 

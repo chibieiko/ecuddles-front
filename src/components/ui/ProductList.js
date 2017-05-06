@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import fetch from 'isomorphic-fetch';
 import Product from './Product';
+import FlameThrower from '../../flameThrower';
 
 export default class ProductList extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class ProductList extends Component {
         this.state = {
             page: 0,
             fetching: false,
-            products: []
+            products: [],
+            error: null
         };
     };
 
@@ -26,7 +28,8 @@ export default class ProductList extends Component {
 
     loadProducts = () => {
         this.setState({
-            fetching: true
+            fetching: true,
+            error: null
         });
 
         let url = "";
@@ -38,7 +41,10 @@ export default class ProductList extends Component {
         }
 
         fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                FlameThrower.burn(response);
+                return response.json();
+            })
             .then(response => {
                 let products = response._embedded.products;
 
@@ -49,16 +55,20 @@ export default class ProductList extends Component {
             })
             .catch(error => {
                 this.setState({
-                    fetching: false
+                    fetching: false,
+                    error: error
                 });
-
-                console.log(error);
-                alert("shit happened"); // todo error msgs
             });
     };
 
     render() {
         return <div>
+            {
+                this.state.error &&
+                <div className="alert alert-danger">
+                    {this.state.error.message}
+                </div>
+            }
             {
                 this.state.fetching ?
                     "Spinner is here!" :

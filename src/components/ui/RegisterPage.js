@@ -1,13 +1,16 @@
 import {Component} from 'react';
 import fetch from 'isomorphic-fetch';
 import {Redirect} from 'react-router-dom';
+import FlameThrower from '../../flameThrower';
+
 
 export default class RegisterPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fetching: false,
-            registerSuccessful: false
+            registerSuccessful: false,
+            error: null
         };
     };
 
@@ -51,25 +54,22 @@ export default class RegisterPage extends Component {
         });
 
         fetch(backendUrl + '/api/register', request)
-            .then(response => response.json())
             .then(response => {
-                console.log(response);
-
+                FlameThrower.burn(response);
+                return response.json()
+            })
+            .then(response => {
                 this.setState({
-                    fetching: false
-                });
-
-                if (response.error) {
-                    throw new Error(response.error);
-                }
-
-                this.setState({
-                    registerSuccessful: true
+                    registerSuccessful: true,
+                    fetching: false,
+                    error: null
                 })
             })
             .catch(error => {
                 this.setState({
-                    fetching: false
+                    fetching: false,
+                    registerSuccessful: false,
+                    error: error
                 });
             });
     };
@@ -78,23 +78,35 @@ export default class RegisterPage extends Component {
         return <form onSubmit={this.submitForm}>
             {
                 this.state.fetching &&
-                    <div>Spinner is spinning</div>
+                <div>Spinner is spinning</div>
             }
             {
                 this.state.registerSuccessful &&
-                    <Redirect to="/login"/>
+                <Redirect to="/login"/>
+            }
+            {
+                this.state.error &&
+                <div className="alert alert-danger">
+                    {this.state.error.message}
+                </div>
             }
             <div className="form-group">
                 <label htmlFor="name">Name</label>
-                <input type="text" onChange={this.onNameChanged} className="form-control" id="name" placeholder="Firstname Lastname"/>
+                <input type="text" onChange={this.onNameChanged}
+                       className="form-control" id="name"
+                       placeholder="Firstname Lastname"/>
             </div>
             <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input type="email" onChange={this.onEmailChanged} className="form-control" id="email" placeholder="example@gmail.com"/>
+                <input type="email" onChange={this.onEmailChanged}
+                       className="form-control" id="email"
+                       placeholder="example@gmail.com"/>
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
-                <input type="password" onChange={this.onPasswordChanged} className="form-control" id="password" placeholder="********"/>
+                <input type="password" onChange={this.onPasswordChanged}
+                       className="form-control" id="password"
+                       placeholder="********"/>
             </div>
             <button type="submit" className="btn btn-primary">Register</button>
         </form>
