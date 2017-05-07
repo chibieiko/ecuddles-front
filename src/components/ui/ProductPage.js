@@ -1,13 +1,28 @@
 import {Component} from 'react';
+import Spinner from './Spinner';
 
-export default class LoginPage extends Component {
+export default class ProductPage extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            fetching: false,
+            product: null
+        };
+
+        console.log(props);
     };
 
     render() {
         return <div>
-            ProductPage
+            {
+                this.state.fetching || !this.state.product ?
+                    <Spinner margin={true}/>
+                    :
+                    <h1>
+                        {this.state.product.name}
+                    </h1>
+            }
         </div>;
     };
 };
