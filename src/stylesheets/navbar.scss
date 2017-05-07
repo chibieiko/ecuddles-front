@@ -40,12 +40,12 @@
   display: inline-block;
 }
 
-#search-bar-xs {
-  padding-right: 0;
-  padding-left: 0;
+.nav-searchbar {
+  width: 400px;
 }
 
-.side-breather {
+.breather {
   padding-right: 15px;
   padding-left: 15px;
+  padding-bottom: 15px;
 }

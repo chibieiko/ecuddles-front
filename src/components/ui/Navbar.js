@@ -26,13 +26,15 @@ export default class Navbar extends Component {
                         <div className="navbar-header-menu">
                             <form className="navbar-form navbar-left hidden-xs"
                                   role="search">
-                                <div className="form-group">
+                                <div className="input-group nav-searchbar">
                                     <input type="text" className="form-control"
                                            placeholder="Search"/>
+                                    <div className="input-group-btn">
+                                    <button type="submit"
+                                            className="btn btn-default"><span
+                                        className="glyphicon glyphicon-search"/></button>
+                                    </div>
                                 </div>
-                                <button type="submit"
-                                        className="btn btn-default"><span
-                                    className="glyphicon glyphicon-search"/></button>
                             </form>
                             {
                                 this.props.loggedIn ?
@@ -87,15 +89,17 @@ export default class Navbar extends Component {
                     </div>
                 </div>
             </nav>
-            <form className="hidden-sm hidden-md hidden-lg side-breather"
+            <form className="hidden-sm hidden-md hidden-lg breather"
                   role="search">
-                <div className="form-group col-xs-11" id="search-bar-xs">
+                <div className="input-group">
                     <input type="text" className="form-control"
                            placeholder="Search"/>
+                    <div className="input-group-btn">
+                        <button type="submit"
+                                className="btn btn-default"><span
+                            className="glyphicon glyphicon-search"/></button>
+                    </div>
                 </div>
-                <button type="submit"
-                        className="btn btn-default col-xs-1"><span
-                    className="glyphicon glyphicon-search"/></button>
             </form>
         </span>;
     };
