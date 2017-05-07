@@ -1,0 +1,26 @@
+#hamburger-button {
+  margin-left: 15px;
+}
+
+.container > .navbar-header {
+  width: 100%;
+}
+
+.navbar-header-menu {
+  float: right;
+}
+
+.navbar-header-menu > .navbar-nav {
+  float: right;
+  margin: 0;
+}
+
+.navbar-header-menu > .navbar-nav > li {
+  float: right;
+}
+
+.navbar-header-menu > .navbar-nav > li > a {
+  padding-right: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
