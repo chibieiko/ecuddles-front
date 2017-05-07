@@ -20,7 +20,8 @@ export default class Navbar extends Component {
                     <Link to="/" className="navbar-brand">eCuddles</Link>
                 </div>
                 <div className="collapse navbar-collapse" id="navbar-collapse">
-                        { this.props.loggedIn ?
+                        {
+                            this.props.loggedIn ?
                             <ul className="nav navbar-nav navbar-right">
                                 <li>
                                     <Link to="/" onClick={this.props.onLogout}>Logout <span className="sr-only">(current)</span></Link>
@@ -29,10 +30,10 @@ export default class Navbar extends Component {
                             :
                             <ul className="nav navbar-nav navbar-right">
                                 <li className={this.props.location.pathname === "/login" && "active"}>
-                                    <a><Link to="/login">Login <span className="sr-only">(current)</span></Link></a>
+                                    <Link to="/login">Login <span className="sr-only">(current)</span></Link>
                                 </li>
                                 <li className={this.props.location.pathname === "/register" && "active"}>
-                                    <a><Link to="/register">Register <span className="sr-only">(current)</span></Link></a>
+                                    <Link to="/register">Register <span className="sr-only">(current)</span></Link>
                                 </li>
                             </ul>
                         }
