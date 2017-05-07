@@ -20,7 +20,32 @@
 }
 
 .navbar-header-menu > .navbar-nav > li > a {
-  padding-right: 0;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.navbar-header-menu > .navbar-form {
+  float: left;
+  width: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-right: 0;
+  margin-left: 0;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.navbar-header-menu > .navbar-form > .form-group {
+  display: inline-block;
+}
+
+#search-bar-xs {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.side-breather {
+  padding-right: 15px;
+  padding-left: 15px;
 }
