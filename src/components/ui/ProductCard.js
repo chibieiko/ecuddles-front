@@ -8,20 +8,27 @@ export default class ProductCard extends Component {
     };
 
     render() {
-        return <div className="col-xs-6 col-lg-4">
-            <div className="panel panel-default">
+        return <div className="col-xs-6 col-lg-4 card">
                 <div className="col-xs-12">
                     <img src={this.props.product.picture.url}
                          alt={this.props.product.picture.caption}/>
                 </div>
-                <div className="panel-body">
-                    <h4>{this.props.product.name}</h4>
-                    <h4>{this.props.product.price} €</h4>
+
+                <div className="col-xs-6">
+                    <p>{this.props.product.name}</p>
+                </div>
+
+                <div className="col-xs-6">
+                    <p className="pull-right">{this.props.product.price} €</p>
+                </div>
+
+                <div className="col-xs-12">
                     <button className="btn btn-success">
-                        <span className="glyphicon glyphicon-shopping-cart"/> Add to cart
+                        <span className="glyphicon glyphicon-shopping-cart"/>
+                        Add to
+                        cart
                     </button>
                 </div>
-            </div>
-        </div>;
+            </div>;
     };
 }
