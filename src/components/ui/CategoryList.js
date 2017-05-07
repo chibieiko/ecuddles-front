@@ -14,7 +14,7 @@ export default class CategoryList extends Component {
             Categories are here
             <Switch>
                 <Route exact path="/" component={MainPage}/>
-                <Route path="/product" component={ProductPage}/>
+                <Route path="/product/:id" component={ProductPage}/>
                 <Route path="/search" component={SearchPage}/>
             </Switch>
         </div>;

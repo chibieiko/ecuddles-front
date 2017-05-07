@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import fetch from 'isomorphic-fetch';
 import Product from './Product';
+import Spinner from './Spinner';
 import FlameThrower from '../../flameThrower';
 
 export default class ProductList extends Component {
@@ -71,7 +72,7 @@ export default class ProductList extends Component {
             }
             {
                 this.state.fetching ?
-                    "Spinner is here!" :
+                    <Spinner margin={true}/> :
                     this.state.products.map(product => <Product key={product.id} product={product}/>)
             }
         </div>;
