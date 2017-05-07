@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import fetch from 'isomorphic-fetch';
-import Product from './Product';
+import ProductCard from './ProductCard';
 import FlameThrower from '../../flameThrower';
 
 export default class ProductList extends Component {
@@ -63,6 +63,7 @@ export default class ProductList extends Component {
 
     render() {
         return <div>
+            <h1>Latest additions to our cuddly family</h1>
             {
                 this.state.error &&
                 <div className="alert alert-danger">
@@ -72,7 +73,7 @@ export default class ProductList extends Component {
             {
                 this.state.fetching ?
                     "Spinner is here!" :
-                    this.state.products.map(product => <Product key={product.id} product={product}/>)
+                    this.state.products.map(product => <ProductCard key={product.id} product={product}/>)
             }
         </div>;
     };

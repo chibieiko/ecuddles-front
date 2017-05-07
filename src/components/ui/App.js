@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import {Link, HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 import RegisterPage from './RegisterPage';
-import CategoryList from './CategoryList';
+import CategoryList from '../containers/CategoryList';
 import Navbar from '../containers/Navbar';
 import LoginPage from '../containers/LoginPage';
 import {Provider} from 'react-redux';
