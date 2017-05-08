@@ -146,9 +146,9 @@ export default class ProductPage extends Component {
                             <div className="col-sm-6">
                                 <Detail name="Color" value={product.color}/>
                                 <Detail name="Designer" value={product.designer}/>
-                                <Detail name="Width" value={product.width}/>
-                                <Detail name="Length" value={product.length}/>
-                                <Detail name="Weight" value={product.weight}/>
+                                <Detail name="Width" value={product.width + " cm"}/>
+                                <Detail name="Length" value={product.length + " cm"}/>
+                                <Detail name="Weight" value={product.weight + " kg"}/>
                             </div>
 
                             <div className="col-sm-6">
