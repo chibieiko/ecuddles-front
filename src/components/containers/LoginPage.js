@@ -4,7 +4,6 @@ import {attemptLogin} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
-    error: state.authentication.error,
     loggedIn: state.authentication.loggedIn,
     fetching: state.authentication.fetching,
     router: props.router

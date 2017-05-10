@@ -26,7 +26,7 @@ export default class FlameThrower {
                 }
 
             case 401:
-                throw new Error("Bad credentials");
+                throw new Error("Bad credentials are very bad and i hate errors please dont throw them ok?");
 
             case 403:
                 throw new Error("No authorization");

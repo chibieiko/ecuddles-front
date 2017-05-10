@@ -26,7 +26,8 @@ export const attemptLogin = value => dispatch => {
             dispatch(login(response));
         })
         .catch(error => {
-            dispatch(failLogin(error));
+            dispatch(failLogin());
+            dispatch(displayError(error))
         });
 };
 
@@ -35,9 +36,8 @@ export const login = userInfo => ({
     payload: userInfo
 });
 
-export const failLogin = error => ({
-    type: C.FAIL_LOGIN,
-    payload: error
+export const failLogin = () => ({
+    type: C.FAIL_LOGIN
 });
 
 export const logout = () => ({
@@ -57,6 +57,31 @@ export const categoryList = categories => ({
     type: C.UPDATE_CATEGORIES,
     payload: categories
 });
+
+export const displayError = error => dispatch => {
+    let timeout = setTimeout(() => {
+        dispatch(hideError(timeout));
+    }, 10000);
+
+    dispatch({
+        type: C.DISPLAY_ERROR,
+        payload: {
+            visible: true,
+            current: error,
+            timeout: timeout
+        }
+    });
+};
+
+export const hideError = timeout => dispatch => {
+    if (timeout) {
+        clearTimeout(timeout);
+    }
+
+    dispatch({
+        type: C.HIDE_ERROR
+    });
+};
 
 export const addToCart = product => dispatch => {
     dispatch({

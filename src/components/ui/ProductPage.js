@@ -31,7 +31,7 @@ export default class ProductPage extends Component {
     };
 
     buyProduct = () => {
-        // code goes here
+
     };
 
     componentWillMount() {
@@ -70,11 +70,9 @@ export default class ProductPage extends Component {
     };
 
     render() {
-        // render stuff
         let product = this.state.product;
 
-        return <div className="row">
-            <div className="col-sm-offset-3 col-sm-9">
+        return <div>
                 {
                     this.state.error &&
                     <div className="alert alert-danger">
@@ -163,7 +161,6 @@ export default class ProductPage extends Component {
                         </div>
                     </div>
                 }
-            </div>
-        </div>;
+            </div>;
     };
 };

@@ -74,7 +74,7 @@ export default class ProductList extends Component {
             {
                 this.state.fetching ?
                     <Spinner margin={true}/> :
-                    this.state.products.map(product => <Product key={product.id} product={product}/>)
+                    this.state.products.map(product => <ProductCard key={product.id} product={product}/>)
             }
         </div>;
     };

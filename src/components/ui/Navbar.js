@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import ErrorBar from '../containers/ErrorBar';
 import {Link} from 'react-router-dom';
 import '../../stylesheets/navbar.scss';
 
@@ -9,7 +10,7 @@ export default class Navbar extends Component {
 
     render() {
         return <span>
-                <nav className="navbar navbar-default">
+                <nav className="navbar navbar-default" id="ecuddles-navbar">
                 <div className="container">
                     <div className="navbar-header">
                         <button type="button" id="hamburger-button"
@@ -89,6 +90,7 @@ export default class Navbar extends Component {
                     </div>
                 </div>
             </nav>
+            <ErrorBar/>
             <form className="hidden-sm hidden-md hidden-lg breather"
                   role="search">
                 <div className="input-group">
