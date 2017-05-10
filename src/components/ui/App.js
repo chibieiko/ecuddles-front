@@ -1,6 +1,6 @@
 import {Component} from 'react';
-import {Link, HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
-import RegisterPage from './RegisterPage';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import RegisterPage from '../containers/RegisterPage';
 import CategoryList from '../containers/CategoryList';
 import Navbar from '../containers/Navbar';
 import LoginPage from '../containers/LoginPage';

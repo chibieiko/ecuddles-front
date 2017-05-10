@@ -8,10 +8,10 @@ import Spinner from './Spinner';
 export default class RegisterPage extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             fetching: false,
-            registerSuccessful: false,
-            error: null
+            registerSuccessful: false
         };
     };
 
@@ -56,22 +56,20 @@ export default class RegisterPage extends Component {
 
         fetch(backendUrl + '/api/register', request)
             .then(response => {
+                this.setState({
+                    fetching: false
+                });
+
                 FlameThrower.burn(response);
                 return response.json()
             })
             .then(response => {
                 this.setState({
-                    registerSuccessful: true,
-                    fetching: false,
-                    error: null
-                })
+                    registerSuccessful: true
+                });
             })
             .catch(error => {
-                this.setState({
-                    fetching: false,
-                    registerSuccessful: false,
-                    error: error
-                });
+                this.props.onError(error);
             });
     };
 
@@ -84,12 +82,6 @@ export default class RegisterPage extends Component {
             {
                 this.state.registerSuccessful &&
                 <Redirect to="/login"/>
-            }
-            {
-                this.state.error &&
-                <div className="alert alert-danger">
-                    {this.state.error.message}
-                </div>
             }
             <div className="form-group">
                 <label htmlFor="name">Name</label>
