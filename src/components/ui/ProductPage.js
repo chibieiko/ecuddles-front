@@ -70,6 +70,7 @@ export default class ProductPage extends Component {
     };
 
     render() {
+        // render stuff
         let product = this.state.product;
 
         return <div className="row">
