@@ -13,7 +13,17 @@
 }
 
 .error-bar-content {
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
+}
+
+.error-bar-message {
+  flex: 1;
+}
+
+.error-bar-close {
+  margin-left: 10px;
 }
 
 .error-visible {

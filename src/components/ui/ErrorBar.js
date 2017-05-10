@@ -17,8 +17,8 @@ export default class ErrorBar extends Component {
         return <div className="error-bar-container">
                 <div className={this.props.error && this.props.error.visible ? "error-bar error-visible" : "error-bar"}>
                     <div className="container error-bar-content">
-                    {this.props.error && this.props.error.current && <span>{this.props.error.current.message}</span>}
-                    <button onClick={this.onClose} type="button" className="close" aria-label="Close">
+                    {this.props.error && this.props.error.current && <span className="error-bar-message">{this.props.error.current.message}</span>}
+                    <button onClick={this.onClose} type="button" className="error-bar-close close" aria-label="Close">
                         <span>&times;</span>
                     </button>
                     </div>
