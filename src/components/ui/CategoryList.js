@@ -39,7 +39,7 @@ export default class CategoryList extends Component {
             <div className="col-xs-12 col-sm-9">
                 <Switch>
                     <Route exact path="/" component={MainPage}/>
-                    <Route path="/product" component={ProductPage}/>
+                    <Route path="/product/:id" component={ProductPage}/>
                     <Route path="/search" component={SearchPage}/>
                 </Switch>
             </div>

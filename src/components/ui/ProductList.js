@@ -2,6 +2,7 @@ import {Component} from 'react';
 import fetch from 'isomorphic-fetch';
 import ProductCard from './ProductCard';
 import FlameThrower from '../../flameThrower';
+import Spinner from './Spinner';
 
 export default class ProductList extends Component {
     constructor(props) {
@@ -72,8 +73,8 @@ export default class ProductList extends Component {
             }
             {
                 this.state.fetching ?
-                    "Spinner is here!" :
-                    this.state.products.map(product => <ProductCard key={product.id} product={product}/>)
+                    <Spinner margin={true}/> :
+                    this.state.products.map(product => <Product key={product.id} product={product}/>)
             }
         </div>;
     };

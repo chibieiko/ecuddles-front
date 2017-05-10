@@ -2,6 +2,7 @@ import {Component} from 'react';
 import fetch from 'isomorphic-fetch';
 import {Redirect} from 'react-router-dom';
 import FlameThrower from '../../flameThrower';
+import Spinner from './Spinner';
 
 
 export default class RegisterPage extends Component {
@@ -78,7 +79,7 @@ export default class RegisterPage extends Component {
         return <form onSubmit={this.submitForm}>
             {
                 this.state.fetching &&
-                <div>Spinner is spinning</div>
+                <Spinner delay={500} margin={true}/>
             }
             {
                 this.state.registerSuccessful &&
