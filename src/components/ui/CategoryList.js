@@ -10,15 +10,31 @@ export default class CategoryList extends Component {
         super(props);
     };
 
+    componentDidMount() {
+        this.props.loadCategories();
+    }
+
     render() {
         return <div className="row">
-            <div className="col-sm-3 sidebar-offcanvas hidden-xs" id="sidebar"
+
+            <div className="col-sm-3 sidebar-offcanvas hidden-xs"
+                 id="sidebar"
                  role="navigation">
-                <ul className="nav">
-                    <li><a className="link-color">Link1</a></li>
-                    <li><a className="link-color">Link2</a></li>
-                    <li><a className="link-color">Link3</a></li>
-                </ul>
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        Categories
+                    </div>
+                    <div className="panel-body">
+                        <ul className="nav">
+                            {
+                                this.props.categories && this.props.categories.map(category =>
+                                    <li key={category.id}><a
+                                        className="link-color">{category.name}</a>
+                                    </li>)
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div className="col-xs-12 col-sm-9">
                 <Switch>

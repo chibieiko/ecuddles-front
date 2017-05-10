@@ -21,6 +21,16 @@ export const shoppingCart = (state = [], action) => {
     }
 };
 
+export const categories = (state = [], action) => {
+    switch (action.type) {
+        case C.UPDATE_CATEGORIES:
+            return action.payload;
+
+        default:
+            return state;
+    }
+};
+
 export const authentication = (state = {loggedIn:false}, action) => {
     switch (action.type) {
         case C.ATTEMPT_LOGIN:
@@ -59,5 +69,6 @@ export const authentication = (state = {loggedIn:false}, action) => {
 export default combineReducers({
     shoppingCart,
     authentication,
+    categories,
     routing
 })

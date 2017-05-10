@@ -44,6 +44,20 @@ export const logout = () => ({
     type: C.LOGOUT
 });
 
+export const updateCategories = value => dispatch => {
+    fetch(backendUrl + '/api/categories', {method: 'GET'})
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            dispatch(categoryList(response._embedded.categories));
+        })
+};
+
+export const categoryList = categories => ({
+    type: C.UPDATE_CATEGORIES,
+    payload: categories
+});
+
 export const addToCart = product => ({
     type: C.ADD_TO_CART,
     payload: product
