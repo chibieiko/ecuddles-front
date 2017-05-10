@@ -30,6 +30,10 @@ export default class ProductPage extends Component {
         };
     };
 
+    buyProduct = () => {
+        // code goes here
+    };
+
     componentWillMount() {
         this.loadProductDetails(this.props.match.params.id);
     }
@@ -101,7 +105,7 @@ export default class ProductPage extends Component {
                                 <div className="panel panel-default buy-panel">
                                     <div className="panel-body">
                                         <span className="product-price">{product.price}€</span>
-                                        <button className={
+                                        <button onClick={this.buyProduct} className={
                                             product.stock > 0 ?
                                                 "btn-buy center-block btn btn-lg btn-success"
                                                 :

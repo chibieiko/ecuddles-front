@@ -58,10 +58,12 @@ export const categoryList = categories => ({
     payload: categories
 });
 
-export const addToCart = product => ({
-    type: C.ADD_TO_CART,
-    payload: product
-});
+export const addToCart = product => dispatch => {
+    dispatch({
+        type: C.ADD_TO_CART,
+        payload: product
+    });
+};
 
 export const removeFromCart = id => ({
     type: C.REMOVE_FROM_CART,
