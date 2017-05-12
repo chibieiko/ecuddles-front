@@ -28,10 +28,10 @@ export default class Navbar extends Component {
                             <form className="navbar-form navbar-left hidden-xs"
                                   role="search">
                                 <div className="input-group nav-searchbar">
-                                    <input type="text" className="form-control"
+                                    <input type="text" id="product-search" className="form-control"
                                            placeholder="Search"/>
                                     <div className="input-group-btn">
-                                    <button type="submit"
+                                    <button type="submit" id="search-button"
                                             className="btn btn-default"><span
                                         className="glyphicon glyphicon-search"/></button>
                                     </div>

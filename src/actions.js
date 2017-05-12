@@ -28,7 +28,7 @@ export const attemptLogin = value => dispatch => {
             dispatch(failLogin());
             dispatch(displayNotification({
                 message: error.message,
-                type: C.NOTIFICATION_SUCCESS
+                type: C.NOTIFICATION_ERROR
             }));
         });
 };
