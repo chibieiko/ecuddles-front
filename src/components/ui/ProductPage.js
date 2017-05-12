@@ -31,7 +31,7 @@ export default class ProductPage extends Component {
     };
 
     buyProduct = () => {
-
+        this.props.addToCart(this.state.product);
     };
 
     componentWillMount() {
@@ -49,21 +49,16 @@ export default class ProductPage extends Component {
         });
 
         fetch(backendUrl + "/api/products/" + productId + "?projection=inspect")
+            .then(response => FlameThrower.burn(response))
             .then(response => {
                 this.setState({
-                    fetching: false
-                });
-
-                FlameThrower.burn(response);
-                return response.json();
-            })
-            .then(response => {
-                this.setState({
+                    fetching: false,
                     product: response
                 });
             })
             .catch(error => {
                 this.setState({
+                    fetching: false,
                     error: error
                 });
             });

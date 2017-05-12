@@ -42,10 +42,7 @@ export default class ProductList extends Component {
         }
 
         fetch(url)
-            .then(response => {
-                FlameThrower.burn(response);
-                return response.json();
-            })
+            .then(response => FlameThrower.burn(response))
             .then(response => {
                 let products = response._embedded.products;
 

@@ -16,12 +16,8 @@ export const attemptLogin = value => dispatch => {
     };
 
     fetch(backendUrl + '/api/login', request)
+        .then(response => FlameThrower.burn(response))
         .then(response => {
-            FlameThrower.burn(response);
-            return response.json()
-        })
-        .then(response => {
-            console.log(response);
             dispatch(login(response));
         })
         .catch(error => {
@@ -47,10 +43,9 @@ export const logout = () => ({
 });
 
 export const updateCategories = value => dispatch => {
-    fetch(backendUrl + '/api/categories', {method: 'GET'})
-        .then(response => response.json())
+    fetch(backendUrl + '/api/categories')
+        .then(response => FlameThrower.burn(response))
         .then(response => {
-            console.log(response);
             dispatch(categoryList(response._embedded.categories));
         })
 };
@@ -85,11 +80,36 @@ export const hideNotification = timeout => dispatch => {
     });
 };
 
-export const addToCart = product => dispatch => {
-    dispatch({
-        type: C.ADD_TO_CART,
-        payload: product
-    });
+export const addToCart = ({entry, showNotification}) => (dispatch, getState) => {
+
+    let headers = new Headers();
+    headers.append("Authorization", getState().authentication.token);
+
+    let request = {
+        headers: headers
+    };
+
+    fetch(backendUrl + '/api/cart/modify/?product=' + entry.product.id + '&quantity=' + entry.quantity, request)
+        .then(response => FlameThrower.burn(response))
+        .then(response => {
+            dispatch({
+                type: C.ADD_TO_CART,
+                payload: entry
+            });
+
+            if (showNotification) {} {
+                dispatch(displayNotification({
+                    message: "Great choice! " + entry.product.name + " was added to your shopping cart.",
+                    type: C.NOTIFICATION_SUCCESS
+                }));
+            }
+        })
+        .catch(error => {
+            dispatch(displayNotification({
+                message: error.message,
+                type: C.NOTIFICATION_ERROR
+            }));
+        });
 };
 
 export const removeFromCart = id => ({
