@@ -1,6 +1,6 @@
 import RegisterPage from '../ui/RegisterPage';
 import {connect} from 'react-redux';
-import {displayError} from '../../actions';
+import {displayNotification} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
@@ -9,7 +9,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
     onError(error) {
-        dispatch(displayError(error));
+        dispatch(displayNotification(error));
     }
 });
 

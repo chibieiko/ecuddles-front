@@ -15,7 +15,6 @@ export const attemptLogin = value => dispatch => {
         body: JSON.stringify(value)
     };
 
-
     fetch(backendUrl + '/api/login', request)
         .then(response => {
             FlameThrower.burn(response);
@@ -27,7 +26,7 @@ export const attemptLogin = value => dispatch => {
         })
         .catch(error => {
             dispatch(failLogin());
-            dispatch(displayError(error))
+            dispatch(displayNotification(error))
         });
 };
 
@@ -58,28 +57,28 @@ export const categoryList = categories => ({
     payload: categories
 });
 
-export const displayError = error => dispatch => {
+export const displayNotification = notification => dispatch => {
     let timeout = setTimeout(() => {
-        dispatch(hideError(timeout));
-    }, 10000);
+        dispatch(hideNotification(timeout));
+    }, 5000);
 
     dispatch({
-        type: C.DISPLAY_ERROR,
+        type: C.DISPLAY_NOTIFICATION,
         payload: {
             visible: true,
-            current: error,
+            current: notification,
             timeout: timeout
         }
     });
 };
 
-export const hideError = timeout => dispatch => {
+export const hideNotification = timeout => dispatch => {
     if (timeout) {
         clearTimeout(timeout);
     }
 
     dispatch({
-        type: C.HIDE_ERROR
+        type: C.HIDE_NOTIFICATION
     });
 };
 

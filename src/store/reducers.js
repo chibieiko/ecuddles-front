@@ -2,12 +2,12 @@ import C from '../constants';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 
-export const error = (state = null, action) => {
+export const notification = (state = null, action) => {
     switch (action.type) {
-        case C.DISPLAY_ERROR:
+        case C.DISPLAY_NOTIFICATION:
             return action.payload;
 
-        case C.HIDE_ERROR:
+        case C.HIDE_NOTIFICATION:
             return {
                 visible: false,
                 current: state.current,
@@ -81,7 +81,7 @@ export const authentication = (state = {loggedIn:false}, action) => {
 };
 
 export default combineReducers({
-    error,
+    notification,
     shoppingCart,
     authentication,
     categories,

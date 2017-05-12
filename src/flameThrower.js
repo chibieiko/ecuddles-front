@@ -9,8 +9,6 @@ export default class FlameThrower {
         }
 
         let responseBody = response.json();
-        console.log("BUUURNED ERRRROOOOOR");
-        console.log(responseBody);
 
         switch (response.status) {
             case 500:

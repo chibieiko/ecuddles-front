@@ -1,16 +1,16 @@
-import ErrorBar from '../ui/ErrorBar';
+import ErrorBar from '../ui/NotificationBar';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {hideError} from '../../actions';
+import {hideNotification} from '../../actions';
 
 const mapStateToProps = (state, props) => ({
-    error: state.error,
+    notification: state.notification,
     router: props.router
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClose(error) {
-        dispatch(hideError(error.timeout));
+    onClose(notification) {
+        dispatch(hideNotification(notification.timeout));
     }
 });
 

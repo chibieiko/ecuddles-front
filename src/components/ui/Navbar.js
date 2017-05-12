@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import ErrorBar from '../containers/ErrorBar';
+import ErrorBar from '../containers/NotificationBar';
 import {Link} from 'react-router-dom';
 import '../../stylesheets/navbar.scss';
 
