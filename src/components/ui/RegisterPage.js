@@ -55,20 +55,18 @@ export default class RegisterPage extends Component {
         });
 
         fetch(backendUrl + '/api/register', request)
+            .then(response => FlameThrower.burn(response))
             .then(response => {
                 this.setState({
-                    fetching: false
-                });
-
-                FlameThrower.burn(response);
-                return response.json()
-            })
-            .then(response => {
-                this.setState({
+                    fetching: false,
                     registerSuccessful: true
                 });
             })
             .catch(error => {
+                this.setState({
+                    fetching: false
+                });
+
                 this.props.onError(error);
             });
     };

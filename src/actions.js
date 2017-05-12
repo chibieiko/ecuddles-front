@@ -16,10 +16,7 @@ export const attemptLogin = value => dispatch => {
     };
 
     fetch(backendUrl + '/api/login', request)
-        .then(response => {
-            FlameThrower.burn(response);
-            return response.json();
-        })
+        .then(response => FlameThrower.burn(response))
         .then(response => {
             dispatch(login(response));
         })
@@ -47,10 +44,7 @@ export const logout = () => ({
 
 export const updateCategories = value => dispatch => {
     fetch(backendUrl + '/api/categories')
-        .then(response => {
-            FlameThrower.burn(response)
-            return response.json();
-        })
+        .then(response => FlameThrower.burn(response))
         .then(response => {
             dispatch(categoryList(response._embedded.categories));
         })
@@ -96,9 +90,8 @@ export const addToCart = ({entry, showNotification}) => (dispatch, getState) => 
     };
 
     fetch(backendUrl + '/api/cart/modify/?product=' + entry.product.id + '&quantity=' + entry.quantity, request)
+        .then(response => FlameThrower.burn(response))
         .then(response => {
-            FlameThrower.burn(response);
-
             dispatch({
                 type: C.ADD_TO_CART,
                 payload: entry
