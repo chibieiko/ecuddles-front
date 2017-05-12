@@ -8,8 +8,6 @@ export default class FlameThrower {
             return;
         }
 
-        let responseBody = response.json();
-
         switch (response.status) {
             case 500:
                 if (responseBody.exception === "com.evil.Exception.TokenException") {
@@ -20,7 +18,14 @@ export default class FlameThrower {
                     location.href="#/login";
                     throw new Error("Invalid token");
                 } else {
-                    throw new Error("Unexpected error occured, please try again later")
+                    throw new Error("Teddy is not happy at the moment, try again later");
+                }
+
+            case 400:
+                if (responseBody.exception === "com.evil.Exception.OutOfStockException") {
+                    throw new Error("Quantity of this product in your shopping cart exceeds stock!");
+                } else {
+                    throw new Error("Bad request!");
                 }
 
             case 401:
@@ -33,7 +38,7 @@ export default class FlameThrower {
                 throw new Error("Not found");
 
             default:
-                throw new Error("Teddy is not happy at the moment, try again later")
+                throw new Error("Teddy is not happy at the moment, try again later");
         }
     }
 }

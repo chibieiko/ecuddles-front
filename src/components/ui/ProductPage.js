@@ -31,7 +31,7 @@ export default class ProductPage extends Component {
     };
 
     buyProduct = () => {
-
+        this.props.addToCart(this.state.product);
     };
 
     componentWillMount() {

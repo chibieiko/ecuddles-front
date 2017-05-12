@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import MainPage from "./MainPage";
-import ProductPage from "./ProductPage";
+import ProductPage from "../containers/ProductPage";
 import SearchPage from "./SearchPage";
 import '../../stylesheets/categoryList.scss';
 
