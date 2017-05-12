@@ -4,12 +4,19 @@
 
 .notification-bar {
   width: 100%;
-  background-color: #b71c1c;
   color: #f2f2f2;
   max-height: 0;
   transition: max-height 0.8s ease-out;
   -webkit-transition: max-height 0.8s ease-out;
   overflow: hidden;
+}
+
+.notification-bar-error {
+  background-color: #d50000;
+}
+
+.notification-bar-success {
+  background-color: #5cb85c;
 }
 
 .notification-bar-content {

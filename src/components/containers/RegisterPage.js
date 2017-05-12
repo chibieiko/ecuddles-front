@@ -2,6 +2,7 @@ import RegisterPage from '../ui/RegisterPage';
 import {connect} from 'react-redux';
 import {displayNotification} from '../../actions';
 import {withRouter} from 'react-router';
+import C from '../../constants';
 
 const mapStateToProps = (state, props) => ({
     router: props.router
@@ -9,7 +10,10 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
     onError(error) {
-        dispatch(displayNotification(error));
+        dispatch(displayNotification({
+            message: error.message,
+            type: C.NOTIFICATION_ERROR
+        }));
     }
 });
 

@@ -1,7 +1,8 @@
 import {Component} from 'react';
 import '../../stylesheets/notificationBar.scss';
+import C from '../../constants';
 
-export default class ErrorBar extends Component {
+export default class NotificationBar extends Component {
     constructor(props) {
         super(props);
     };
@@ -12,14 +13,41 @@ export default class ErrorBar extends Component {
 
     render() {
         return <div className="notification-bar-container">
-                <div className={this.props.notification && this.props.notification.visible ? "notification-bar notification-visible" : "notification-bar"}>
-                    <div className="container notification-bar-content">
-                    {this.props.notification && this.props.notification.current && <span className="notification-bar-message">{this.props.notification.current.message}</span>}
-                    <button onClick={this.onClose} type="button" className="notification-bar-close close" aria-label="Close">
-                        <span>&times;</span>
-                    </button>
-                    </div>
-                </div>
+            {
+                this.props.notification &&
+                <Notification data={this.props.notification}
+                              onClose={this.onClose}/>
+            }
         </div>;
     };
+};
+
+const Notification = ({data, onClose}) => {
+
+    let notificationClass = "notification-bar";
+    switch (data.current.type) {
+        case C.NOTIFICATION_ERROR:
+            notificationClass += " notification-bar-error";
+            break;
+
+        case C.NOTIFICATION_SUCCESS:
+            notificationClass += " notification-bar-success";
+            break;
+    }
+
+    if (data.visible) {
+        notificationClass += " notification-visible"
+    }
+
+    return <div
+        className={notificationClass}>
+        <div className="container notification-bar-content">
+            {data.current && <span
+                className="notification-bar-message">{data.current.message}</span>}
+            <button onClick={onClose} type="button"
+                    className="notification-bar-close close" aria-label="Close">
+                <span>&times;</span>
+            </button>
+        </div>
+    </div>;
 };
