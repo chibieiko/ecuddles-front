@@ -3,7 +3,7 @@
  */
 import CartPage from '../ui/CartPage';
 import {connect} from 'react-redux';
-import {updateCategories} from '../../actions';
+import {modifyCart} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
@@ -12,7 +12,16 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    //
+    clearCart() {
+        console.log("clearing");
+        dispatch(modifyCart({
+            entry: {
+                product: -1,
+                quantity: 0
+            },
+            showNotification: true
+        }));
+    }
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(CartPage);

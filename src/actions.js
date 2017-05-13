@@ -96,26 +96,15 @@ export const modifyCart = ({entry, showNotification}) => dispatch  => {
             dispatch(updateCart());
 
             if (showNotification) {
+                let msg = entry.product === -1 ?
+                    "You shopping cart was successfully cleared!"
+                    :
+                    "Great choice! The product has been added to your shopping cart.";
+
                 dispatch(displayNotification({
-                    message: "Great choice! The product has been added to your shopping cart.",
+                    message: msg,
                     type: C.NOTIFICATION_SUCCESS
                 }));
             }
         });
-};
-
-export const removeFromCart = id => dispatch => {
-    /*
-    dispatch({type: C.REMOVE_FROM_CART,
-        payload: id
-    });
-    */
-};
-
-export const clearCart = () => dispatch => {
-    /*
-    dispatch({
-        type: C.CLEAR_CART
-    })
-    */
 };
