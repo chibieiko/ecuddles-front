@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import fetch from 'isomorphic-fetch';
+import connector from '../../connector';
 import ProductCard from './ProductCard';
 import FlameThrower from '../../flameThrower';
 import Spinner from './Spinner';
@@ -11,8 +11,7 @@ export default class ProductList extends Component {
         this.state = {
             page: 0,
             fetching: false,
-            products: [],
-            error: null
+            products: []
         };
     };
 
@@ -29,20 +28,18 @@ export default class ProductList extends Component {
 
     loadProducts = () => {
         this.setState({
-            fetching: true,
-            error: null
+            fetching: true
         });
 
         let url = "";
 
         if (this.props.category) {
-            url = backendUrl + "/api/categories/" + this.props.category;
+            url = "/categories/" + this.props.category;
         } else {
-            url = backendUrl + "/api/products/search/contains/?name=" + this.props.search + "&page=" + this.state.page;
+            url = "/products/search/contains/?name=" + this.props.search + "&page=" + this.state.page;
         }
 
-        fetch(url)
-            .then(response => FlameThrower.burn(response))
+        connector(url)
             .then(response => {
                 let products = response._embedded.products;
 
@@ -51,10 +48,9 @@ export default class ProductList extends Component {
                     products: products ? products : []
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 this.setState({
-                    fetching: false,
-                    error: error
+                    fetching: false
                 });
             });
     };
@@ -62,12 +58,6 @@ export default class ProductList extends Component {
     render() {
         return <div>
             <h1>Latest additions to our cuddly family</h1>
-            {
-                this.state.error &&
-                <div className="alert alert-danger">
-                    {this.state.error.message}
-                </div>
-            }
             {
                 this.state.fetching ?
                     <Spinner margin={true}/> :

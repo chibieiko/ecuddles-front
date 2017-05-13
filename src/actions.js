@@ -1,31 +1,19 @@
 import C from './constants';
 import fetch from 'isomorphic-fetch';
 import FlameThrower from './flameThrower';
+import connector from './connector';
 
 export const attemptLogin = value => dispatch => {
     dispatch({
         type: C.ATTEMPT_LOGIN
     });
 
-    let request = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(value)
-    };
-
-    fetch(backendUrl + '/api/login', request)
-        .then(response => FlameThrower.burn(response))
+    connector("/login", { post: value })
         .then(response => {
             dispatch(login(response));
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(failLogin());
-            dispatch(displayNotification({
-                message: error.message,
-                type: C.NOTIFICATION_ERROR
-            }));
         });
 };
 
@@ -43,11 +31,10 @@ export const logout = () => ({
 });
 
 export const updateCategories = value => dispatch => {
-    fetch(backendUrl + '/api/categories')
-        .then(response => FlameThrower.burn(response))
+    connector("/categories", {hideError: true})
         .then(response => {
             dispatch(categoryList(response._embedded.categories));
-        })
+        });
 };
 
 export const categoryList = categories => ({
@@ -70,46 +57,25 @@ export const displayNotification = notification => dispatch => {
     });
 };
 
-export const hideNotification = timeout => dispatch => {
-    if (timeout) {
-        clearTimeout(timeout);
-    }
+export const hideNotification = () => ({
+    type: C.HIDE_NOTIFICATION
+});
 
-    dispatch({
-        type: C.HIDE_NOTIFICATION
-    });
-};
-
-export const addToCart = ({entry, showNotification}) => (dispatch, getState) => {
-
-    let headers = new Headers();
-    headers.append("Authorization", getState().authentication.token);
-
-    let request = {
-        headers: headers
-    };
-
-    fetch(backendUrl + '/api/cart/modify/?product=' + entry.product.id + '&quantity=' + entry.quantity, request)
-        .then(response => FlameThrower.burn(response))
+export const addToCart = ({entry, showNotification}) => dispatch => {
+    connector('/cart/modify/?product=' + entry.product.id + '&quantity=' + entry.quantity, {auth: true})
         .then(response => {
             dispatch({
                 type: C.ADD_TO_CART,
                 payload: entry
             });
 
-            if (showNotification) {} {
+            if (showNotification) {
                 dispatch(displayNotification({
                     message: "Great choice! " + entry.product.name + " was added to your shopping cart.",
                     type: C.NOTIFICATION_SUCCESS
                 }));
             }
         })
-        .catch(error => {
-            dispatch(displayNotification({
-                message: error.message,
-                type: C.NOTIFICATION_ERROR
-            }));
-        });
 };
 
 export const removeFromCart = id => ({

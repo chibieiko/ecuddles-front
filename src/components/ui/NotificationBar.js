@@ -7,16 +7,12 @@ export default class NotificationBar extends Component {
         super(props);
     };
 
-    onClose = () => {
-        this.props.onClose(this.props.notification);
-    };
-
     render() {
         return <div className="notification-bar-container">
             {
                 this.props.notification &&
                 <Notification data={this.props.notification}
-                              onClose={this.onClose}/>
+                              onClose={this.props.onClose}/>
             }
         </div>;
     };

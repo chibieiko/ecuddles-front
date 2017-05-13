@@ -3,6 +3,8 @@ import {logout} from './actions';
 
 export default class FlameThrower {
 
+    // TODO MAKE FLAME THROWER GREAT AGAIN
+
     static burn = (response) => {
         return new Promise((resolve, reject) => {
             if (response.ok) {

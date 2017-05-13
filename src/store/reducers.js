@@ -5,9 +5,17 @@ import { routerReducer as routing } from 'react-router-redux';
 export const notification = (state = null, action) => {
     switch (action.type) {
         case C.DISPLAY_NOTIFICATION:
+            if (state && state.timeout) {
+                clearTimeout(state.timeout);
+            }
+
             return action.payload;
 
         case C.HIDE_NOTIFICATION:
+            if (state && state.timeout) {
+                clearTimeout(state.timeout);
+            }
+
             return {
                 visible: false,
                 current: state.current,

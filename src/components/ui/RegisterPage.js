@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import fetch from 'isomorphic-fetch';
+import connector from '../../connector';
 import {Redirect} from 'react-router-dom';
 import FlameThrower from '../../flameThrower';
 import Spinner from './Spinner';
@@ -42,32 +42,21 @@ export default class RegisterPage extends Component {
             password: this.state.password
         };
 
-        let request = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        };
-
         this.setState({
             fetching: true
         });
 
-        fetch(backendUrl + '/api/register', request)
-            .then(response => FlameThrower.burn(response))
-            .then(response => {
+        connector("/register", {post: body})
+            .then(() => {
                 this.setState({
                     fetching: false,
                     registerSuccessful: true
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 this.setState({
                     fetching: false
                 });
-
-                this.props.onError(error);
             });
     };
 

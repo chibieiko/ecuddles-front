@@ -9,8 +9,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClose(notification) {
-        dispatch(hideNotification(notification.timeout));
+    onClose() {
+        dispatch(hideNotification());
     }
 });
 
