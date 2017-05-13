@@ -1,6 +1,4 @@
 import C from './constants';
-import fetch from 'isomorphic-fetch';
-import FlameThrower from './flameThrower';
 import connector from './connector';
 
 export const attemptLogin = value => dispatch => {
@@ -8,7 +6,7 @@ export const attemptLogin = value => dispatch => {
         type: C.ATTEMPT_LOGIN
     });
 
-    connector("/login", { post: value })
+    connector("/login", {post: value})
         .then(response => {
             dispatch(login(response));
         })
@@ -17,18 +15,26 @@ export const attemptLogin = value => dispatch => {
         });
 };
 
-export const login = userInfo => ({
-    type: C.LOGIN,
-    payload: userInfo
-});
+export const login = userInfo => dispatch => {
+    dispatch({
+        type: C.LOGIN,
+        payload: userInfo
+    });
+
+    dispatch(updateCart());
+};
 
 export const failLogin = () => ({
     type: C.FAIL_LOGIN
 });
 
-export const logout = () => ({
-    type: C.LOGOUT
-});
+export const logout = () => dispatch => {
+    dispatch({
+        type: C.LOGOUT
+    });
+
+    dispatch(updateCart());
+};
 
 export const updateCategories = value => dispatch => {
     connector("/categories", {hideError: true})
@@ -61,28 +67,55 @@ export const hideNotification = () => ({
     type: C.HIDE_NOTIFICATION
 });
 
-export const addToCart = ({entry, showNotification}) => dispatch => {
-    connector('/cart/modify/?product=' + entry.product.id + '&quantity=' + entry.quantity, {auth: true})
-        .then(response => {
-            dispatch({
-                type: C.ADD_TO_CART,
-                payload: entry
+export const updateCart = () => (dispatch, getState) => {
+    if (getState().authentication.loggedIn) {
+        connector("/cart", {auth: true})
+            .then((response=[]) => {
+                dispatch({
+                    type: C.UPDATE_CART,
+                    payload: response
+                });
+            })
+            .catch(() => {
+                dispatch({
+                    type: C.UPDATE_CART,
+                    payload: []
+                });
             });
+    } else {
+        dispatch({
+            type: C.UPDATE_CART,
+            payload: []
+        });
+    }
+};
+
+export const modifyCart = ({entry, showNotification}) => dispatch  => {
+    connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
+        .then(response => {
+            dispatch(updateCart());
 
             if (showNotification) {
                 dispatch(displayNotification({
-                    message: "Great choice! " + entry.product.name + " was added to your shopping cart.",
+                    message: "Great choice! The product has been added to your shopping cart.",
                     type: C.NOTIFICATION_SUCCESS
                 }));
             }
-        })
+        });
 };
 
-export const removeFromCart = id => ({
-    type: C.REMOVE_FROM_CART,
-    payload: id
-});
+export const removeFromCart = id => dispatch => {
+    /*
+    dispatch({type: C.REMOVE_FROM_CART,
+        payload: id
+    });
+    */
+};
 
-export const clearCart = () => ({
-    type: C.CLEAR_CART
-});
+export const clearCart = () => dispatch => {
+    /*
+    dispatch({
+        type: C.CLEAR_CART
+    })
+    */
+};

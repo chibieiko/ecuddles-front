@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 import {createBrowserHistory} from 'history';
 import {syncHistoryWithStore} from 'react-router-redux';
 import store from '../../store';
+import {updateCart} from '../../actions';
 
 export default class App extends Component {
     constructor(props) {
@@ -16,6 +17,10 @@ export default class App extends Component {
 
         // todo remove when app is ready
         window.store = store;
+    }
+
+    componentDidMount() {
+        store.dispatch(updateCart());
     }
 
     render() {

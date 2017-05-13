@@ -7,7 +7,6 @@ import './stylesheets/global.scss';
 
 // todo remove later
 window.React = React;
-window.backendUrl = "http://localhost:8080";
 
 render(
     <App />,

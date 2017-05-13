@@ -31,6 +31,9 @@ export const shoppingCart = (state = [], action) => {
     let newState;
 
     switch (action.type) {
+        case C.UPDATE_CART:
+            return action.payload;
+
         case C.ADD_TO_CART:
             newState = [...state];
             let exists = false;

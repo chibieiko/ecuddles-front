@@ -3,20 +3,18 @@
  */
 import ProductPage from '../ui/ProductPage';
 import {connect} from 'react-redux';
-import {addToCart} from '../../actions';
+import {modifyCart} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
+    cart: state.shoppingCart,
     router: props.router
 });
 
 const mapDispatchToProps = dispatch => ({
-    addToCart(product) {
-        dispatch(addToCart({
-            entry: {
-                product: product,
-                quantity: 1
-            },
+    addToCart(entry) {
+        dispatch(modifyCart({
+            entry: entry,
             showNotification: true
         }));
     }
