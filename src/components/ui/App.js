@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 import {createBrowserHistory} from 'history';
 import {syncHistoryWithStore} from 'react-router-redux';
 import store from '../../store';
+import Footer from './Footer';
 import {updateCart} from '../../actions';
 
 export default class App extends Component {
@@ -40,6 +41,7 @@ export default class App extends Component {
                                     <Route path="/" component={CategoryList}/>
                                 </Switch>
                             </div>
+                            <Footer/>
                         </div>
                     </Router>
                 </Provider>

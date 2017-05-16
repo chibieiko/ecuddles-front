@@ -12,10 +12,10 @@ export default class ProductCard extends Component {
             <Link to={'/product/' + this.props.product.id}>
                 <div className="panel panel-default">
                     <div className="panel-body">
-                        <div className="col-xs-12 image vertical-center">
+                        <div className="col-xs-12 image align-center">
                             <img src={this.props.product.picture.url}
                                  alt={this.props.product.picture.caption}
-                                 className="vertical-center center-block"/>
+                                 className="align-center center-block"/>
                         </div>
                     </div>
                 </div>

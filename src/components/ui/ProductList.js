@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import connector from '../../connector';
 import ProductCard from './ProductCard';
-import FlameThrower from '../../flameThrower';
 import Spinner from './Spinner';
+import '../../stylesheets/productList.scss';
 
 export default class ProductList extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ export default class ProductList extends Component {
         }, this.loadProducts)
     };
 
-    // Defines a proper url and gets products form server.
+    // Defines a proper url and gets products from server.
     loadProducts = () => {
         this.setState({
             fetching: true
@@ -54,10 +54,10 @@ export default class ProductList extends Component {
             url = "/products/search/contains/?name=" + this.props.search +
                 "&page=" + this.state.page.number;
 
-        } else if (this.props.category){
+        } else if (this.props.category) {
             console.log("I HAVE A CATEGORY ", this.props.category);
 
-            url = "/products/search/has?categoryid=" + this.props.category+ "&page=" + this.state.page.number;
+            url = "/products/search/has?categoryid=" + this.props.category + "&page=" + this.state.page.number;
 
         } else {
             console.log("default url");
@@ -69,7 +69,7 @@ export default class ProductList extends Component {
     };
 
     getProducts = (url) => {
-        console.log("getting products with url: ", url);
+        //console.log("getting products with url: ", url);
 
         connector(url)
             .then(response => {
@@ -119,10 +119,11 @@ export default class ProductList extends Component {
         }
     };
 
+    // Jumps to a specific page.
     jumpToPage = (pageNum) => {
         this.setState({
             page: {
-                number: pageNum
+                number: pageNum - 1
             }
         }, this.loadProducts)
     };
@@ -137,41 +138,46 @@ export default class ProductList extends Component {
                         key={product.id} product={product}/>)
             }
             <div className="col-xs-12">
-                <nav aria-label="Product page navigation">
-                    <ul className="pager">
-                        <li className="previous">
-                            <a onClick={this.previousPage}>
-                                <span className="hidden-xs">Previous page</span>
-                                <span
-                                    className="glyphicon glyphicon-arrow-left hidden-lg hidden-md hidden-sm col-xs-1"/>
-                            </a>
-                        </li>
-                        <span className="dropup">
-                            <button className="btn btn-default dropdown-toggle"
-                                    type="button" id="pageMenu"
-                                    data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                {this.state.page.number} <span
-                                className="caret"/>
-                            </button>
 
-                            <ul className="dropdown-menu"
-                                aria-labelledby="pageMenu">
-                                {
-                                    this.state.pages && this.state.pages.map(pageNum =>
-                                        <li key={pageNum}><a>{pageNum}</a></li>)
-                                }
-                            </ul>
-                        </span> / {this.state.page.totalPages}
-                        <li className="next">
-                            <a onClick={this.nextPage}>
-                                <span className="hidden-xs">Next page</span>
-                                <span
-                                    className="glyphicon glyphicon-arrow-right hidden-lg hidden-md hidden-sm col-xs-1"/>
-                            </a>
-                        </li>
+                <div className="col-xs-4">
+                    <button className="btn btn-default"
+                            onClick={this.previousPage}>
+                        <span className="hidden-xs">Previous page</span>
+                        <span
+                            className="glyphicon glyphicon-arrow-left hidden-lg hidden-md hidden-sm col-xs-1"/>
+                    </button>
+                </div>
+
+                <div className="col-xs-4 text-center">
+                <span className="dropup">
+                    <button className="btn btn-default dropdown-toggle"
+                            type="button" id="pageMenu"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                        {this.state.page.number + 1} <span
+                        className="caret"/>
+                    </button>
+
+                    <ul className="dropdown-menu"
+                        aria-labelledby="pageMenu">
+                        {
+                            this.state.pages && this.state.pages.map(pageNum =>
+                                <li key={pageNum}><a
+                                    onClick={() => this.jumpToPage(pageNum)}>{pageNum}</a>
+                                </li>)
+                        }
                     </ul>
-                </nav>
+                </span> / {this.state.page.totalPages}
+                </div>
+
+                <div className="col-xs-4">
+                    <button className="btn btn-default pull-right"
+                            onClick={this.nextPage}>
+                        <span className="hidden-xs">Next page</span>
+                        <span
+                            className="glyphicon glyphicon-arrow-right hidden-lg hidden-md hidden-sm col-xs-1"/>
+                    </button>
+                </div>
             </div>
         </div>;
     };
