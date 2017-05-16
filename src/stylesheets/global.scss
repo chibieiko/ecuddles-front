@@ -25,6 +25,6 @@ Link, a, h1 {
   color: #7A3636;
 }
 
-Link:hover, Link:active, a:hover, a:active {
+Link:hover, Link:active, Link:focus, a:hover, a:active, a:focus {
   color: #9A4D46;
 }

@@ -19,12 +19,14 @@ export default class ProductList extends Component {
     };
 
     componentDidMount() {
+        console.log(this.props.category);
         this.resetPage();
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
             this.props = nextProps;
+            console.log(nextProps);
             this.resetPage();
         }
     }
@@ -52,10 +54,10 @@ export default class ProductList extends Component {
             url = "/products/search/contains/?name=" + this.props.search +
                 "&page=" + this.state.page.number;
 
-        } else if (this.props.category) {
+        } else if (this.props.category){
             console.log("I HAVE A CATEGORY ", this.props.category);
 
-            url = "/products/search/has?categoryid=" + this.props.category + "&page=" + this.state.page.number;
+            url = "/products/search/has?categoryid=" + this.props.category+ "&page=" + this.state.page.number;
 
         } else {
             console.log("default url");

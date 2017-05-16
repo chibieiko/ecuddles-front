@@ -28,10 +28,7 @@ export default class CategoryList extends Component {
                             {
                                 this.props.categories && this.props.categories.map(category =>
                                     <li key={category.id}>
-                                        <Link to={{
-                                            pathname: '/',
-                                            state: {category: category.id}
-                                        }} replace>
+                                        <Link to={'/category/' + category.id + '/' + category.name}>
                                             {category.name}
                                         </Link>
                                     </li>)
@@ -43,6 +40,7 @@ export default class CategoryList extends Component {
             <div className="col-xs-12 col-sm-9">
                 <Switch>
                     <Route exact path="/" component={MainPage}/>
+                    <Route path="/category/:id/:name" component={MainPage}/>
                     <Route path="/product/:id" component={ProductPage}/>
                     <Route path="/search" component={SearchPage}/>
                 </Switch>
