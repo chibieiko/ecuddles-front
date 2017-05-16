@@ -19,13 +19,19 @@ div.panel-body {
   padding: 2px;
 }
 
+div.panel-default {
+  margin-bottom: 5px;
+}
+
 .product-name {
   font-size: 20px;
+  margin-bottom: 0;
 }
 
 .price {
   font-size: 16px;
   color: gray;
+  margin-bottom: 3px;
 }
 
 .card {
