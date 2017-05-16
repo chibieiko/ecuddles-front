@@ -12,21 +12,30 @@ export default class ProductList extends Component {
             page: {
                 number: 0
             },
+            pages: [],
             fetching: false,
             products: []
         };
     };
 
     componentDidMount() {
-        this.loadProducts();
+        this.resetPage();
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
             this.props = nextProps;
-            this.loadProducts();
+            this.resetPage();
         }
     }
+
+    resetPage = () => {
+        this.setState({
+            page: {
+                number: 0
+            }
+        }, this.loadProducts)
+    };
 
     loadProducts = () => {
         this.setState({
@@ -37,44 +46,41 @@ export default class ProductList extends Component {
 
         if (this.props.search) {
             console.log("SEARCHING");
-            this.setState({
-                page: {
-                    number: 0
-                }
-            }, () => {
-                url = "/products/search/contains/?name=" + this.props.search +
-                    "&page=" + this.state.page.number;
-                this.getProducts(url);
-            });
+
+            url = "/products/search/contains/?name=" + this.props.search +
+                "&page=" + this.state.page.number;
 
         } else if (this.props.category) {
             console.log("I HAVE A CATEGORY");
-            this.setState({
-                page: {
-                    number: 0
-                }
-            }, () => {
-                url = "/products/search/has?categoryid=" + this.props.category + "&page=" + this.state.page.number;
-                this.getProducts(url);
-            });
+
+            url = "/products/search/has?categoryid=" + this.props.category + "&page=" + this.state.page.number;
+
         } else {
             console.log("default url");
+
             url = "/products/search/has?categoryid=1&page=" + this.state.page.number;
-            this.getProducts(url);
         }
+
+        this.getProducts(url);
     };
 
     getProducts = (url) => {
         console.log("getting products with url: ", url);
+
         connector(url)
             .then(response => {
                 let products = response._embedded.products;
                 let page = response.page;
+                let pages = [];
+                for (let i = 0; i < page.totalPages; i++) {
+                    pages.push(i + 1);
+                }
 
                 this.setState({
                     fetching: false,
                     products: products ? products : [],
-                    page: page
+                    page: page,
+                    pages: pages
                 });
             })
             .catch(() => {
@@ -109,6 +115,14 @@ export default class ProductList extends Component {
         }
     };
 
+    jumpToPage = (pageNum) => {
+        this.setState({
+            page: {
+                number: pageNum
+            }
+        }, this.loadProducts)
+    };
+
     render() {
         return <div>
             <h1>Latest additions to our cuddly family</h1>
@@ -124,21 +138,36 @@ export default class ProductList extends Component {
                         <li className="previous">
                             <a onClick={this.previousPage}>
                                 <span className="hidden-xs">Previous page</span>
-                                <span className="glyphicon glyphicon-arrow-left hidden-lg hidden-md hidden-sm col-xs-1"/>
+                                <span
+                                    className="glyphicon glyphicon-arrow-left hidden-lg hidden-md hidden-sm col-xs-1"/>
                             </a>
                         </li>
+                        <span className="dropup">
+                            <button className="btn btn-default dropdown-toggle"
+                                    type="button" id="pageMenu"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                {this.state.page.number} <span
+                                className="caret"/>
+                            </button>
 
+                            <ul className="dropdown-menu"
+                                aria-labelledby="pageMenu">
+                                {
+                                    this.state.pages && this.state.pages.map(pageNum =>
+                                        <li key={pageNum}><a>{pageNum}</a></li>)
+                                }
+                            </ul>
+                        </span> / {this.state.page.totalPages}
                         <li className="next">
                             <a onClick={this.nextPage}>
                                 <span className="hidden-xs">Next page</span>
-                                <span className="glyphicon glyphicon-arrow-right hidden-lg hidden-md hidden-sm col-xs-1"/>
+                                <span
+                                    className="glyphicon glyphicon-arrow-right hidden-lg hidden-md hidden-sm col-xs-1"/>
                             </a>
                         </li>
                     </ul>
                 </nav>
-                <p>total pages: {this.state.page.totalPages}</p>
-                <p>total elements: {this.state.page.totalElements}</p>
-                <p>current page: {this.state.page.number}</p>
             </div>
         </div>;
     };

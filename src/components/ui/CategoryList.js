@@ -16,7 +16,6 @@ export default class CategoryList extends Component {
 
     render() {
         return <div className="row">
-
             <div className="col-sm-3 sidebar-offcanvas hidden-xs"
                  id="sidebar"
                  role="navigation">

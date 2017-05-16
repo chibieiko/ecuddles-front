@@ -11,7 +11,7 @@ export default class MainPage extends Component {
 
     render() {
         return <div>
-            <ProductList/>
+            <ProductList search={this.state.search} />
         </div>;
     };
 };
