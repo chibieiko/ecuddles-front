@@ -14,14 +14,12 @@ export default class CategoryList extends Component {
         this.props.loadCategories();
     }
 
-    //className="link-color"
-
     render() {
         return <div className="row">
             <div className="col-sm-3 sidebar-offcanvas hidden-xs"
                  id="sidebar"
                  role="navigation">
-                <div className="panel panel-default">
+                <div className="panel panel-danger">
                     <div className="panel-heading">
                         Categories
                     </div>

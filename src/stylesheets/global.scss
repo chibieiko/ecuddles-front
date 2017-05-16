@@ -21,6 +21,10 @@ body {
   background-color: darken($color_accent, 5);
 }
 
-Link, a {
+Link, a, h1 {
   color: #7A3636;
+}
+
+Link:hover, Link:active, a:hover, a:active {
+  color: #9A4D46;
 }
