@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Link} from 'react-router-dom';
 import MainPage from "./MainPage";
 import ProductPage from "../containers/ProductPage";
 import SearchPage from "./SearchPage";
@@ -14,6 +14,8 @@ export default class CategoryList extends Component {
         this.props.loadCategories();
     }
 
+    //className="link-color"
+
     render() {
         return <div className="row">
             <div className="col-sm-3 sidebar-offcanvas hidden-xs"
@@ -27,8 +29,13 @@ export default class CategoryList extends Component {
                         <ul className="nav">
                             {
                                 this.props.categories && this.props.categories.map(category =>
-                                    <li key={category.id}><a
-                                        className="link-color">{category.name}</a>
+                                    <li key={category.id}>
+                                        <Link to={{
+                                            pathname: '/',
+                                            state: {category: category.id}
+                                        }} replace>
+                                            {category.name}
+                                        </Link>
                                     </li>)
                             }
                         </ul>

@@ -7,11 +7,19 @@ export default class MainPage extends Component {
         this.state = {
             search: ""
         };
+
+        if(this.props) {
+            console.log(this.props.location.state)
+        }
     };
 
     render() {
         return <div>
-            <ProductList search={this.state.search} />
+            {
+                this.props.location.state ?
+                <ProductList search={this.state.search} category={this.props.location.state.category}/> :
+                    <ProductList search={this.state.search}/>
+            }
         </div>;
     };
 };

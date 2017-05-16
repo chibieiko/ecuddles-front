@@ -29,6 +29,7 @@ export default class ProductList extends Component {
         }
     }
 
+    // Resets page number if necessary i.e user clicked on different category.
     resetPage = () => {
         this.setState({
             page: {
@@ -37,6 +38,7 @@ export default class ProductList extends Component {
         }, this.loadProducts)
     };
 
+    // Defines a proper url and gets products form server.
     loadProducts = () => {
         this.setState({
             fetching: true
@@ -51,7 +53,7 @@ export default class ProductList extends Component {
                 "&page=" + this.state.page.number;
 
         } else if (this.props.category) {
-            console.log("I HAVE A CATEGORY");
+            console.log("I HAVE A CATEGORY ", this.props.category);
 
             url = "/products/search/has?categoryid=" + this.props.category + "&page=" + this.state.page.number;
 
