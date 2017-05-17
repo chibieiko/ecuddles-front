@@ -66,11 +66,13 @@ export default class Navbar extends Component {
                                         </li>
                                         <li>
                                             <Link to="/cart">
+                                                <div className="navbar-cart">
                                                 Cart
                                                 {
                                                     this.props.cart.length > 0 &&
-                                                    <span> ({this.props.cartItemCount})</span>
+                                                    <span className="badge" id="cart-badge">{this.props.cartItemCount}</span>
                                                 }
+                                                </div>
                                             </Link>
                                         </li>
                                     </ul>
