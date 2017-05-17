@@ -75,18 +75,14 @@ export default class Navbar extends Component {
                          id="navbar-collapse">
                         <ul className="nav navbar-nav hidden-sm hidden-md hidden-lg"
                             id="categories">
-                            <li>
-                                <a href="#">Link1<span
-                                    className="sr-only">(current)</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Link2<span
-                                    className="sr-only">(current)</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Link3<span
-                                    className="sr-only">(current)</span></a>
-                            </li>
+                            {
+                                this.props.categories && this.props.categories.map(category =>
+                                    <li key={category.id} className="nav-category-link">
+                                        <Link to={'/category/' + category.id + '/' + category.name} data-toggle="collapse" data-target=".navbar-collapse.in">
+                                            {category.name}
+                                        </Link>
+                                    </li>)
+                            }
                         </ul>
                     </div>
                 </div>
