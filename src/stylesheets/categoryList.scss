@@ -1,5 +1,7 @@
+@import 'variables';
+
 .col-xs-12 {
-  background-color: #fff;
+  background-color: $color_white;
 }
 #sidebar {
   height: 100%;
@@ -17,13 +19,13 @@ h1 {
 }
 
 #sidebar>.panel-default {
-  border-color: #A45249;
+  border-color: $color_primary;
 }
 
 #sidebar>.panel-default>.panel-heading {
-  background-color: #A45249;
-  border-color: #A45249;
-  color: #f3f3f3;
+  background-color: $color_primary;
+  border-color: $color_primary;
+  color: $color_dirty_white;
 }
 
 #sidebar>.panel-default>.panel-body {
@@ -33,5 +35,9 @@ h1 {
 ul.nav>li.category-link>a:hover,
 ul.nav>li.category-link>a:active,
 ul.nav>li.category-link>a:focus {
-  background-color: #fce5cc;
+  background-color: $color_light_orange;
+}
+
+ul.nav>li.active-category-link>a {
+  background-color: $color_light_orange;
 }

@@ -77,7 +77,7 @@ export default class Navbar extends Component {
                             id="categories">
                             {
                                 this.props.categories && this.props.categories.map(category =>
-                                    <li key={category.id} className="nav-category-link">
+                                    <li key={category.id} className={this.props.location.pathname === "/category/" + category.id + "/" + category.name ? "active-category nav-category-link" : "nav-category-link"} >
                                         <Link to={'/category/' + category.id + '/' + category.name} data-toggle="collapse" data-target=".navbar-collapse.in">
                                             {category.name}
                                         </Link>

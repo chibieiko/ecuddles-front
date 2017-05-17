@@ -101,3 +101,16 @@
 #hamburger-button:focus {
   background-color: $color_primaryDark;
 }
+
+.active-category {
+  background-color: $color_light_orange;
+}
+
+#ecuddles-navbar.navbar-default ul.navbar-nav>li.active-category>a {
+  color: $color_primary;
+}
+
+#ecuddles-navbar.navbar-default ul.navbar-nav>li.active-category>a:hover,
+#ecuddles-navbar.navbar-default ul.navbar-nav>li.active-category>a:active {
+  color: $color_primaryDark;
+}
