@@ -1,11 +1,47 @@
-img {
-  width: 300px;
-  height: 300px;
-  padding: 15px;
+.image {
+  padding: 0;
+  height: 200px;
 }
 
-p {
-  font-size: 2em;
+img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+img:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+div.panel-body {
+  padding: 5px;
+  overflow: hidden;
+}
+
+div.panel-body>.col-xs-12 {
+  padding: 0;
+}
+
+div.panel-default {
+  margin-bottom: 5px;
+}
+
+.product-name {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.price {
+  font-size: 16px;
+  color: gray;
+  margin-bottom: 3px;
 }
 
 .card {
