@@ -70,7 +70,7 @@ export const hideNotification = () => ({
 export const updateCart = () => (dispatch, getState) => {
     if (getState().authentication.loggedIn) {
         connector("/cart", {auth: true})
-            .then((response=[]) => {
+            .then((response = []) => {
                 dispatch({
                     type: C.UPDATE_CART,
                     payload: response
@@ -90,7 +90,7 @@ export const updateCart = () => (dispatch, getState) => {
     }
 };
 
-export const modifyCart = ({entry, showNotification}) => dispatch  => {
+export const modifyCart = ({entry, showNotification}) => dispatch => {
     connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
         .then(response => {
             dispatch(updateCart());
@@ -99,7 +99,10 @@ export const modifyCart = ({entry, showNotification}) => dispatch  => {
                 let msg = entry.product === -1 ?
                     "You shopping cart was successfully cleared!"
                     :
-                    "Great choice! The product has been added to your shopping cart.";
+                    entry.quantity > 0 ?
+                        "Great choice! The product has been added to your shopping cart."
+                        :
+                        "One product was successfully deleted from your shopping cart.";
 
                 dispatch(displayNotification({
                     message: msg,

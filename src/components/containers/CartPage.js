@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => ({
             },
             showNotification: true
         }));
+    },
+    changeQuantity(product, quantity) {
+        console.log("Product: " + product + " | Quantity: " + quantity);
     }
 });
 
