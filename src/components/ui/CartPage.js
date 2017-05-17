@@ -1,5 +1,6 @@
 import {Component} from 'react';
-import '../../stylesheets/categoryList.scss';
+import '../../stylesheets/cart.scss';
+import CartProgressBar from './CartProgressBar';
 
 export default class CartPage extends Component {
     constructor(props) {
@@ -20,9 +21,9 @@ export default class CartPage extends Component {
                         </ul>
                         <button className="btn btn-danger" onClick={this.props.clearCart}>Clear</button>
                     </div>
-                :
-                <div><h2>There are no items in shopping cart.</h2></div>
-                }
+                    :
+                    <CartProgressBar/>
+            }
         </div>;
     };
 };

@@ -1,3 +1,5 @@
+@import 'variables';
+
 #ecuddles-navbar {
   margin-bottom: 0;
   border: 0;
@@ -63,17 +65,17 @@
 }
 
 #ecuddles-navbar.navbar-default {
-  background-image: -webkit-linear-gradient(top, #A45249 0%, #9A4D46 100%);
-  background-image:      -o-linear-gradient(top, #A45249 0%, #9A4D46 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#A45249), to(#9A4D46));
-  background-image:         linear-gradient(to bottom, #A45249 0%, #9A4D46 100%);
+  background-image: -webkit-linear-gradient(top, $color_primary 0%, $color_primarySemiDark 100%);
+  background-image:      -o-linear-gradient(top, $color_primary 0%, $color_primarySemiDark 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($color_primary), to($color_primarySemiDark));
+  background-image:         linear-gradient(to bottom, $color_primary 0%, $color_primarySemiDark 100%);
 }
 #ecuddles-navbar.navbar-default .navbar-nav > .open > a,
 #ecuddles-navbar.navbar-default .navbar-nav > .active > a {
-  background-image: -webkit-linear-gradient(top, #7A3636 0%, #9A4D46 100%);
-  background-image:      -o-linear-gradient(top, #7A3636 0%, #9A4D46 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#7A3636), to(#9A4D46));
-  background-image:         linear-gradient(to bottom, #7A3636 0%, #9A4D46 100%);
+  background-image: -webkit-linear-gradient(top, $color_primaryDark 0%, $color_primarySemiDark 100%);
+  background-image:      -o-linear-gradient(top, $color_primaryDark 0%, $color_primarySemiDark 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($color_primaryDark), to($color_primarySemiDark));
+  background-image:         linear-gradient(to bottom, $color_primaryDark 0%, $color_primarySemiDark 100%);
 }
 #ecuddles-navbar.navbar-default .navbar-header .navbar-brand,
 #ecuddles-navbar.navbar-default ul.navbar-nav>li>a {
@@ -97,5 +99,5 @@
 #hamburger-button:hover,
 #hamburger-button:active,
 #hamburger-button:focus {
-  background-color: #7A3636;
+  background-color: $color_primaryDark;
 }

@@ -1,3 +1,5 @@
+@import 'variables';
+
 body {
   font-family: "Open Sans", sans-serif;
 }
@@ -10,11 +12,11 @@ body {
 }
 
 .btn.btn-success {
-  background-color: #F28E21;
-  border-color: #CC700C
+  background-color: $color_accent;
+  border-color: $color_accentDark
 }
 
 .btn.btn-success:hover,
 .btn.btn-success:active {
-  background-color: #DF7A0D;
+  background-color: darken($color_accent, 5);
 }

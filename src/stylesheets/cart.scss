@@ -1,0 +1,44 @@
+@import 'variables';
+
+.stepper-bar {
+  width: 100%;
+  display: flex;
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .stepper-step {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    @media screen and (max-width: 767px) {
+      margin-bottom: 5px;
+    }
+
+    .stepper-number {
+      color: white;
+      background-color: $color_primary;
+      border: 2px solid $color_primaryDark;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+    }
+
+    .stepper-number.current {
+      background-color: $color_accent;
+    }
+
+    .stepper-title {
+      margin-left: 20px;
+    }
+  }
+}
