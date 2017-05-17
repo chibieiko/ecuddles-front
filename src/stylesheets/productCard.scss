@@ -1,9 +1,4 @@
-.image {
-  padding: 0;
-  height: 200px;
-}
-
-img {
+.picture-box img {
   max-height: 100%;
   max-width: 100%;
   width: auto;
@@ -14,22 +9,23 @@ img {
   transition: all 0.3s;
 }
 
-img:hover {
+.picture-box img:hover {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
 
-div.panel-body {
+.picture-box>.panel-body {
   padding: 5px;
   overflow: hidden;
 }
 
-div.panel-body>.col-xs-12 {
+.picture-box>.panel-body>.image {
   padding: 0;
+  height: 200px;
 }
 
-div.panel-default {
+.picture-box.panel-default {
   margin-bottom: 5px;
 }
 

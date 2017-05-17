@@ -19,7 +19,7 @@ export default class CategoryList extends Component {
             <div className="col-sm-3 sidebar-offcanvas hidden-xs"
                  id="sidebar"
                  role="navigation">
-                <div className="panel panel-danger">
+                <div className="panel panel-default">
                     <div className="panel-heading">
                         Categories
                     </div>
@@ -27,7 +27,7 @@ export default class CategoryList extends Component {
                         <ul className="nav">
                             {
                                 this.props.categories && this.props.categories.map(category =>
-                                    <li key={category.id}>
+                                    <li key={category.id} className="category-link">
                                         <Link to={'/category/' + category.id + '/' + category.name}>
                                             {category.name}
                                         </Link>

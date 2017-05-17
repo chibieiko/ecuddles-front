@@ -10,7 +10,7 @@ export default class ProductCard extends Component {
     render() {
         return <div className="col-xs-6 col-sm-4 col-lg-3 card">
             <Link to={'/product/' + this.props.product.id}>
-                <div className="panel panel-default">
+                <div className="panel panel-default picture-box">
                     <div className="panel-body">
                         <div className="col-xs-12 image align-center">
                             <img src={this.props.product.picture.url}
