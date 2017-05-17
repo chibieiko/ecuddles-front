@@ -34,10 +34,7 @@ h1 {
 
 ul.nav>li.category-link>a:hover,
 ul.nav>li.category-link>a:active,
-ul.nav>li.category-link>a:focus {
-  background-color: $color_light_orange;
-}
-
+ul.nav>li.category-link>a:focus,
 ul.nav>li.active-category-link>a {
   background-color: $color_light_orange;
 }
