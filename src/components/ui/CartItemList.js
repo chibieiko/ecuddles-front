@@ -11,20 +11,51 @@ export default class CartItemList extends Component {
         super(props);
     };
 
-    onQuantityChange = (product, quantity) => {
-        console.log("product: " + product + ", quantity: " + quantity);
-    };
-
     render() {
+        let empty = this.props.entries.length < 1;
+        let totalCount = 0;
+        let totalPrice = 0;
+
+        this.props.entries.forEach(entry => {
+            totalPrice += entry.product.price * entry.quantity;
+            totalCount += entry.quantity;
+        });
+
         return <div>
             {
                 this.props.entries.map(entry => {
                     return <div key={entry.product.id}>
-                        <CartItem onQuantityChange={this.props.changeQuantity} entry={entry}/>
+                        <CartItem entry={entry}/>
                         <hr/>
                     </div>;
                 })
             }
+            {
+                empty ?
+                    <div>Your shopping cart is currently empty.</div>
+                    :
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <span className="pull-right">
+                                Total: <span className="cart-total-price">{totalPrice} €</span>
+                            </span>
+                        </div>
+                    </div>
+
+            }
+            <hr/>
+            <div className="row">
+                <div className="col-xs-12">
+                    <button className={
+                        empty ?
+                            "btn btn-success pull-right disabled"
+                            :
+                            "btn btn-success pull-right"
+                    }>
+                        Continue
+                    </button>
+                </div>
+            </div>
         </div>;
     };
 };

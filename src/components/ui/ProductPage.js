@@ -31,21 +31,23 @@ export default class ProductPage extends Component {
     };
 
     buyProduct = () => {
-        let entry = {
-            product: this.state.product.id
-        };
+        if (this.state.product.stock > 0) {
+            let entry = {
+                product: this.state.product.id
+            };
 
-        if (this.props.cart) {
-            this.props.cart.forEach(cartEntry => {
-                if (cartEntry.product.id === entry.product) {
-                    entry.quantity = cartEntry.quantity + 1;
-                }
-            });
+            if (this.props.cart) {
+                this.props.cart.forEach(cartEntry => {
+                    if (cartEntry.product.id === entry.product) {
+                        entry.quantity = cartEntry.quantity + 1;
+                    }
+                });
+            }
+
+            entry.quantity = entry.quantity || 1;
+
+            this.props.addToCart(entry);
         }
-
-        entry.quantity = entry.quantity || 1;
-
-        this.props.addToCart(entry);
     };
 
     componentWillMount() {

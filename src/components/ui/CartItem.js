@@ -56,7 +56,7 @@ export default class CartItem extends Component {
             </div>
             <div className="cart-item-col cart-item-col-details">
                 <div className="cart-item-name"><Link to={'/product/' + product.id}>{product.name}</Link></div>
-                <div className="cart-item-price">{product.price}€ / kpl</div>
+                <div className="cart-item-price">{product.price}€</div>
                 {
                     product.stock > 0 ?
                         <span><span className="icon-margin icon-green glyphicon glyphicon-ok"/>{product.stock} available</span>

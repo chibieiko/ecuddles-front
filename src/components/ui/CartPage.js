@@ -16,12 +16,7 @@ export default class CartPage extends Component {
         return <div>
             <CartProgressBar steps={["Cart", "Information", "Payment"]} current={this.state.current}/>
             <hr/>
-            {
-                this.props.cart.length > 0 ?
-                    <CartItemList entries={this.props.cart}/>
-                    :
-                    <div>No items in the shopping cart</div>
-            }
+            <CartItemList entries={this.props.cart}/>
         </div>;
     };
 };
