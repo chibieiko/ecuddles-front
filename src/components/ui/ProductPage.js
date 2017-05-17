@@ -26,27 +26,17 @@ export default class ProductPage extends Component {
 
         this.state = {
             fetching: false,
-            product: null
+            product: null,
+            quantity: 0
         };
     };
 
     buyProduct = () => {
-        if (this.state.product.stock > 0) {
-            let entry = {
-                product: this.state.product.id
-            };
-
-            if (this.props.cart) {
-                this.props.cart.forEach(cartEntry => {
-                    if (cartEntry.product.id === entry.product) {
-                        entry.quantity = cartEntry.quantity + 1;
-                    }
-                });
-            }
-
-            entry.quantity = entry.quantity || 1;
-
-            this.props.addToCart(entry);
+        if (this.state.product.stock > 0 && this.state.product.stock > this.state.quantity) {
+            this.props.addToCart({
+                product: this.state.product.id,
+                quantity: this.state.quantity + 1
+            });
         }
     };
 
@@ -65,9 +55,20 @@ export default class ProductPage extends Component {
 
         connector("/products/" + productId + "?projection=inspect")
             .then(response => {
+                let quantity = 0;
+
+                if (this.props.cart) {
+                    this.props.cart.forEach(cartEntry => {
+                        if (cartEntry.product.id === response.id) {
+                            quantity = cartEntry.quantity;
+                        }
+                    });
+                }
+
                 this.setState({
                     fetching: false,
-                    product: response
+                    product: response,
+                    quantity: quantity
                 });
             })
             .catch(() => {
@@ -111,9 +112,9 @@ export default class ProductPage extends Component {
                             <div className="col-sm-4">
                                 <div className="panel panel-default buy-panel">
                                     <div className="panel-body">
-                                        <span className="product-price">{product.price}€</span>
+                                        <span className="product-price">{product.price} €</span>
                                         <button onClick={this.buyProduct} className={
-                                            product.stock > 0 ?
+                                            product.stock > 0 && product.stock > this.state.quantity ?
                                                 "btn-buy center-block btn btn-lg btn-success"
                                                 :
                                                 "btn-buy center-block btn btn-lg btn-success disabled"
@@ -122,7 +123,7 @@ export default class ProductPage extends Component {
                                         </button>
                                         <br/>
                                         {
-                                            product.stock > 0 ?
+                                            product.stock > 0 && product.stock > this.state.quantity ?
                                                 <span>
                                                     <span
                                                         className="icon-margin icon-green glyphicon glyphicon-ok"/>
@@ -133,6 +134,13 @@ export default class ProductPage extends Component {
                                                     <span className="icon-margin icon-red glyphicon glyphicon-remove"/>
                                                     Out of stock
                                                 </span>
+                                        }
+                                        {
+                                            this.state.quantity > 0 &&
+                                                <div>
+                                                    <span className="icon-margin glyphicon glyphicon-shopping-cart"/>
+                                                    {this.state.quantity} item{this.state.quantity > 1 && "s"} in cart
+                                                </div>
                                         }
                                     </div>
                                 </div>
