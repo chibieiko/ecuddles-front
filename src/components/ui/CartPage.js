@@ -5,10 +5,15 @@ import CartProgressBar from './CartProgressBar';
 export default class CartPage extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            current: 1
+        }
     };
 
     render() {
         return <div>
+            <CartProgressBar steps={["Cart", "Information", "Payment"]} current={this.state.current}/>
             {
                 this.props.cart.length > 0 ?
                     <div>
@@ -22,7 +27,7 @@ export default class CartPage extends Component {
                         <button className="btn btn-danger" onClick={this.props.clearCart}>Clear</button>
                     </div>
                     :
-                    <CartProgressBar/>
+                    <div>No items in the shopping cart</div>
             }
         </div>;
     };

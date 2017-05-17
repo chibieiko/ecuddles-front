@@ -3,22 +3,32 @@
 .stepper-bar {
   width: 100%;
   display: flex;
-  @media screen and (max-width: 767px) {
-    flex-direction: column;
-  }
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
   }
 
+  @media screen and (max-width: 767px) {
+    justify-content: space-between;
+  }
+
   .stepper-step {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
 
+    @media screen and (min-width: 768px) {
+      justify-content: flex-start;
+      .stepper-title {
+        margin-left: 20px;
+      }
+    }
+
     @media screen and (max-width: 767px) {
-      margin-bottom: 5px;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .stepper-number {
@@ -31,14 +41,14 @@
       justify-content: center;
       width: 35px;
       height: 35px;
+
+      @media screen and (max-width: 767px) {
+        margin-bottom: 5px;
+      }
     }
 
     .stepper-number.current {
       background-color: $color_accent;
-    }
-
-    .stepper-title {
-      margin-left: 20px;
     }
   }
 }
