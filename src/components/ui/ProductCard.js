@@ -19,20 +19,24 @@ export default class ProductCard extends Component {
                         </div>
                     </div>
                 </div>
+            </Link>
+            <div className="row">
+                <Link to={'/product/' + this.props.product.id}>
+                <div className="col-xs-12">
+                        <p className="product-name">{this.props.product.name}</p>
+                </div>
+                </Link>
 
                 <div className="col-xs-12">
-                    <p className="product-name">{this.props.product.name}</p>
-                </div>
-
-                <div className="col-xs-12 price">
                     <p className="price">{this.props.product.price} €</p>
                 </div>
-            </Link>
-
-            <div className="col-xs-12">
-                <button className="btn btn-success">
-                    <span className="glyphicon glyphicon-shopping-cart"/> <span className="hidden-xs">Add to cart</span>
-                </button>
+                <div className="col-xs-12">
+                    <Link to={'/product/' + this.props.product.id}>
+                        <button className="btn btn-xs btn-success">
+                            <span className="glyphicon glyphicon-shopping-cart"/> Add to cart
+                        </button>
+                    </Link>
+                </div>
             </div>
         </div>;
     };
