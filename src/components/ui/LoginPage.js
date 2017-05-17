@@ -32,9 +32,9 @@ export default class LoginPage extends Component {
     render() {
         return <form onSubmit={this.submitForm}>
             {
-                this.props.error &&
+                this.props.notification &&
                 <div className="alert alert-danger">
-                    {this.props.error.message}
+                    {this.props.notification.message}
                 </div>
             }
 

@@ -1,56 +1,46 @@
 import C from './constants';
-import fetch from 'isomorphic-fetch';
-import FlameThrower from './flameThrower';
+import connector from './connector';
 
 export const attemptLogin = value => dispatch => {
     dispatch({
         type: C.ATTEMPT_LOGIN
     });
 
-    let request = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(value)
-    };
-
-
-    fetch(backendUrl + '/api/login', request)
+    connector("/login", {post: value})
         .then(response => {
-            FlameThrower.burn(response);
-            return response.json()
-        })
-        .then(response => {
-            console.log(response);
             dispatch(login(response));
         })
-        .catch(error => {
+        .catch(() => {
             dispatch(failLogin());
-            dispatch(displayError(error))
         });
 };
 
-export const login = userInfo => ({
-    type: C.LOGIN,
-    payload: userInfo
-});
+export const login = userInfo => dispatch => {
+    dispatch({
+        type: C.LOGIN,
+        payload: userInfo
+    });
+
+    dispatch(updateCart());
+};
 
 export const failLogin = () => ({
     type: C.FAIL_LOGIN
 });
 
-export const logout = () => ({
-    type: C.LOGOUT
-});
+export const logout = () => dispatch => {
+    dispatch({
+        type: C.LOGOUT
+    });
+
+    dispatch(updateCart());
+};
 
 export const updateCategories = value => dispatch => {
-    fetch(backendUrl + '/api/categories', {method: 'GET'})
-        .then(response => response.json())
+    connector("/categories", {hideError: true})
         .then(response => {
-            console.log(response);
             dispatch(categoryList(response._embedded.categories));
-        })
+        });
 };
 
 export const categoryList = categories => ({
@@ -58,43 +48,63 @@ export const categoryList = categories => ({
     payload: categories
 });
 
-export const displayError = error => dispatch => {
+export const displayNotification = notification => dispatch => {
     let timeout = setTimeout(() => {
-        dispatch(hideError(timeout));
-    }, 10000);
+        dispatch(hideNotification(timeout));
+    }, 5000);
 
     dispatch({
-        type: C.DISPLAY_ERROR,
+        type: C.DISPLAY_NOTIFICATION,
         payload: {
             visible: true,
-            current: error,
+            current: notification,
             timeout: timeout
         }
     });
 };
 
-export const hideError = timeout => dispatch => {
-    if (timeout) {
-        clearTimeout(timeout);
+export const hideNotification = () => ({
+    type: C.HIDE_NOTIFICATION
+});
+
+export const updateCart = () => (dispatch, getState) => {
+    if (getState().authentication.loggedIn) {
+        connector("/cart", {auth: true})
+            .then((response=[]) => {
+                dispatch({
+                    type: C.UPDATE_CART,
+                    payload: response
+                });
+            })
+            .catch(() => {
+                dispatch({
+                    type: C.UPDATE_CART,
+                    payload: []
+                });
+            });
+    } else {
+        dispatch({
+            type: C.UPDATE_CART,
+            payload: []
+        });
     }
-
-    dispatch({
-        type: C.HIDE_ERROR
-    });
 };
 
-export const addToCart = product => dispatch => {
-    dispatch({
-        type: C.ADD_TO_CART,
-        payload: product
-    });
+export const modifyCart = ({entry, showNotification}) => dispatch  => {
+    connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
+        .then(response => {
+            dispatch(updateCart());
+
+            if (showNotification) {
+                let msg = entry.product === -1 ?
+                    "You shopping cart was successfully cleared!"
+                    :
+                    "Great choice! The product has been added to your shopping cart.";
+
+                dispatch(displayNotification({
+                    message: msg,
+                    type: C.NOTIFICATION_SUCCESS
+                }));
+            }
+        });
 };
-
-export const removeFromCart = id => ({
-    type: C.REMOVE_FROM_CART,
-    payload: id
-});
-
-export const clearCart = () => ({
-    type: C.CLEAR_CART
-});

@@ -3,11 +3,21 @@ import {connect} from 'react-redux';
 import {logout} from '../../actions';
 import {withRouter} from 'react-router';
 
-const mapStateToProps = (state, props) => ({
-    loggedIn: state.authentication.loggedIn,
-    user: state.authentication.user,
-    router: props.router
-});
+const mapStateToProps = (state, props) => {
+    let cartItemCount = 0;
+
+    state.shoppingCart.forEach(entry => {
+        cartItemCount += entry.quantity;
+    });
+
+    return {
+        cart: state.shoppingCart,
+        cartItemCount: cartItemCount,
+        loggedIn: state.authentication.loggedIn,
+        user: state.authentication.user,
+        router: props.router
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     onLogout() {

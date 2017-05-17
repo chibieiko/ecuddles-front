@@ -2,12 +2,20 @@ import C from '../constants';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 
-export const error = (state = null, action) => {
+export const notification = (state = null, action) => {
     switch (action.type) {
-        case C.DISPLAY_ERROR:
+        case C.DISPLAY_NOTIFICATION:
+            if (state && state.timeout) {
+                clearTimeout(state.timeout);
+            }
+
             return action.payload;
 
-        case C.HIDE_ERROR:
+        case C.HIDE_NOTIFICATION:
+            if (state && state.timeout) {
+                clearTimeout(state.timeout);
+            }
+
             return {
                 visible: false,
                 current: state.current,
@@ -20,15 +28,52 @@ export const error = (state = null, action) => {
 };
 
 export const shoppingCart = (state = [], action) => {
+    let newState;
+
     switch (action.type) {
+        case C.UPDATE_CART:
+            return action.payload;
+
         case C.ADD_TO_CART:
-            return [
-                    ...state,
-                    action.payload
-                ];
+            newState = [...state];
+            let exists = false;
+
+            newState.forEach(entry => {
+                if (entry.product.id === action.payload.product.id) {
+                    entry.quantity += action.payload.quantity;
+                    exists = true;
+                }
+            });
+
+            if (!exists) {
+                newState.push(action.payload);
+            }
+
+            return newState;
 
         case C.REMOVE_FROM_CART:
-            return state.filter(product => product.id !== action.payload);
+            let removedCompletely = false;
+
+            newState = state.filter(entry => {
+                let save = entry.product.id !== action.payload.product.id &&
+                    entry.quantity > action.payload.quantity;
+
+                if (!save) {
+                    removedCompletely = true;
+                }
+
+                return save;
+            });
+
+            if (!removedCompletely) {
+                newState.forEach(entry => {
+                    if (entry.product.id === action.payload.product.id) {
+                        entry.quantity -= action.payload.quantity;
+                    }
+                });
+            }
+
+            return newState;
 
         case C.CLEAR_CART:
             return [];
@@ -81,7 +126,7 @@ export const authentication = (state = {loggedIn:false}, action) => {
 };
 
 export default combineReducers({
-    error,
+    notification,
     shoppingCart,
     authentication,
     categories,

@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import ErrorBar from '../containers/ErrorBar';
+import ErrorBar from '../containers/NotificationBar';
 import {Link} from 'react-router-dom';
 import '../../stylesheets/navbar.scss';
 
@@ -28,10 +28,10 @@ export default class Navbar extends Component {
                             <form className="navbar-form navbar-left hidden-xs"
                                   role="search">
                                 <div className="input-group nav-searchbar">
-                                    <input type="text" className="form-control"
+                                    <input type="text" id="product-search" className="form-control"
                                            placeholder="Search"/>
                                     <div className="input-group-btn">
-                                    <button type="submit"
+                                    <button type="submit" id="search-button"
                                             className="btn btn-default"><span
                                         className="glyphicon glyphicon-search"/></button>
                                     </div>
@@ -41,10 +41,17 @@ export default class Navbar extends Component {
                                 this.props.loggedIn ?
                                     <ul className="nav navbar-nav navbar-right">
                                         <li>
-                                            <Link to="/"
-                                                  onClick={this.props.onLogout}>Logout
-                                                <span className="sr-only">(current)
-                                            </span>
+                                            <Link to="/" onClick={this.props.onLogout}>
+                                                Logout
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/cart">
+                                                Cart
+                                                {
+                                                    this.props.cart.length > 0 &&
+                                                    <span> ({this.props.cartItemCount})</span>
+                                                }
                                             </Link>
                                         </li>
                                     </ul>
@@ -53,17 +60,11 @@ export default class Navbar extends Component {
                                         <li className={this.props.location.pathname === "/login" && "active"}>
                                             <Link to="/login">
                                                 Login
-                                                <span
-                                                    className="sr-only">(current)
-                                            </span>
                                             </Link>
                                         </li>
                                         <li className={this.props.location.pathname === "/register" && "active"}>
                                             <Link to="/register">
                                                 Register
-                                                <span
-                                                    className="sr-only">(current)
-                                            </span>
                                             </Link>
                                         </li>
                                     </ul>

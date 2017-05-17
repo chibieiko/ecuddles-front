@@ -1,0 +1,22 @@
+@import 'variables';
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+.btn:focus,
+.btn:active {
+  border-color: rgba(246, 179, 105, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(246, 179, 105, 0.6);
+  outline: 0 none;
+}
+
+.btn.btn-success {
+  background-color: $color_accent;
+  border-color: $color_accentDark
+}
+
+.btn.btn-success:hover,
+.btn.btn-success:active {
+  background-color: darken($color_accent, 5);
+}

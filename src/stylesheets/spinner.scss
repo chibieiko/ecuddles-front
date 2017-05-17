@@ -1,10 +1,12 @@
+@import 'variables';
+
 .spinner {
   width: 70px;
   text-align: center;
 }
 
 .spinner > div {
-  background-color: #593f35;
+  background-color: $color_primary;
 
   border-radius: 100%;
   display: inline-block;

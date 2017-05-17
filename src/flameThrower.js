@@ -3,39 +3,72 @@ import {logout} from './actions';
 
 export default class FlameThrower {
 
+    // TODO MAKE FLAME THROWER GREAT AGAIN
+
     static burn = (response) => {
-        if (response.ok) {
-            return;
-        }
+        return new Promise((resolve, reject) => {
+            if (response.ok) {
+                response.json()
+                    .then(responseBody => resolve(responseBody))
+                    .catch(e => resolve());
 
-        let responseBody = response.json();
-        console.log("BUUURNED ERRRROOOOOR");
-        console.log(responseBody);
+                return;
+            }
 
-        switch (response.status) {
-            case 500:
-                if (responseBody.exception === "com.evil.Exception.TokenException") {
-                    store.dispatch(
-                        logout()
-                    );
+            switch (response.status) {
+                case 500:
+                    response.json()
+                        .then(responseBody => {
+                            if (responseBody.exception === "com.evil.Exception.TokenException") {
+                                store.dispatch(
+                                    logout()
+                                );
 
-                    location.href="#/login";
-                    throw new Error("Invalid token");
-                } else {
-                    throw new Error("Unexpected error occured, please try again later")
-                }
+                                location.href = "#/login";
+                                reject(new Error("Invalid token"));
+                            } else {
+                                reject(new Error("Teddy is not happy at the moment, try again later"));
+                            }
+                        })
+                        .catch(e => {
+                            reject(e);
+                        });
 
-            case 401:
-                throw new Error("Incorrect email or password");
+                    return;
 
-            case 403:
-                throw new Error("No authorization");
+                case 400:
+                    response.json()
+                        .then(responseBody => {
+                            if (responseBody.exception === "com.evil.Exception.OutOfStockException") {
+                                reject(new Error("Quantity of this product in your shopping cart exceeds stock!"));
+                            } else {
+                                reject(new Error("Bad request!"));
+                            }
+                        })
+                        .catch(e => {
+                            reject(e);
+                        });
 
-            case 404:
-                throw new Error("Not found");
+                    return;
 
-            default:
-                throw new Error("Teddy is not happy at the moment, try again later")
-        }
+                case 401:
+                    reject(new Error("Incorrect email or password"));
+                    return;
+
+                case 403:
+                    reject(new Error("No authorization"));
+                    return;
+
+                case 404:
+                    reject(new Error("Not found"));
+                    return;
+
+                default:
+                    reject(new Error("Teddy is not happy at the moment, try again later"));
+                    return;
+            }
+        });
+
+
     }
 }

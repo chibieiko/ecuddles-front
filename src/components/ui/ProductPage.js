@@ -3,6 +3,7 @@ import Spinner from './Spinner';
 import FlameThrower from '../../flameThrower';
 import ImageViewer from './ImageViewer';
 import Stars from './Stars';
+import connector from '../../connector';
 import '../../stylesheets/product.scss';
 
 const ListDetail = (props) => (
@@ -24,14 +25,27 @@ export default class ProductPage extends Component {
         super(props);
 
         this.state = {
-            error: null,
             fetching: false,
             product: null
         };
     };
 
     buyProduct = () => {
+        let entry = {
+            product: this.state.product.id
+        };
 
+        if (this.props.cart) {
+            this.props.cart.forEach(cartEntry => {
+                if (cartEntry.product.id === entry.product) {
+                    entry.quantity = cartEntry.quantity + 1;
+                }
+            });
+        }
+
+        entry.quantity = entry.quantity || 1;
+
+        this.props.addToCart(entry);
     };
 
     componentWillMount() {
@@ -44,27 +58,19 @@ export default class ProductPage extends Component {
 
     loadProductDetails = productId => {
         this.setState({
-            fetching: true,
-            error: null
+            fetching: true
         });
 
-        fetch(backendUrl + "/api/products/" + productId + "?projection=inspect")
+        connector("/products/" + productId + "?projection=inspect")
             .then(response => {
                 this.setState({
-                    fetching: false
-                });
-
-                FlameThrower.burn(response);
-                return response.json();
-            })
-            .then(response => {
-                this.setState({
+                    fetching: false,
                     product: response
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 this.setState({
-                    error: error
+                    fetching: false
                 });
             });
     };
