@@ -28,3 +28,8 @@ Link, a, h1 {
 Link:hover, Link:active, Link:focus, a:hover, a:active, a:focus {
   color: #9A4D46;
 }
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
