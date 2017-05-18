@@ -102,6 +102,16 @@
   background-color: $color_primaryDark;
 }
 
+.navbar-cart {
+  display: flex;
+  align-items: center;
+}
+
+#cart-badge {
+  background-color: white;
+  color: $color_primary;
+  margin-left: 5px;
+}
 .active-category {
   background-color: $color_light_orange;
 }

@@ -63,6 +63,43 @@ export const displayNotification = notification => dispatch => {
     });
 };
 
+export const savePhase = (phase) => ({
+    type: C.SAVE_PHASE,
+    payload: phase // {key, content}
+});
+
+export const saveProgress = (index) => ({
+    type: C.SAVE_PROGRESS,
+    payload: index
+});
+
+export const checkout = () => (dispatch, getState) => {
+    let content = getState().cartPhases[1];
+
+    let url = "?name=" + content.name +
+            "&address=" + content.address +
+            "&postalCode=" + content.postalCode +
+            "&city=" + content.city +
+            "&phone=" + content.phone;
+
+    connector("/cart/checkout" + url, {auth: true})
+        .then(response => {
+            dispatch({
+                type: C.CHECKOUT
+            });
+
+            dispatch(displayNotification({
+                type: C.NOTIFICATION_SUCCESS,
+                message: "Checkout successful!"
+            }));
+        })
+        .catch(error => {
+            // TODO: HANDLE THIS SHIT
+            console.log("ERROR WITH CHECKOUT");
+            console.log(error);
+        });
+};
+
 export const hideNotification = () => ({
     type: C.HIDE_NOTIFICATION
 });
@@ -70,7 +107,7 @@ export const hideNotification = () => ({
 export const updateCart = () => (dispatch, getState) => {
     if (getState().authentication.loggedIn) {
         connector("/cart", {auth: true})
-            .then((response=[]) => {
+            .then((response = []) => {
                 dispatch({
                     type: C.UPDATE_CART,
                     payload: response
@@ -90,16 +127,23 @@ export const updateCart = () => (dispatch, getState) => {
     }
 };
 
-export const modifyCart = ({entry, showNotification}) => dispatch  => {
+export const modifyCart = ({entry, showNotification}) => dispatch => {
     connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
         .then(response => {
+            dispatch({
+                type: C.RESET_PROGRESS
+            });
+
             dispatch(updateCart());
 
             if (showNotification) {
                 let msg = entry.product === -1 ?
                     "You shopping cart was successfully cleared!"
                     :
-                    "Great choice! The product has been added to your shopping cart.";
+                    entry.quantity > 0 ?
+                        "Great choice! The product has been added to your shopping cart."
+                        :
+                        "One product was successfully deleted from your shopping cart.";
 
                 dispatch(displayNotification({
                     message: msg,

@@ -27,55 +27,59 @@ export const notification = (state = null, action) => {
     }
 };
 
-export const shoppingCart = (state = [], action) => {
-    let newState;
-
+export const cartProgress = (state = 0, action) => {
     switch (action.type) {
-        case C.UPDATE_CART:
+        case C.SAVE_PROGRESS:
             return action.payload;
 
-        case C.ADD_TO_CART:
-            newState = [...state];
-            let exists = false;
+        case C.RESET_PROGRESS:
+            return 0;
 
-            newState.forEach(entry => {
-                if (entry.product.id === action.payload.product.id) {
-                    entry.quantity += action.payload.quantity;
-                    exists = true;
-                }
-            });
+        case C.CHECKOUT:
+            return 0;
 
-            if (!exists) {
-                newState.push(action.payload);
-            }
+        default:
+            return state;
+    }
+};
 
-            return newState;
+export const cartPhases = (state = null, action) => {
+    switch (action.type) {
+        case C.SAVE_PHASE:
+            let newState = {};
+            let updated = false;
 
-        case C.REMOVE_FROM_CART:
-            let removedCompletely = false;
-
-            newState = state.filter(entry => {
-                let save = entry.product.id !== action.payload.product.id &&
-                    entry.quantity > action.payload.quantity;
-
-                if (!save) {
-                    removedCompletely = true;
-                }
-
-                return save;
-            });
-
-            if (!removedCompletely) {
-                newState.forEach(entry => {
-                    if (entry.product.id === action.payload.product.id) {
-                        entry.quantity -= action.payload.quantity;
+            if (state) {
+                Object.keys(state).forEach(key => {
+                    if (action.payload.key === key) {
+                        newState[key] = action.payload.content;
+                        updated = true;
+                    } else {
+                        newState[key] = state[key];
                     }
                 });
             }
 
+            if (!updated) {
+                newState[action.payload.key] = action.payload.content;
+            }
+
             return newState;
 
-        case C.CLEAR_CART:
+        case C.CHECKOUT:
+            return null;
+
+        default:
+            return state;
+    }
+};
+
+export const shoppingCart = (state = [], action) => {
+    switch (action.type) {
+        case C.UPDATE_CART:
+            return action.payload;
+
+        case C.CHECKOUT:
             return [];
 
         default:
@@ -128,7 +132,9 @@ export const authentication = (state = {loggedIn:false}, action) => {
 export default combineReducers({
     notification,
     shoppingCart,
+    cartPhases,
+    cartProgress,
     authentication,
     categories,
     routing
-})
+});
