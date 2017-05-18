@@ -7,17 +7,13 @@ export default class ReviewCard extends Component {
     constructor(props) {
         super(props);
 
-        if (this.props.review.date) {
-            let date = new Date(this.props.review.date);
-            date = dateFormat(date, "dd mmm yyyy");
-            this.state = {
-                date: date
-            }
-        } else {
-            this.state = {
-                date: ""
-            }
-        }
+        let date = new Date(this.props.review.date);
+        date = dateFormat(date, "dd mmm yyyy");
+        this.state = {
+            date: date
+        };
+
+        console.log(this.props);
     }
 
     render() {
@@ -50,6 +46,18 @@ export default class ReviewCard extends Component {
                         <span
                             className="glyphicon glyphicon-user right-breather"/> {this.props.review.user.name}
                     </div>
+                </div>
+
+                <div className="row review-item">
+                    {
+                        this.props.user.id == this.props.review.user.id &&
+                        <div className="col-xs-12">
+                            <button
+                                className="btn btn-sm btn-danger">
+                                <span className="glyphicon glyphicon-trash"/> Delete review
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

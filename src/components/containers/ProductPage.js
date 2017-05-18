@@ -1,6 +1,3 @@
-/**
- * Created by vilik on 12.5.2017.
- */
 import ProductPage from '../ui/ProductPage';
 import C from '../../constants';
 import {connect} from 'react-redux';
@@ -9,7 +6,8 @@ import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
     cart: state.shoppingCart,
-    router: props.router
+    router: props.router,
+    authentication: state.authentication
 });
 
 const mapDispatchToProps = dispatch => ({

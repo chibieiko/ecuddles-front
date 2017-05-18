@@ -190,7 +190,7 @@ export default class ProductPage extends Component {
                             <Detail name="Dispose instructions" value={product.disposeInstructions}/>
                         </div>
 
-                        <ProductReview product={product}/>
+                        <ProductReview product={product} user={this.props.authentication.user}/>
                     </div>
                 </div>
             }
