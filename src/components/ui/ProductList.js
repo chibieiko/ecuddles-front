@@ -20,14 +20,12 @@ export default class ProductList extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.category);
         this.resetPage();
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
             this.props = nextProps;
-            console.log(nextProps);
             this.resetPage();
         }
     }
@@ -61,12 +59,13 @@ export default class ProductList extends Component {
                 categoryId = this.props.category;
             }
 
-            url = "/products/search/has?categoryid=" + categoryId + "&page=" + this.state.page.number;
+            url = "/products/search/has?categoryid=" + categoryId +
+                "&page=" + this.state.page.number;
 
-            if (this.state.sort) {
-                url += "&sort=" + this.state.sort.on + "," + this.state.sort.order;
+            if (this.props.location.search) {
+                url += this.props.location.search.replace('?', '&');
             } else {
-                url += "&sort=date";
+                url += "&sort=date,desc";
             }
         }
 
@@ -74,7 +73,7 @@ export default class ProductList extends Component {
     };
 
     getProducts = (url) => {
-        console.log("getting products with url: ", url);
+       // console.log("getting products with url: ", url);
 
         connector(url)
             .then(response => {
@@ -133,23 +132,13 @@ export default class ProductList extends Component {
         }, this.loadProducts)
     };
 
-    sortProducts = (sort, order, sortButtonText) => {
-        this.setState({
-            sort: {
-                on: sort,
-                order: order,
-                buttonName: sortButtonText
-            }
-        }, this.loadProducts)
-    };
-
     render() {
         return <div>
             {
                 this.state.fetching ?
                     <Spinner margin={true}/> :
                     <div>
-                        <ProductListSort sortProducts={this.sortProducts} buttonName={this.state.sort ? this.state.sort.buttonName : 'Newest first'}/>
+                        <ProductListSort location={this.props.location}/>
 
                         {
                             this.state.products.map(product => <ProductCard

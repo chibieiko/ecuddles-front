@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import ProductList from './ProductList';
+import ProductList from '../containers/ProductList';
 
 export default class MainPage extends Component {
     constructor(props) {
@@ -11,11 +11,8 @@ export default class MainPage extends Component {
 
     render() {
         return <div>
-            {
-                this.props.match.params.id ?
-                <ProductList search={this.state.search} category={this.props.match.params.id}/> :
-                    <ProductList search={this.state.search}/>
-            }
+            <ProductList search={this.state.search}
+                         category={this.props.match.params.id}/>
         </div>;
     };
 };

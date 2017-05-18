@@ -27,7 +27,9 @@ export default class CategoryList extends Component {
                         <ul className="nav">
                             {
                                 this.props.categories && this.props.categories.map(category =>
-                                    <li key={category.id} className={this.props.location.pathname === "/category/" + category.id + "/" + category.name ? "active-category-link" : "category-link"}>
+                                    <li key={category.id}
+                                        className={this.props.location.pathname === "/category/" + category.id + "/" + category.name ?
+                                            "active-category-link" : "category-link"}>
                                         <Link to={'/category/' + category.id + '/' + category.name}>
                                             {category.name}
                                         </Link>
@@ -37,6 +39,7 @@ export default class CategoryList extends Component {
                     </div>
                 </div>
             </div>
+
             <div className="col-xs-12 col-sm-9">
                 <Switch>
                     <Route exact path="/" component={MainPage}/>

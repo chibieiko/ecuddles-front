@@ -11,7 +11,8 @@ export default class Pagination extends Component {
 
                 <div className="col-xs-4">
                     <button className="btn btn-default"
-                            onClick={this.props.previousPage}>
+                            onClick={this.props.previousPage}
+                            disabled={this.props.page.number <= 0}>
                                     <span
                                         className="hidden-xs">Previous page</span>
                         <span
@@ -43,7 +44,8 @@ export default class Pagination extends Component {
 
                 <div className="col-xs-4">
                     <button className="btn btn-default pull-right"
-                            onClick={this.props.nextPage}>
+                            onClick={this.props.nextPage}
+                            disabled={this.props.page.number >= this.props.page.totalPages - 1}>
                         <span className="hidden-xs">Next page</span>
                         <span
                             className="glyphicon glyphicon-arrow-right hidden-lg hidden-md hidden-sm col-xs-1"/>

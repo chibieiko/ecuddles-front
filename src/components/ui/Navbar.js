@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import ErrorBar from '../containers/NotificationBar';
+import NotificationBar from '../containers/NotificationBar';
 import {Link} from 'react-router-dom';
 import '../../stylesheets/navbar.scss';
 
@@ -87,7 +87,7 @@ export default class Navbar extends Component {
                     </div>
                 </div>
             </nav>
-            <ErrorBar/>
+            <NotificationBar/>
             <form className="hidden-sm hidden-md hidden-lg breather"
                   role="search">
                 <div className="input-group">
