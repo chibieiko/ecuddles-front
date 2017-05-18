@@ -3,6 +3,7 @@ import Spinner from './Spinner';
 import ImageViewer from './ImageViewer';
 import Stars from './Stars';
 import connector from '../../connector';
+import ProductReview from './ProductReview';
 import '../../stylesheets/product.scss';
 
 const ListDetail = (props) => (
@@ -188,6 +189,8 @@ export default class ProductPage extends Component {
                             <Detail name="Care instructions" value={product.careInstructions}/>
                             <Detail name="Dispose instructions" value={product.disposeInstructions}/>
                         </div>
+
+                        <ProductReview product={product}/>
                     </div>
                 </div>
             }
