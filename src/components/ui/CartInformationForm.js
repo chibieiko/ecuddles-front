@@ -14,10 +14,6 @@ export default class CartInformationForm extends Component {
         };
     };
 
-    onSave = () => {
-
-    };
-
     onNext = () => {
         if (this.state.completed) {
             this.props.onNext(this.state.content);
@@ -41,10 +37,96 @@ export default class CartInformationForm extends Component {
         });
     };
 
+    onChangeAddress = (e) => {
+        let content = this.state.content;
+        content.address = e.target.value;
+
+        this.setState({
+            content: content
+        });
+    };
+
+    onChangePostalCode = (e) => {
+        let content = this.state.content;
+        content.postalCode = e.target.value;
+
+        this.setState({
+            content: content
+        });
+    };
+
+    onChangeCity = (e) => {
+        let content = this.state.content;
+        content.city = e.target.value;
+
+        this.setState({
+            content: content
+        });
+    };
+
+    onChangePhone = (e) => {
+        let content = this.state.content;
+        content.phone = e.target.value;
+
+        this.setState({
+            content: content
+        });
+    };
+
     render() {
         return <div>
             <div>
-                <input type="text" value={this.state.content.name} onChange={this.onChangeName} onBlur={this.saveState}/>
+                <form>
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input type="text"
+                               value={this.state.content.name}
+                               onChange={this.onChangeName}
+                               onBlur={this.saveState}
+                               className="form-control"
+                               id="name"/>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="address">Address</label>
+                        <input type="text"
+                               value={this.state.content.address}
+                               onChange={this.onChangeAddress}
+                               onBlur={this.saveState}
+                               className="form-control"
+                               id="address"/>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="postalCode">Postal code</label>
+                        <input type="text"
+                               value={this.state.content.postalCode}
+                               onChange={this.onChangePostalCode}
+                               onBlur={this.saveState}
+                               className="form-control"
+                               id="postalCode"/>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="city">City</label>
+                        <input type="text"
+                               value={this.state.content.city}
+                               onChange={this.onChangeCity}
+                               onBlur={this.saveState}
+                               className="form-control"
+                               id="city"/>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="phone">Phone number</label>
+                        <input type="text"
+                               value={this.state.content.phone}
+                               onChange={this.onChangePhone}
+                               onBlur={this.saveState}
+                               className="form-control"
+                               id="phone"/>
+                    </div>
+                </form>
             </div>
             <hr/>
             <div className="row">

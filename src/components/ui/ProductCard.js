@@ -25,11 +25,12 @@ export default class ProductCard extends Component {
                 <div className="col-xs-12">
                         <p className="product-name">{this.props.product.name}</p>
                 </div>
-                </Link>
 
                 <div className="col-xs-12">
                     <p className="price">{this.props.product.price} €</p>
                 </div>
+                </Link>
+
                 <div className="col-xs-12">
                     <Link to={'/product/' + this.props.product.id}>
                         <button className="btn btn-xs btn-success">

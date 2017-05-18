@@ -117,6 +117,10 @@ export const updateCart = () => (dispatch, getState) => {
 export const modifyCart = ({entry, showNotification}) => dispatch => {
     connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
         .then(response => {
+            dispatch({
+                type: C.RESET_PROGRESS
+            });
+
             dispatch(updateCart());
 
             if (showNotification) {

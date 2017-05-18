@@ -32,6 +32,9 @@ export const cartProgress = (state = 0, action) => {
         case C.SAVE_PROGRESS:
             return action.payload;
 
+        case C.RESET_PROGRESS:
+            return 0;
+
         case C.CHECKOUT:
             return 0;
 
@@ -72,55 +75,9 @@ export const cartPhases = (state = null, action) => {
 };
 
 export const shoppingCart = (state = [], action) => {
-    let newState;
-
     switch (action.type) {
         case C.UPDATE_CART:
             return action.payload;
-
-        case C.ADD_TO_CART:
-            newState = [...state];
-            let exists = false;
-
-            newState.forEach(entry => {
-                if (entry.product.id === action.payload.product.id) {
-                    entry.quantity += action.payload.quantity;
-                    exists = true;
-                }
-            });
-
-            if (!exists) {
-                newState.push(action.payload);
-            }
-
-            return newState;
-
-        case C.REMOVE_FROM_CART:
-            let removedCompletely = false;
-
-            newState = state.filter(entry => {
-                let save = entry.product.id !== action.payload.product.id &&
-                    entry.quantity > action.payload.quantity;
-
-                if (!save) {
-                    removedCompletely = true;
-                }
-
-                return save;
-            });
-
-            if (!removedCompletely) {
-                newState.forEach(entry => {
-                    if (entry.product.id === action.payload.product.id) {
-                        entry.quantity -= action.payload.quantity;
-                    }
-                });
-            }
-
-            return newState;
-
-        case C.CLEAR_CART:
-            return [];
 
         case C.CHECKOUT:
             return [];
