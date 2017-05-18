@@ -63,6 +63,30 @@ export const displayNotification = notification => dispatch => {
     });
 };
 
+export const savePhase = (phase) => ({
+    type: C.SAVE_PHASE,
+    payload: phase // {key, content}
+});
+
+export const saveProgress = (index) => ({
+    type: C.SAVE_PROGRESS,
+    payload: index
+});
+
+export const checkout = () => (dispatch) => {
+    connector("/cart/checkout", {auth: true})
+        .then(response => {
+            dispatch({
+                type: C.CHECKOUT
+            });
+        })
+        .catch(error => {
+            // TODO: HANDLE THIS SHIT
+            console.log("ERROR WITH CHECKOUT");
+            console.log(error);
+        });
+};
+
 export const hideNotification = () => ({
     type: C.HIDE_NOTIFICATION
 });

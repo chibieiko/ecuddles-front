@@ -28,7 +28,7 @@ export default class CartProgressBar extends Component {
                                  number={index + 1}
                                  title={step}
                                  current={
-                                     index + 1 === this.props.current
+                                     index === this.props.current
                                  }
                     />;
                 })

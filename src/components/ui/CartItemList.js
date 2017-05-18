@@ -11,6 +11,12 @@ export default class CartItemList extends Component {
         super(props);
     };
 
+    onNext = () => {
+        if (this.props.entries.length > 0) {
+            this.props.onNext();
+        }
+    };
+
     render() {
         let empty = this.props.entries.length < 1;
         let totalCount = 0;
@@ -47,11 +53,12 @@ export default class CartItemList extends Component {
             <div className="row">
                 <div className="col-xs-12">
                     <button className={
-                        empty ?
-                            "btn btn-success pull-right disabled"
-                            :
-                            "btn btn-success pull-right"
-                    }>
+                            empty ?
+                                "btn btn-success pull-right disabled"
+                                :
+                                "btn btn-success pull-right"
+                            }
+                            onClick={this.onNext}>
                         Continue
                     </button>
                 </div>

@@ -27,6 +27,50 @@ export const notification = (state = null, action) => {
     }
 };
 
+export const cartProgress = (state = 0, action) => {
+    switch (action.type) {
+        case C.SAVE_PROGRESS:
+            return action.payload;
+
+        case C.CHECKOUT:
+            return 0;
+
+        default:
+            return state;
+    }
+};
+
+export const cartPhases = (state = null, action) => {
+    switch (action.type) {
+        case C.SAVE_PHASE:
+            let newState = {};
+            let updated = false;
+
+            if (state) {
+                Object.keys(state).forEach(key => {
+                    if (action.payload.key === key) {
+                        newState[key] = action.payload.content;
+                        updated = true;
+                    } else {
+                        newState[key] = state[key];
+                    }
+                });
+            }
+
+            if (!updated) {
+                newState[action.payload.key] = action.payload.content;
+            }
+
+            return newState;
+
+        case C.CHECKOUT:
+            return null;
+
+        default:
+            return state;
+    }
+};
+
 export const shoppingCart = (state = [], action) => {
     let newState;
 
@@ -76,6 +120,9 @@ export const shoppingCart = (state = [], action) => {
             return newState;
 
         case C.CLEAR_CART:
+            return [];
+
+        case C.CHECKOUT:
             return [];
 
         default:
@@ -128,7 +175,9 @@ export const authentication = (state = {loggedIn:false}, action) => {
 export default combineReducers({
     notification,
     shoppingCart,
+    cartPhases,
+    cartProgress,
     authentication,
     categories,
     routing
-})
+});
