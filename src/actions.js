@@ -73,12 +73,25 @@ export const saveProgress = (index) => ({
     payload: index
 });
 
-export const checkout = () => (dispatch) => {
-    connector("/cart/checkout", {auth: true})
+export const checkout = () => (dispatch, getState) => {
+    let content = getState().cartPhases[1];
+
+    let url = "?name=" + content.name +
+            "&address=" + content.address +
+            "&postalCode=" + content.postalCode +
+            "&city=" + content.city +
+            "&phone=" + content.phone;
+
+    connector("/cart/checkout" + url, {auth: true})
         .then(response => {
             dispatch({
                 type: C.CHECKOUT
             });
+
+            dispatch(displayNotification({
+                type: C.NOTIFICATION_SUCCESS,
+                message: "Checkout successful!"
+            }));
         })
         .catch(error => {
             // TODO: HANDLE THIS SHIT

@@ -31,7 +31,6 @@ const mapDispatchToProps = dispatch => ({
         dispatch(saveProgress(index));
     },
     savePhase(index, content) {
-        console.log("Saving phase " + index + " with data:", content);
         dispatch(savePhase({
             key: index,
             content: content ? content : {}

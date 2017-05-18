@@ -9,15 +9,19 @@ export default class CartInformationForm extends Component {
         super(props);
 
         this.state = {
-            completed: false,
-            content: this.props.content
+            content: {
+                name: (this.props.content && this.props.content.name) || "",
+                address: (this.props.content && this.props.content.address) || "",
+                postalCode: (this.props.content && this.props.content.postalCode) || "",
+                city: (this.props.content && this.props.content.city) || "",
+                phone: (this.props.content && this.props.content.phone) || ""
+            }
         };
     };
 
-    onNext = () => {
-        if (this.state.completed) {
-            this.props.onNext(this.state.content);
-        }
+    onNext = (e) => {
+        e.preventDefault();
+        this.props.onNext(this.state.content);
     };
 
     onPrevious = () => {
@@ -75,8 +79,9 @@ export default class CartInformationForm extends Component {
 
     render() {
         return <div>
+            <form onSubmit={this.onNext}>
             <div>
-                <form>
+
                     <div className="form-group">
                         <label htmlFor="name">Name</label>
                         <input type="text"
@@ -84,7 +89,9 @@ export default class CartInformationForm extends Component {
                                onChange={this.onChangeName}
                                onBlur={this.saveState}
                                className="form-control"
-                               id="name"/>
+                               id="name"
+                               required
+                        />
                     </div>
 
                     <div className="form-group">
@@ -94,7 +101,9 @@ export default class CartInformationForm extends Component {
                                onChange={this.onChangeAddress}
                                onBlur={this.saveState}
                                className="form-control"
-                               id="address"/>
+                               id="address"
+                               required
+                        />
                     </div>
 
                     <div className="form-group">
@@ -104,7 +113,9 @@ export default class CartInformationForm extends Component {
                                onChange={this.onChangePostalCode}
                                onBlur={this.saveState}
                                className="form-control"
-                               id="postalCode"/>
+                               id="postalCode"
+                               required
+                        />
                     </div>
 
                     <div className="form-group">
@@ -114,7 +125,9 @@ export default class CartInformationForm extends Component {
                                onChange={this.onChangeCity}
                                onBlur={this.saveState}
                                className="form-control"
-                               id="city"/>
+                               id="city"
+                               required
+                        />
                     </div>
 
                     <div className="form-group">
@@ -124,9 +137,10 @@ export default class CartInformationForm extends Component {
                                onChange={this.onChangePhone}
                                onBlur={this.saveState}
                                className="form-control"
-                               id="phone"/>
+                               id="phone"
+                               required
+                        />
                     </div>
-                </form>
             </div>
             <hr/>
             <div className="row">
@@ -137,16 +151,13 @@ export default class CartInformationForm extends Component {
                     </button>
                 </div>
                 <div className="col-xs-6">
-                    <button className={
-                        this.state.completed ?
-                            "btn btn-success pull-right disabled"
-                            :
-                            "btn btn-success pull-right"
-                        } onClick={this.onNext}>
+                    <button type="submit"
+                            className="btn btn-success pull-right">
                         Continue
                     </button>
                 </div>
             </div>
+            </form>
         </div>;
     };
 };
