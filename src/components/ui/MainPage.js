@@ -8,8 +8,7 @@ export default class MainPage extends Component {
 
     render() {
         return <div>
-            <ProductList search={this.props.search}
-                         category={this.props.match.params.id}/>
+            <ProductList category={this.props.match.params.id}/>
         </div>;
     };
 };

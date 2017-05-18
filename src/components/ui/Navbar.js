@@ -6,6 +6,21 @@ import '../../stylesheets/navbar.scss';
 export default class Navbar extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            search: ""
+        }
+    };
+
+    submitForm = (event) => {
+        event.preventDefault();
+        this.props.history.push("/search/" + this.state.search);
+    };
+
+    onSearchChanged = (event) => {
+        this.setState({
+            search: event.target.value
+        });
     };
 
     render() {
@@ -26,9 +41,12 @@ export default class Navbar extends Component {
                         <Link to="/" className="navbar-brand">eCuddles</Link>
                         <div className="navbar-header-menu">
                             <form className="navbar-form navbar-left hidden-xs"
-                                  role="search">
+                                  role="search" onSubmit={this.submitForm}>
                                 <div className="input-group nav-searchbar">
-                                    <input type="text" id="product-search" className="form-control"
+                                    <input type="text" id="product-search"
+                                           onChange={this.onSearchChanged}
+                                           className="form-control"
+                                           value={this.state.search && this.state.search}
                                            placeholder="Search"/>
                                     <div className="input-group-btn">
                                     <button type="submit" id="search-button"
@@ -41,7 +59,8 @@ export default class Navbar extends Component {
                                 this.props.loggedIn ?
                                     <ul className="nav navbar-nav navbar-right">
                                         <li>
-                                            <Link to="/" onClick={this.props.onLogout}>
+                                            <Link to="/"
+                                                  onClick={this.props.onLogout}>
                                                 Logout
                                             </Link>
                                         </li>
@@ -77,8 +96,12 @@ export default class Navbar extends Component {
                             id="categories">
                             {
                                 this.props.categories && this.props.categories.map(category =>
-                                    <li key={category.id} className={this.props.location.pathname === "/category/" + category.id + "/" + category.name ? "active-category nav-category-link" : "nav-category-link"} >
-                                        <Link to={'/category/' + category.id + '/' + category.name} data-toggle="collapse" data-target=".navbar-collapse.in">
+                                    <li key={category.id}
+                                        className={this.props.location.pathname === "/category/" + category.id + "/" + category.name ? "active-category nav-category-link" : "nav-category-link"}>
+                                        <Link
+                                            to={'/category/' + category.id + '/' + category.name}
+                                            data-toggle="collapse"
+                                            data-target=".navbar-collapse.in">
                                             {category.name}
                                         </Link>
                                     </li>)
@@ -89,9 +112,11 @@ export default class Navbar extends Component {
             </nav>
             <NotificationBar/>
             <form className="hidden-sm hidden-md hidden-lg breather"
-                  role="search">
+                  role="search" onSubmit={this.submitForm}>
                 <div className="input-group">
                     <input type="text" className="form-control"
+                           onChange={this.onSearchChanged}
+                           value={this.state.search && this.state.search}
                            placeholder="Search"/>
                     <div className="input-group-btn">
                         <button type="submit"
