@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import {Route} from 'react-router-dom';
-import ProductList from './ProductList';
+import ProductList from '../containers/ProductList';
 
-export default class LoginPage extends Component {
+export default class SearchPage extends Component {
     constructor(props) {
         super(props);
     };
