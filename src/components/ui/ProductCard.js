@@ -30,7 +30,8 @@ export default class ProductCard extends Component {
 
     render() {
         return <div className="col-xs-6 col-sm-4 col-lg-3 card">
-            <Link to={'/product/' + this.props.product.id}>
+            <Link
+                to={'/product/' + this.props.product.id + "/" + this.props.product.name}>
                 <div className="panel panel-default picture-box">
                     <div className="panel-body">
                         <div className="col-xs-12 image align-center">
@@ -40,9 +41,9 @@ export default class ProductCard extends Component {
                         </div>
                     </div>
                 </div>
-            </Link>
+
             <div className="row">
-                <Link to={'/product/' + this.props.product.id}>
+
                     <div className="col-xs-12">
                         <p className="product-name">{this.props.product.name}</p>
                     </div>
@@ -50,8 +51,10 @@ export default class ProductCard extends Component {
                     <div className="col-xs-12">
                         <p className="price">{this.props.product.price} €</p>
                     </div>
-                </Link>
 
+        </div>
+            </Link>
+                <div className="row">
                 <div className="col-xs-12">
                     <button onClick={this.addToCart}
                             disabled={!(this.props.product.stock > 0 && this.props.product.stock > this.state.quantity)}
@@ -69,6 +72,7 @@ export default class ProductCard extends Component {
                         }
                     </button>
                 </div>
+
             </div>
         </div>;
     };

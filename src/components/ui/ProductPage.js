@@ -3,7 +3,7 @@ import Spinner from './Spinner';
 import ImageViewer from './ImageViewer';
 import Stars from './Stars';
 import connector from '../../connector';
-import ProductReview from './ProductReview';
+import ProductReview from '../containers/ProductReview';
 import '../../stylesheets/product.scss';
 
 const ListDetail = (props) => (
@@ -71,10 +71,17 @@ export default class ProductPage extends Component {
                     });
                 }
 
+                let starsTotal = 0;
+                response.reviews.forEach((review) => {
+                    starsTotal += review.stars;
+                });
+                let starAverage = starsTotal / response.reviews.length;
+
                 this.setState({
                     fetching: false,
                     product: response,
-                    quantity: quantity
+                    quantity: quantity,
+                    stars: starAverage
                 });
             })
             .catch(() => {
@@ -100,39 +107,39 @@ export default class ProductPage extends Component {
                 <Spinner margin={true} delay={500}/>
             }
 
-            {
-                product &&
-                <div>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <h3>
-                                {product.name}
-                            </h3>
-                            <Stars rating={4.4}/> 4.4 / 5
+                {
+                    product &&
+                    <div>
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <h3>
+                                    {product.name}
+                                </h3>
+                                <Stars rating={this.state.stars}/> {this.state.stars ? this.state.stars : 0} / 5
+                            </div>
                         </div>
-                    </div>
-                    <div className="row product-page-row">
-                        <div className="col-sm-8 breather-bottom-20">
-                            <ImageViewer images={product.pictures}/>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="panel panel-default buy-panel">
-                                <div className="panel-body">
-                                    <span className="product-price">{product.price} €</span>
-                                    <button onClick={this.buyProduct}
-                                            disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
-                                            className={
-                                                product.stock > 0 && product.stock > this.state.quantity ?
-                                                    "btn-buy center-block btn btn-lg btn-success"
-                                                    :
-                                                    "btn-buy center-block btn btn-lg btn-success disabled"
-                                            }>
-                                        Add to cart
-                                    </button>
-                                    <br/>
-                                    {
-                                        product.stock > 0 && product.stock > this.state.quantity ?
-                                            <div>
+                        <div className="row product-page-row">
+                            <div className="col-sm-8 breather-bottom-20">
+                                <ImageViewer images={product.pictures}/>
+                            </div>
+                            <div className="col-sm-4">
+                                <div className="panel panel-default buy-panel">
+                                    <div className="panel-body">
+                                        <span className="product-price">{product.price}€</span>
+                                        <button onClick={this.buyProduct}
+                                                disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
+                                                className={
+                                                    product.stock > 0 && product.stock > this.state.quantity ?
+                                                        "btn-buy center-block btn btn-lg btn-success"
+                                                        :
+                                                        "btn-buy center-block btn btn-lg btn-success disabled"
+                                                }>
+                                            Add to cart
+                                        </button>
+                                        <br/>
+                                        {
+                                            product.stock > 0 && product.stock > this.state.quantity ?
+                                                <div>
                                                     <span
                                                         className="icon-margin icon-green glyphicon glyphicon-ok"/>
                                                 {product.stock} available

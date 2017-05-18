@@ -4,6 +4,7 @@ import MainPage from "./MainPage";
 import ProductPage from "../containers/ProductPage";
 import SearchPage from "./SearchPage";
 import ReviewPage from "../containers/ReviewPage";
+import ReviewForm from './ReviewForm';
 import '../../stylesheets/categoryList.scss';
 
 export default class CategoryList extends Component {
@@ -45,8 +46,9 @@ export default class CategoryList extends Component {
                 <Switch>
                     <Route exact path="/" component={MainPage}/>
                     <Route path="/category/:id/:name" component={MainPage}/>
-                    <Route path="/product/:id/reviews" component={ReviewPage}/>
-                    <Route path="/product/:id" component={ProductPage}/>
+                    <Route path="/product/:id/:name/reviews/add" component={ReviewForm}/>
+                    <Route path="/product/:id/:name/reviews" component={ReviewPage}/>
+                    <Route path="/product/:id/:name" component={ProductPage}/>
                     <Route path="/search" component={SearchPage}/>
                 </Switch>
             </div>

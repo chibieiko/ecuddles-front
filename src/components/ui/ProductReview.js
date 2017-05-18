@@ -6,6 +6,8 @@ import '../../stylesheets/productReview.scss';
 export default class ProductReview extends Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props);
     }
 
     render() {
@@ -16,7 +18,7 @@ export default class ProductReview extends Component {
                     <h4>Reviews</h4>
                 </div>
                 <div className="col-xs-6">
-                    <button className="btn btn-success pull-right">
+                   <button className="btn btn-success" onClick={() => this.props.history.push(this.props.product.name + "/reviews/add")}>
                         Add review
                     </button>
                 </div>
@@ -29,19 +31,22 @@ export default class ProductReview extends Component {
                     <p>No reviews for this product, go ahead and add one!</p>
             }
 
-            <div className="row">
-                <div className="col-xs-12">
-                    <Link to={{
-                        pathname: '/product/' + this.props.product.id + "/reviews",
-                        state: {
-                            reviews: this.props.product.reviews
-                        }
-                    }}
-                          className="pull-right bottom-breather">
-                        Show all reviews >>
-                    </Link>
+            {
+                this.props.product.reviews.length > 1 &&
+                <div className="row">
+                    <div className="col-xs-12">
+                        <Link to={{
+                            pathname: '/product/' + this.props.product.id + "/" + this.props.product.name + "/reviews",
+                            state: {
+                                reviews: this.props.product.reviews
+                            }
+                        }}
+                              className="pull-right bottom-breather">
+                            Show all reviews >>
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     }
 }
