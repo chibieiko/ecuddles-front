@@ -61,12 +61,12 @@ export default class ProductList extends Component {
 
             url = "/products/search/has?categoryid=" + categoryId +
                 "&page=" + this.state.page.number;
+        }
 
-            if (this.props.location.search) {
-                url += this.props.location.search.replace('?', '&');
-            } else {
-                url += "&sort=date,desc";
-            }
+        if (this.props.location.search) {
+            url += this.props.location.search.replace('?', '&');
+        } else {
+            url += "&sort=date,desc";
         }
 
         this.getProducts(url);
@@ -138,6 +138,7 @@ export default class ProductList extends Component {
                 this.state.fetching ?
                     <Spinner margin={true}/> :
                     <div>
+
                         <ProductListSort location={this.props.location}/>
 
                         {
