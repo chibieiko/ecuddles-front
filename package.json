@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "dateformat": "^2.0.0",
     "history": "^4.6.1",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.2.1",

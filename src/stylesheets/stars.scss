@@ -1,10 +1,12 @@
+@import "variables";
+
 .star-container {
   .star {
     padding: 3px;
   }
 
   .star-filled {
-    color: #ffc107;
+    color: $color-accent;
   }
 
   .star-empty {
