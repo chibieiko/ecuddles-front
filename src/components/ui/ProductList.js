@@ -133,18 +133,19 @@ export default class ProductList extends Component {
     };
 
     render() {
-        return <div>
+        return <div className="row">
             {
                 this.state.fetching ?
-                    <Spinner margin={true}/> :
+                    <Spinner margin={true}/>
+                    :
                     <div>
-
-                        <ProductListSort location={this.props.location}/>
+                    <ProductListSort location={this.props.location}/>
 
                         {
                             this.state.products.map(product => <ProductCard
                                 key={product.id} product={product}/>)
                         }
+
                         <Pagination jumpToPage={this.jumpToPage} previousPage={this.previousPage}
                                     nextPage={this.nextPage} page={this.state.page}/>
                     </div>

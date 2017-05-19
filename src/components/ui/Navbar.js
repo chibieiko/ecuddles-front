@@ -116,6 +116,7 @@ export default class Navbar extends Component {
             </nav>
             <NotificationBar/>
             </div>
+            <div className="row">
                 <div className="col-xs-12">
                     <form className="hidden-sm hidden-md hidden-lg breather after-navbar-search"
                           role="search" onSubmit={this.submitForm}>
@@ -132,6 +133,7 @@ export default class Navbar extends Component {
                         </div>
                     </form>
                 </div>
+            </div>
         </span>;
     };
 };

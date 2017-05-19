@@ -7,8 +7,12 @@ export default class Footer extends Component {
     }
 
     render() {
-        return <footer>
-            - Everyone needs a hug every now and then -
-        </footer>
+        return <div className="container">
+            <hr/>
+            <div className="text-center">
+            - Everyone needs a hug every now and then -<br/>
+            © eCuddles
+            </div>
+        </div>
     }
 }
