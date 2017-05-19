@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import Spinner from './Spinner';
-import FlameThrower from '../../flameThrower';
 import ImageViewer from './ImageViewer';
 import Stars from './Stars';
 import connector from '../../connector';
@@ -8,16 +7,16 @@ import '../../stylesheets/product.scss';
 
 const ListDetail = (props) => (
     <li className="list-group-item">
-        <div className="text-info">{props.name}</div>
+        <div className="color-gray">{props.name}</div>
         {props.value}
     </li>
 );
 
 const Detail = (props) => (
-        <div className="product-detail">
-            <div className="name">{props.name}</div>
-            <span className="value">{props.value}</span>
-        </div>
+    <div className="product-detail">
+        <div className="name color-gray">{props.name}</div>
+        <span className="value">{props.value}</span>
+    </div>
 );
 
 export default class ProductPage extends Component {
@@ -32,12 +31,10 @@ export default class ProductPage extends Component {
     };
 
     buyProduct = () => {
-        if (this.state.product.stock > 0 && this.state.product.stock > this.state.quantity) {
-            this.props.addToCart({
-                product: this.state.product.id,
-                quantity: this.state.quantity + 1
-            });
-        }
+        this.props.addToCart({
+            product: this.state.product.id,
+            quantity: this.state.quantity + 1
+        });
     };
 
     componentWillMount() {
@@ -47,6 +44,14 @@ export default class ProductPage extends Component {
     componentWillReceiveProps(nextProps) {
         this.loadProductDetails(nextProps.match.params.id);
     }
+
+    notifyMe = () => {
+        connector("/notifications/" + this.state.product.id,
+            {request: { method: "POST" }, auth: true})
+            .then(() => {
+                this.props.subscribeSuccess();
+            });
+    };
 
     loadProductDetails = productId => {
         this.setState({
@@ -82,101 +87,110 @@ export default class ProductPage extends Component {
         let product = this.state.product;
 
         return <div>
-                {
-                    this.state.error &&
-                    <div className="alert alert-danger">
-                        {this.state.error.message}
-                    </div>
-                }
+            {
+                this.state.error &&
+                <div className="alert alert-danger">
+                    {this.state.error.message}
+                </div>
+            }
 
-                {
-                    this.state.fetching &&
-                    <Spinner margin={true} delay={500}/>
-                }
+            {
+                this.state.fetching &&
+                <Spinner margin={true} delay={500}/>
+            }
 
-                {
-                    product &&
-                    <div>
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <h3>
-                                    {product.name}
-                                </h3>
-                                <Stars rating={4.4}/> 4.4 / 5
-                            </div>
+            {
+                product &&
+                <div>
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <h3>
+                                {product.name}
+                            </h3>
+                            <Stars rating={4.4}/> 4.4 / 5
                         </div>
-                        <div className="row product-page-row">
-                            <div className="col-sm-8 breather-bottom-20">
-                                <ImageViewer images={product.pictures}/>
-                            </div>
-                            <div className="col-sm-4">
-                                <div className="panel panel-default buy-panel">
-                                    <div className="panel-body">
-                                        <span className="product-price">{product.price} €</span>
-                                        <button onClick={this.buyProduct} className={
-                                            product.stock > 0 && product.stock > this.state.quantity ?
-                                                "btn-buy center-block btn btn-lg btn-success"
-                                                :
-                                                "btn-buy center-block btn btn-lg btn-success disabled"
-                                        }>
-                                            Add to cart
-                                        </button>
-                                        <br/>
-                                        {
-                                            product.stock > 0 && product.stock > this.state.quantity ?
-                                                <span>
+                    </div>
+                    <div className="row product-page-row">
+                        <div className="col-sm-8 breather-bottom-20">
+                            <ImageViewer images={product.pictures}/>
+                        </div>
+                        <div className="col-sm-4">
+                            <div className="panel panel-default buy-panel">
+                                <div className="panel-body">
+                                    <span className="product-price">{product.price} €</span>
+                                    <button onClick={this.buyProduct}
+                                            disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
+                                            className={
+                                                product.stock > 0 && product.stock > this.state.quantity ?
+                                                    "btn-buy center-block btn btn-lg btn-success"
+                                                    :
+                                                    "btn-buy center-block btn btn-lg btn-success disabled"
+                                            }>
+                                        Add to cart
+                                    </button>
+                                    <br/>
+                                    {
+                                        product.stock > 0 && product.stock > this.state.quantity ?
+                                            <div>
                                                     <span
                                                         className="icon-margin icon-green glyphicon glyphicon-ok"/>
-                                                    {product.stock} available
-                                                </span>
-                                                :
-                                                <span>
-                                                    <span className="icon-margin icon-red glyphicon glyphicon-remove"/>
-                                                    Out of stock
-                                                </span>
-                                        }
-                                        {
-                                            this.state.quantity > 0 &&
-                                                <div>
-                                                    <span className="icon-margin glyphicon glyphicon-shopping-cart"/>
-                                                    {this.state.quantity} item{this.state.quantity > 1 && "s"} in cart
-                                                </div>
-                                        }
-                                    </div>
+                                                {product.stock} available
+                                            </div>
+                                            :
+                                            <div>
+                                                <span className="icon-margin icon-red glyphicon glyphicon-remove"/>
+                                                Out of stock
+                                            </div>
+                                    }
+                                    {
+                                        product.stock < 1 &&
+                                        <button className="btn btn-sm btn-success notify-link"
+                                                onClick={this.notifyMe}>
+                                            <span className="icon-margin glyphicon glyphicon-envelope"/>Notify me
+                                        </button>
+                                    }
+                                    {
+                                        this.state.quantity > 0 &&
+                                        <div>
+                                            <span className="icon-margin glyphicon glyphicon-shopping-cart"/>
+                                            {this.state.quantity} item{this.state.quantity > 1 && "s"} in cart
+                                        </div>
+                                    }
                                 </div>
-
-                                <ul className="list-group">
-                                    <ListDetail name="Height" value={product.height + " cm"}/>
-                                    <ListDetail name="Fabric" value={product.fabric}/>
-                                    <ListDetail name="Filling" value={product.filling}/>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="row product-page-row">
-                            <div className="col-xs-12">
-                                {product.description}
                             </div>
 
-                            <div className="col-xs-12 breather-bottom">
-                                <hr/>
-                                <h4>More details</h4>
-                            </div>
-
-                            <div className="col-sm-6">
-                                <Detail name="Color" value={product.color}/>
-                                <Detail name="Designer" value={product.designer}/>
-                                <Detail name="Width" value={product.width + " cm"}/>
-                                <Detail name="Length" value={product.length + " cm"}/>
-                                <Detail name="Weight" value={product.weight + " kg"}/>
-                            </div>
-
-                            <div className="col-sm-6">
-                                <Detail name="Care instructions" value={product.careInstructions}/>
-                                <Detail name="Dispose instructions" value={product.disposeInstructions}/>
-                            </div>
+                            <ul className="list-group">
+                                <ListDetail name="Height" value={product.height + " cm"}/>
+                                <ListDetail name="Fabric" value={product.fabric}/>
+                                <ListDetail name="Filling" value={product.filling}/>
+                            </ul>
                         </div>
                     </div>
-                }
-            </div>;
+                    <div className="row product-page-row">
+                        <div className="col-xs-12">
+                            {product.description}
+                        </div>
+
+                        <div className="col-xs-12 breather-bottom">
+                            <hr/>
+                            <h4>More details</h4>
+                        </div>
+
+                        <div className="col-sm-6">
+                            <Detail name="Color" value={product.color}/>
+                            <Detail name="Designer" value={product.designer}/>
+                            <Detail name="Width" value={product.width + " cm"}/>
+                            <Detail name="Length" value={product.length + " cm"}/>
+                            <Detail name="Weight" value={product.weight + " kg"}/>
+                        </div>
+
+                        <div className="col-sm-6">
+                            <Detail name="Care instructions" value={product.careInstructions}/>
+                            <Detail name="Dispose instructions" value={product.disposeInstructions}/>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>;
     };
 };

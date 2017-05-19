@@ -1,3 +1,5 @@
+@import 'variables';
+
 .btn-buy {
   width: 100%;
   margin-top: 10px;
@@ -27,13 +29,12 @@
   margin-bottom: 8px;
 
   .name {
-    color: #7c7c7c;
     margin-bottom: 3px;
   }
+}
 
-  .value {
-
-  }
+.color-gray {
+  color: $color_gray;
 }
 
 .breather-bottom {
@@ -42,4 +43,9 @@
 
 .breather-bottom-20 {
   margin-bottom: 20px;
+}
+
+.notify-link {
+  width: 100%;
+  margin-top: 9px;
 }

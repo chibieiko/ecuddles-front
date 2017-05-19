@@ -22,12 +22,10 @@ export default class ProductCard extends Component {
     };
 
     addToCart = () => {
-        if (this.props.product.stock > 0 && this.props.product.stock > this.state.quantity) {
-            this.props.addToCart({
-                product: this.props.product.id,
-                quantity: this.state.quantity + 1
-            });
-        }
+        this.props.addToCart({
+            product: this.props.product.id,
+            quantity: this.state.quantity + 1
+        });
     };
 
     render() {
@@ -56,6 +54,7 @@ export default class ProductCard extends Component {
 
                 <div className="col-xs-12">
                     <button onClick={this.addToCart}
+                            disabled={!(this.props.product.stock > 0 && this.props.product.stock > this.state.quantity)}
                             className={
                                 this.props.product.stock > 0 && this.props.product.stock > this.state.quantity ?
                                     "btn btn-xs btn-success"
