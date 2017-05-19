@@ -2,8 +2,9 @@
  * Created by vilik on 12.5.2017.
  */
 import ProductPage from '../ui/ProductPage';
+import C from '../../constants';
 import {connect} from 'react-redux';
-import {modifyCart} from '../../actions';
+import {modifyCart, displayNotification} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
@@ -16,6 +17,12 @@ const mapDispatchToProps = dispatch => ({
         dispatch(modifyCart({
             entry: entry,
             showNotification: true
+        }));
+    },
+    subscribeSuccess() {
+        dispatch(displayNotification({
+            type: C.NOTIFICATION_SUCCESS,
+            message: "Successfully subscribed to email notification when the product becomes available"
         }));
     }
 });

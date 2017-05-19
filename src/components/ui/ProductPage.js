@@ -45,6 +45,14 @@ export default class ProductPage extends Component {
         this.loadProductDetails(nextProps.match.params.id);
     }
 
+    notifyMe = () => {
+        connector("/notifications/" + this.state.product.id,
+            {request: { method: "POST" }, auth: true})
+            .then(() => {
+                this.props.subscribeSuccess();
+            });
+    };
+
     loadProductDetails = productId => {
         this.setState({
             fetching: true
@@ -136,7 +144,8 @@ export default class ProductPage extends Component {
                                     }
                                     {
                                         product.stock < 1 &&
-                                        <button className="btn btn-xs center-block btn-success notify-link">
+                                        <button className="btn btn-sm btn-success notify-link"
+                                                onClick={this.notifyMe}>
                                             <span className="icon-margin glyphicon glyphicon-envelope"/>Notify me
                                         </button>
                                     }

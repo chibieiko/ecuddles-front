@@ -60,8 +60,12 @@ export default class FlameThrower {
                         {
                             exception: "com.evil.Exception.OutOfStockException",
                             msg: "Quantity of a product in your shopping cart exceeds stock"
+                        },
+                        {
+                            exception: "com.evil.Exception.DuplicateNotificationException",
+                            msg: "You are already subscribed for this notification"
                         }
-                    ], "Bad request");
+                    ], "Teddy thought the request tasted bad");
 
                     return;
 
