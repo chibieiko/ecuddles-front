@@ -8,8 +8,6 @@ export default class ReviewPage extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
-
         this.state = {
             fetching: false,
             reviews: []
@@ -38,6 +36,12 @@ export default class ReviewPage extends Component {
         connector(url)
             .then(response => {
                 let product = response;
+                let reviews = product.reviews;
+                if (reviews.length > 1) {
+                    reviews.sort((a, b) => {
+                        return (a.date > b.date) ? -1 : (a.date < b.date) ? 1 : 0;
+                    })
+                }
 
                 this.setState({
                     fetching: false,

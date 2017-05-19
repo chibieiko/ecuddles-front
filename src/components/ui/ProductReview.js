@@ -58,7 +58,7 @@ export default class ProductReview extends Component {
 
             {
                 reviews.length > 0 ?
-                        <ReviewCard key={reviews[0].id} review={reviews[0]}
+                        <ReviewCard key={reviews[reviews.length -1].id} review={reviews[reviews.length -1]}
                                     user={this.props.user}
                         product={this.props.product.id}
                         deleteReview={this.deleteReview}/> :
