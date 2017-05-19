@@ -13,7 +13,7 @@ export default class CartPaymentForm extends Component {
                 cardNumber: (this.props.content && this.props.content.cardNumber) || "",
                 cardHolder: (this.props.content && this.props.content.cardHolder) || "",
                 expiration: (this.props.content && this.props.content.expiration) || "",
-                cvs: (this.props.content && this.props.content.cvs) || ""
+                cvv: (this.props.content && this.props.content.cvs) || ""
             }
         };
     };
@@ -58,9 +58,9 @@ export default class CartPaymentForm extends Component {
         });
     };
 
-    onChangeCvs = (e) => {
+    onChangeCvv = (e) => {
         let content = this.state.content;
-        content.cvs = e.target.value;
+        content.cvv = e.target.value;
 
         this.setState({
             content: content
@@ -109,14 +109,14 @@ export default class CartPaymentForm extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="cvs">CVS</label>
+                        <label htmlFor="cvv">CVV</label>
                         <input type="text"
                                placeholder="123"
-                               value={this.state.content.cvs}
-                               onChange={this.onChangeCvs}
+                               value={this.state.content.cvv}
+                               onChange={this.onChangeCvv}
                                onBlur={this.saveState}
                                className="form-control"
-                               id="cvs"
+                               id="cvv"
                                required/>
                     </div>
 
