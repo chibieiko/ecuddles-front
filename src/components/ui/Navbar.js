@@ -2,6 +2,7 @@ import {Component} from 'react';
 import NotificationBar from '../containers/NotificationBar';
 import {Link} from 'react-router-dom';
 import '../../stylesheets/navbar.scss';
+import {matchPath} from 'react-router'
 
 export default class Navbar extends Component {
     constructor(props) {
@@ -20,6 +21,14 @@ export default class Navbar extends Component {
     onSearchChanged = (event) => {
         this.setState({
             search: event.target.value
+        });
+    };
+
+    displaySearchBar = () => {
+        return matchPath(this.props.location.pathname, {
+            path: ['/', '/category/:id', '/category/:id/:name', '/search', '/search/:name'],
+            exact: true,
+            strict: false
         });
     };
 
@@ -127,24 +136,32 @@ export default class Navbar extends Component {
             </nav>
             <NotificationBar/>
             </div>
-            <div className="row">
-                <div className="col-xs-12">
-                    <form className="hidden-sm hidden-md hidden-lg breather after-navbar-search"
-                          role="search" onSubmit={this.submitForm}>
-                        <div className="input-group">
-                            <input type="text" className="form-control"
-                                   onChange={this.onSearchChanged}
-                                   value={this.state.search && this.state.search}
-                                   placeholder="Search"/>
-                            <div className="input-group-btn">
-                                <button type="submit"
-                                        className="btn btn-default"><span
-                                    className="glyphicon glyphicon-search"/></button>
-                            </div>
+
+            {
+                this.displaySearchBar() ?
+                    <div className="row">
+                        <div className="col-xs-12">
+                            <form
+                                className="hidden-sm hidden-md hidden-lg breather after-navbar-search"
+                                role="search" onSubmit={this.submitForm}>
+                                <div className="input-group">
+                                    <input type="text" className="form-control"
+                                           onChange={this.onSearchChanged}
+                                           value={this.state.search && this.state.search}
+                                           placeholder="Search"/>
+                                    <div className="input-group-btn">
+                                        <button type="submit"
+                                                className="btn btn-default"><span
+                                            className="glyphicon glyphicon-search"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                    :
+                    <div className="after-navbar-search"/>
+            }
         </span>;
     };
 };
