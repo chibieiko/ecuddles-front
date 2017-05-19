@@ -7,7 +7,7 @@ export default class Footer extends Component {
     }
 
     render() {
-        return <div className="container">
+        return <div className="container footer">
             <hr/>
             <div className="text-center">
             - Everyone needs a hug every now and then -<br/>

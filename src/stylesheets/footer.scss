@@ -1,7 +1,6 @@
-footer {
-  background-color: #A45249;
-  height: 50px;
-  margin-top: 15px;
-  color: #f3f3f3;
-  text-align: center;
+@import "variables";
+
+.footer {
+  color: $color_gray;
+  margin-bottom: 10px;
 }
