@@ -5,6 +5,29 @@ import '../../stylesheets/productCard.scss';
 export default class ProductCard extends Component {
     constructor(props) {
         super(props);
+
+        let quantity = 0;
+
+        if (this.props.cart) {
+            this.props.cart.forEach(cartEntry => {
+                if (cartEntry.product.id === this.props.product.id) {
+                    quantity = cartEntry.quantity;
+                }
+            });
+        }
+
+        this.state = {
+            quantity: quantity
+        };
+    };
+
+    addToCart = () => {
+        if (this.props.product.stock > 0 && this.props.product.stock > this.state.quantity) {
+            this.props.addToCart({
+                product: this.props.product.id,
+                quantity: this.state.quantity + 1
+            });
+        }
     };
 
     render() {
@@ -22,21 +45,30 @@ export default class ProductCard extends Component {
             </Link>
             <div className="row">
                 <Link to={'/product/' + this.props.product.id}>
-                <div className="col-xs-12">
+                    <div className="col-xs-12">
                         <p className="product-name">{this.props.product.name}</p>
-                </div>
+                    </div>
 
-                <div className="col-xs-12">
-                    <p className="price">{this.props.product.price} €</p>
-                </div>
+                    <div className="col-xs-12">
+                        <p className="price">{this.props.product.price} €</p>
+                    </div>
                 </Link>
 
                 <div className="col-xs-12">
-                    <Link to={'/product/' + this.props.product.id}>
-                        <button className="btn btn-xs btn-success">
-                            <span className="glyphicon glyphicon-shopping-cart"/> Add to cart
-                        </button>
-                    </Link>
+                    <button onClick={this.addToCart}
+                            className={
+                                this.props.product.stock > 0 && this.props.product.stock > this.state.quantity ?
+                                    "btn btn-xs btn-success"
+                                    :
+                                    "btn btn-xs btn-success disabled"
+                            }>
+                        {
+                            this.props.product.stock > 0 && this.props.product.stock > this.state.quantity ?
+                                <span><span className="glyphicon glyphicon-shopping-cart"/> Add to cart</span>
+                                :
+                                <span><span className="glyphicon glyphicon-remove"/> Out of stock</span>
+                        }
+                    </button>
                 </div>
             </div>
         </div>;

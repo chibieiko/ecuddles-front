@@ -33,7 +33,7 @@ export default class App extends Component {
                     <Router history={ history }>
                         <div>
                             <Navbar/>
-                            <div className="container">
+                            <div className="container after-navbar">
                                 <Switch>
                                     <Route path="/login" component={LoginPage}/>
                                     <Route path="/register" component={RegisterPage}/>
