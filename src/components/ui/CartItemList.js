@@ -43,7 +43,7 @@ export default class CartItemList extends Component {
                     <div className="row">
                         <div className="col-xs-12">
                             <span className="pull-right">
-                                Total: <span className="cart-total-price">{totalPrice} €</span>
+                                Total: <span className="cart-total-price">{totalPrice.toFixed(2)} €</span>
                             </span>
                         </div>
                     </div>

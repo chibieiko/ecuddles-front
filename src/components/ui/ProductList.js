@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import connector from '../../connector';
-import ProductCard from './ProductCard';
+import ProductCard from '../containers/ProductCard';
 import ProductListSort from './ProductListSort';
 import Spinner from './Spinner';
 import Pagination from './Pagination';

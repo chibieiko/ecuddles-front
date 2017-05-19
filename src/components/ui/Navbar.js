@@ -25,6 +25,7 @@ export default class Navbar extends Component {
 
     render() {
         return <span>
+                <div className="navbar-fixed-top">
                 <nav className="navbar navbar-default" id="ecuddles-navbar">
                 <div className="container">
                     <div className="navbar-header">
@@ -67,11 +68,12 @@ export default class Navbar extends Component {
                                         <li>
                                             <Link to="/cart">
                                                 <div className="navbar-cart">
-                                                Cart
-                                                {
-                                                    this.props.cart.length > 0 &&
-                                                    <span className="badge" id="cart-badge">{this.props.cartItemCount}</span>
-                                                }
+                                                    Cart
+                                                    {
+                                                        this.props.cart.length > 0 &&
+                                                        <span className="badge"
+                                                              id="cart-badge">{this.props.cartItemCount}</span>
+                                                    }
                                                 </div>
                                             </Link>
                                         </li>
@@ -113,20 +115,23 @@ export default class Navbar extends Component {
                 </div>
             </nav>
             <NotificationBar/>
-            <form className="hidden-sm hidden-md hidden-lg breather"
-                  role="search" onSubmit={this.submitForm}>
-                <div className="input-group">
-                    <input type="text" className="form-control"
-                           onChange={this.onSearchChanged}
-                           value={this.state.search && this.state.search}
-                           placeholder="Search"/>
-                    <div className="input-group-btn">
-                        <button type="submit"
-                                className="btn btn-default"><span
-                            className="glyphicon glyphicon-search"/></button>
-                    </div>
+            </div>
+                <div className="col-xs-12">
+                    <form className="hidden-sm hidden-md hidden-lg breather after-navbar-search"
+                          role="search" onSubmit={this.submitForm}>
+                        <div className="input-group">
+                            <input type="text" className="form-control"
+                                   onChange={this.onSearchChanged}
+                                   value={this.state.search && this.state.search}
+                                   placeholder="Search"/>
+                            <div className="input-group-btn">
+                                <button type="submit"
+                                        className="btn btn-default"><span
+                                    className="glyphicon glyphicon-search"/></button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
         </span>;
     };
 };

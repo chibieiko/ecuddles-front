@@ -90,13 +90,12 @@ export const checkout = () => (dispatch, getState) => {
 
             dispatch(displayNotification({
                 type: C.NOTIFICATION_SUCCESS,
-                message: "Checkout successful!"
+                message: "Thank you for your purchase!"
             }));
         })
         .catch(error => {
-            // TODO: HANDLE THIS SHIT
-            console.log("ERROR WITH CHECKOUT");
-            console.log(error);
+            dispatch(updateCart());
+            dispatch(saveProgress(0));
         });
 };
 
