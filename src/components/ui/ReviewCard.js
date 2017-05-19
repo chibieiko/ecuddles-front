@@ -12,8 +12,6 @@ export default class ReviewCard extends Component {
         this.state = {
             date: date
         };
-
-        console.log(this.props);
     }
 
     render() {
@@ -50,10 +48,11 @@ export default class ReviewCard extends Component {
 
                 <div className="row review-item">
                     {
-                        this.props.user.id == this.props.review.user.id &&
+                        this.props.user && this.props.user.id == this.props.review.user.id &&
                         <div className="col-xs-12">
                             <button
-                                className="btn btn-sm btn-danger">
+                                className="btn btn-sm btn-danger"
+                            onClick={this.props.deleteReview}>
                                 <span className="glyphicon glyphicon-trash"/> Delete review
                             </button>
                         </div>

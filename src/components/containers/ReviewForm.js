@@ -1,4 +1,4 @@
-import ProductReview from '../ui/ProductReview';
+import ReviewForm from '../ui/ReviewForm';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {displayNotification} from '../../actions';
@@ -10,14 +10,14 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onReviewAddError() {
+    onReviewAdd() {
         dispatch(displayNotification({
-            message: "Please log in to add a review",
-            type: C.NOTIFICATION_ERROR
+            message: "Review added successfully",
+            type: C.NOTIFICATION_SUCCESS
         }))
     }
 });
 
-const Container = connect(mapStateToProps, mapDispatchToProps)(ProductReview);
+const Container = connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
 
 export default withRouter(Container);

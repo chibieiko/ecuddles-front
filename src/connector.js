@@ -38,6 +38,8 @@ export default (path, options={}) => {
 
             request.method = "POST";
             request.body = JSON.stringify(options.post);
+        } else if (options.delete) {
+            request.method = "DELETE";
         }
 
         fetch(api + path, request)

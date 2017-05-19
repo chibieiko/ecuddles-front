@@ -9,8 +9,14 @@ export default class LoginPage extends Component {
         this.state = {
             email: "",
             password: ""
-        }
+        };
     };
+
+    componentWillUpdate(nextProps, nextState) {
+        if (nextProps.loggedIn) {
+            nextProps.history.goBack();
+        }
+    }
 
     submitForm = (event) => {
         event.preventDefault();
@@ -39,23 +45,20 @@ export default class LoginPage extends Component {
             }
 
             {
-                this.props.loggedIn &&
-                <Redirect to="/"/>
-            }
-
-            {
                 this.props.fetching &&
                 <Spinner delay={500} margin={true}/>
             }
 
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email</label>
-                <input type="email" onChange={this.onEmailChanged} className="form-control" id="exampleInputEmail1"
+                <input type="email" onChange={this.onEmailChanged}
+                       className="form-control" id="exampleInputEmail1"
                        placeholder="email@gmail.com"/>
             </div>
             <div className="form-group">
                 <label htmlFor="exampleInputPassword1">Password</label>
-                <input type="password" onChange={this.onPasswordChanged} className="form-control"
+                <input type="password" onChange={this.onPasswordChanged}
+                       className="form-control"
                        id="exampleInputPassword1" placeholder="********"/>
             </div>
             <button type="submit" className="btn btn-primary">Login</button>

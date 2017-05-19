@@ -1,4 +1,6 @@
 import {Component} from 'react';
+import '../../stylesheets/reviewForm.scss';
+import connector from '../../connector';
 
 export default class ReviewForm extends Component {
     constructor(props) {
@@ -7,7 +9,10 @@ export default class ReviewForm extends Component {
         this.state = {
             title: "",
             body: "",
+            star: 3
         };
+
+        console.log(this.props);
     }
 
     onTitleChange = (event) => {
@@ -22,10 +27,32 @@ export default class ReviewForm extends Component {
         })
     };
 
+    onStarChange = (event) => {
+        this.setState({
+            star: event.target.value
+        })
+    };
+
     onFormSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state.title);
-        console.log(this.state.body);
+
+        let review = {
+            title: this.state.title,
+            body: this.state.body,
+            stars: this.state.star
+        };
+
+        console.log(review);
+
+        connector("/products/" + this.props.match.params.id + "/reviews", {
+            auth: true,
+            post: review
+        })
+            .then(response => {
+                console.log(response);
+                this.props.onReviewAdd();
+                this.props.history.goBack();
+            })
     };
 
     render() {
@@ -37,18 +64,64 @@ export default class ReviewForm extends Component {
                     <label htmlFor="title">Title</label>
                     <input type="text" className="form-control" id="title"
                            placeholder="Review title"
-                           onChange={this.onTitleChange}/>
+                           onChange={this.onTitleChange} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="body">Review</label>
                     <textarea className="form-control" id="body"
                               placeholder="Type your review here"
-                              onChange={this.onBodyChange} rows="5"/>
+                              onChange={this.onBodyChange} rows="5" required/>
                 </div>
 
-                <button type="submit" className="btn btn-success">Submit
-                    review
+                <label>Stars</label>
+                <div className="radio">
+                    <label>
+                        <input type="radio" name="starRadios" id="starRadios1"
+                               value="1" onChange={this.onStarChange}/>
+                        1
+                    </label>
+                </div>
+                <div className="radio">
+                    <label>
+                        <input type="radio" name="starRadios" id="starRadios2"
+                               value="2" onChange={this.onStarChange}/>
+                        2
+                    </label>
+                </div>
+                <div className="radio">
+                    <label>
+                        <input type="radio" name="starRadios" id="starRadios3"
+                               value="3" defaultChecked
+                               onChange={this.onStarChange}/>
+                        3
+                    </label>
+                </div>
+                <div className="radio">
+                    <label>
+                        <input type="radio" name="starRadios" id="starRadios4"
+                               value="4" onChange={this.onStarChange}/>
+                        4
+                    </label>
+                </div>
+                <div className="radio">
+                    <label>
+                        <input type="radio" name="starRadios" id="starRadios5"
+                               value="5" onChange={this.onStarChange}/>
+                        5
+                    </label>
+                </div>
+
+                <br/>
+
+                <button type="submit" className="btn btn-success">
+                    Submit review
                 </button>
+
+                <button className="btn btn-default left-breather"
+                onClick={this.props.history.goBack}>
+                    Cancel
+                </button>
+
             </form>
         </div>
     }
