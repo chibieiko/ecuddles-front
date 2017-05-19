@@ -7,12 +7,12 @@ import '../../stylesheets/productReview.scss';
 export default class ProductReview extends Component {
     constructor(props) {
         super(props);
+    }
 
-        this.state = {
-            reviews: this.props.product.reviews
-        };
-
-        console.log(this.props);
+    componentWillReceiveProps(nextProps) {
+        if (this.props !== nextProps) {
+            this.props = nextProps;
+        }
     }
 
     deleteReview = (event) => {
@@ -32,6 +32,9 @@ export default class ProductReview extends Component {
     };
 
     render() {
+
+        let reviews = this.props.product.reviews;
+
         return <div>
             <hr/>
             <div className="row bottom-breather">
@@ -54,16 +57,15 @@ export default class ProductReview extends Component {
             </div>
 
             {
-                this.state.reviews.length > 0 ?
-                        <ReviewCard key={this.state.reviews[0].id} review={this.state.reviews[0]}
+                reviews.length > 0 ?
+                        <ReviewCard key={reviews[0].id} review={reviews[0]}
                                     user={this.props.user}
                         product={this.props.product.id}
                         deleteReview={this.deleteReview}/> :
                     <p>No reviews for this product, go ahead and add one!</p>
             }
-
             {
-                this.state.reviews.length > 1 &&
+                reviews.length > 1 &&
                 <div className="row">
                     <div className="col-xs-12">
                         <Link to={'/product/' + this.props.product.id + "/" + this.props.product.name + "/reviews"}
