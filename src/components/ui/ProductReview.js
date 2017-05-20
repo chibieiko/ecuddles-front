@@ -7,11 +7,18 @@ import '../../stylesheets/productReview.scss';
 export default class ProductReview extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            reviews: this.props.product.reviews
+        }
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
             this.props = nextProps;
+            this.setState({
+                reviews: this.props.product.reviews
+            })
         }
     }
 
@@ -20,7 +27,6 @@ export default class ProductReview extends Component {
 
         connector("/products/" + this.props.product.id + "/reviews", {auth: true, delete: true})
             .then(response => {
-                console.log(response);
                 let reviews = this.state.reviews.filter((review) => {
                     return review.id !== response.id
                 });
@@ -33,7 +39,7 @@ export default class ProductReview extends Component {
 
     render() {
 
-        let reviews = this.props.product.reviews;
+        let reviews = this.state.reviews;
 
         return <div>
             <hr/>
