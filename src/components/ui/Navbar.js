@@ -65,18 +65,29 @@ export default class Navbar extends Component {
                                                 Logout
                                             </Link>
                                         </li>
-                                        <li>
-                                            <Link to="/cart">
-                                                <div className="navbar-cart">
-                                                    Cart
-                                                    {
-                                                        this.props.cart.length > 0 &&
-                                                        <span className="badge"
-                                                              id="cart-badge">{this.props.cartItemCount}</span>
-                                                    }
-                                                </div>
-                                            </Link>
-                                        </li>
+                                        {
+                                            this.props.user.role === "ADMIN" ?
+                                                <li>
+                                                    <Link to="/log">
+                                                        <div className="navbar-cart">
+                                                            Purchases
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                                :
+                                                <li>
+                                                    <Link to="/cart">
+                                                        <div className="navbar-cart">
+                                                            Cart
+                                                            {
+                                                                this.props.cart.length > 0 &&
+                                                                <span className="badge"
+                                                                      id="cart-badge">{this.props.cartItemCount}</span>
+                                                            }
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                        }
                                     </ul>
                                     :
                                     <ul className="nav navbar-nav navbar-right">
