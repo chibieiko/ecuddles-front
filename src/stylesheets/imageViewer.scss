@@ -3,14 +3,14 @@
 
   .image-viewer-selected-image-container {
     height: 300px;
-    width: 100%;
-    max-width: 300px;
     margin-bottom: 20px;
   }
 
-  .image-viewer-selected-image {
+  .image-viewer-selected-image-container img {
+    max-height: 100%;
+    max-width: 100%;
     width: auto;
-    height: 100%;
+    height: auto;
   }
 
   .image-viewer-thumbnail {
