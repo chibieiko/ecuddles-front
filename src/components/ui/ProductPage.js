@@ -188,7 +188,7 @@ export default class ProductPage extends Component {
                         </div>
                     </div>
                     <div className="row product-page-row">
-                        <div className="col-xs-12">
+                        <div className="col-xs-12 col-md-8">
                             {product.description}
                         </div>
 
@@ -199,7 +199,8 @@ export default class ProductPage extends Component {
 
                         <div className="col-sm-6">
                             <Detail name="Color" value={product.color}/>
-                            <Detail name="Designer" value={product.designer}/>
+                            <Detail name="Height"
+                                        value={product.height + " cm"}/>
                             <Detail name="Width" value={product.width + " cm"}/>
                             <Detail name="Length"
                                     value={product.length + " cm"}/>
@@ -208,10 +209,15 @@ export default class ProductPage extends Component {
                         </div>
 
                         <div className="col-sm-6">
+                            <Detail name="Fabric"
+                                        value={product.fabric}/>
+                            <Detail name="Filling"
+                                        value={product.filling}/>
                             <Detail name="Care instructions"
                                     value={product.careInstructions}/>
                             <Detail name="Dispose instructions"
                                     value={product.disposeInstructions}/>
+                            <Detail name="Designer" value={product.designer}/>
                         </div>
                     </div>
                     <div className="row">
