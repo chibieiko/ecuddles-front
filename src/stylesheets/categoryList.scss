@@ -38,3 +38,10 @@ ul.nav>li.category-link>a:focus,
 ul.nav>li.active-category-link>a {
   background-color: $color_light_orange;
 }
+
+.white-btn-icon,
+.white-btn-icon:hover,
+.white-btn-icon:focus,
+.white-btn-icon:active{
+  color: white;
+}

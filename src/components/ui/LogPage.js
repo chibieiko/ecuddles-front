@@ -47,7 +47,9 @@ export default class LoginPage extends Component {
             auth: true,
             successNotification: notification
         }).then(response => {
-            this.loadLogs();
+            this.setState({
+                log: this.state.log.filter(entry => (entry.id !== id))
+            });
         });
     };
 

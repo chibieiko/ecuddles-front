@@ -2,6 +2,7 @@ import {Component} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import RegisterPage from '../containers/RegisterPage';
 import CategoryList from '../containers/CategoryList';
+import EditCategoriesPage from './EditCategoriesPage';
 import CartPage from '../containers/CartPage';
 import LogPage from './LogPage';
 import Navbar from '../containers/Navbar';
@@ -40,6 +41,7 @@ export default class App extends Component {
                                     <Route path="/register" component={RegisterPage}/>
                                     <Route path="/cart" component={CartPage}/>
                                     <Route path="/log" component={LogPage}/>
+                                    <Route path="/edit-categories" component={EditCategoriesPage}/>
                                     <Route path="/" component={CategoryList}/>
                                 </Switch>
                             </div>

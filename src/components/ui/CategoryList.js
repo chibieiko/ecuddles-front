@@ -24,6 +24,14 @@ export default class CategoryList extends Component {
                 <div className="panel panel-default">
                     <div className="panel-heading">
                         Categories
+                        {
+                            this.props.role === "ADMIN" &&
+                                <Link to="/edit-categories" className="white-btn-icon">
+                                    <span className="pull-right">
+                                        <span className="glyphicon glyphicon-edit"/>
+                                    </span>
+                                </Link>
+                        }
                     </div>
                     <div className="panel-body">
                         <ul className="nav">

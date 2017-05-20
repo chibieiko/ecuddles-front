@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
     categories: state.categories,
+    role: state.authentication.user ? state.authentication.user.role : "",
     router: props.router
 });
 

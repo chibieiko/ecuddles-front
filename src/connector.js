@@ -41,6 +41,13 @@ export default (path, options={}) => {
             request.body = JSON.stringify(options.post);
         } else if (options.delete) {
             request.method = "DELETE";
+        } else if (options.patch) {
+            request.headers = request.headers || new Headers();
+
+            request.headers.append("Content-Type", "application/json");
+
+            request.method = "PATCH";
+            request.body = JSON.stringify(options.patch);
         }
 
         fetch(api + path, request)
