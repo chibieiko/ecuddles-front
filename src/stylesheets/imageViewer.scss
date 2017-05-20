@@ -4,7 +4,8 @@
     margin-bottom: 20px;
   }
 
-  .image-viewer-selected-image-container img {
+  .image-viewer-selected-image-container img,
+  .image-viewer-thumbnail img {
     max-height: 100%;
     max-width: 100%;
     width: auto;
@@ -16,12 +17,5 @@
     display: inline-block;
     height: 50px;
     padding-right: 3px;
-  }
-
-  .image-viewer-thumbnail img {
-    max-height: 100%;
-    max-width: 100%;
-    width: auto;
-    height: auto;
   }
 }
