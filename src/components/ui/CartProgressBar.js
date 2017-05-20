@@ -22,9 +22,17 @@ export default class CartProgressBar extends Component {
 
     render() {
         return <div className="stepper-bar">
-            <Step current={true} number={1} title="Shopping cart"/>
-            <Step number={2} title="Information"/>
-            <Step number={3} title="Payment"/>
+            {
+                this.props.steps.map((step, index) => {
+                    return <Step key={index}
+                                 number={index + 1}
+                                 title={step}
+                                 current={
+                                     index === this.props.current
+                                 }
+                    />;
+                })
+            }
         </div>;
     };
 };

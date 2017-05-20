@@ -3,11 +3,13 @@
  */
 import CartPage from '../ui/CartPage';
 import {connect} from 'react-redux';
-import {modifyCart} from '../../actions';
+import {modifyCart, saveProgress, savePhase, checkout} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => ({
     cart: state.shoppingCart,
+    phases: state.cartPhases,
+    current: state.cartProgress,
     router: props.router
 });
 
@@ -21,6 +23,21 @@ const mapDispatchToProps = dispatch => ({
             },
             showNotification: true
         }));
+    },
+    changeQuantity(product, quantity) {
+        console.log("Product: " + product + " | Quantity: " + quantity);
+    },
+    saveProgress(index) {
+        dispatch(saveProgress(index));
+    },
+    savePhase(index, content) {
+        dispatch(savePhase({
+            key: index,
+            content: content ? content : {}
+        }))
+    },
+    checkout() {
+        dispatch(checkout());
     }
 });
 

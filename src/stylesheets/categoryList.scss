@@ -1,5 +1,7 @@
+@import 'variables';
+
 .col-xs-12 {
-  background-color: #fff;
+  background-color: $color_white;
 }
 #sidebar {
   height: 100%;
@@ -9,19 +11,30 @@
   width: 100%;
 }
 #sidebar li {
-  border:0 rgba(242, 142, 33, 0.23) solid;
+  border:0 #fce5cc solid;
   border-bottom-width:1px;
 }
 h1 {
   padding-left: 15px;
 }
 
-div.panel-danger {
-  border-color: #A45249;
+#sidebar>.panel-default {
+  border-color: $color_primary;
 }
 
-div.panel-danger>.panel-heading {
-  background-color: #A45249;
-  border-color: #A45249;
-  color: #f3f3f3;
+#sidebar>.panel-default>.panel-heading {
+  background-color: $color_primary;
+  border-color: $color_primary;
+  color: $color_dirty_white;
+}
+
+#sidebar>.panel-default>.panel-body {
+  padding: 0;
+}
+
+ul.nav>li.category-link>a:hover,
+ul.nav>li.category-link>a:active,
+ul.nav>li.category-link>a:focus,
+ul.nav>li.active-category-link>a {
+  background-color: $color_light_orange;
 }

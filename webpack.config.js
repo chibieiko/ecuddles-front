@@ -4,9 +4,9 @@ var webpack = require('webpack');
 module.exports = {
     entry: "./src/index.js",
     output: {
-        path: __dirname + "public/assets",
+        path: __dirname + "/public/assets",
         filename: "bundle.js",
-        publicPath: "assets"
+        publicPath: "assets/"
     },
     devServer: {
         inline: true,

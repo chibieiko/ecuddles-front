@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/webpack-dev-server"
+    "start": "./node_modules/.bin/webpack-dev-server",
+    "build": "./node_modules/.bin/webpack -p"
   },
   "author": "Vili Kinnunen & Erika Sankari",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "dateformat": "^2.0.0",
     "history": "^4.6.1",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.2.1",

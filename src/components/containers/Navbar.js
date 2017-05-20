@@ -4,6 +4,7 @@ import {logout} from '../../actions';
 import {withRouter} from 'react-router';
 
 const mapStateToProps = (state, props) => {
+
     let cartItemCount = 0;
 
     state.shoppingCart.forEach(entry => {
@@ -15,7 +16,8 @@ const mapStateToProps = (state, props) => {
         cartItemCount: cartItemCount,
         loggedIn: state.authentication.loggedIn,
         user: state.authentication.user,
-        router: props.router
+        router: props.router,
+        categories: state.categories
     };
 };
 

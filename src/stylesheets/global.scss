@@ -17,7 +17,8 @@ body {
 }
 
 .btn.btn-success:hover,
-.btn.btn-success:active {
+.btn.btn-success:active,
+.btn.btn-success:focus{
   background-color: darken($color_accent, 5);
 }
 
@@ -27,9 +28,20 @@ Link, a, h1 {
 
 Link:hover, Link:active, Link:focus, a:hover, a:active, a:focus {
   color: #9A4D46;
+  text-decoration: none;
 }
 
 .align-center {
   display: flex;
   align-items: center;
+}
+
+.after-navbar {
+  @media screen and (min-width: 768px) {
+    margin-top: 70px;
+  }
+}
+
+.after-navbar-search {
+  margin-top: 70px;
 }

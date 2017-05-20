@@ -1,10 +1,32 @@
 import store from './store';
 import {logout} from './actions';
 
+const parseError = (response, reject, errors, defaultMessage) => {
+    response.json()
+        .then(responseBody => {
+            let found = false;
+
+            errors.forEach(error => {
+                if (error.exception === responseBody.exception) {
+                    if (error.execute) {
+                        error.execute();
+                    }
+
+                    reject(new Error(error.msg));
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                reject(new Error(defaultMessage));
+            }
+        })
+        .catch(e => {
+            reject(e);
+        });
+};
+
 export default class FlameThrower {
-
-    // TODO MAKE FLAME THROWER GREAT AGAIN
-
     static burn = (response) => {
         return new Promise((resolve, reject) => {
             if (response.ok) {
@@ -17,37 +39,33 @@ export default class FlameThrower {
 
             switch (response.status) {
                 case 500:
-                    response.json()
-                        .then(responseBody => {
-                            if (responseBody.exception === "com.evil.Exception.TokenException") {
+                    parseError(response, reject, [
+                        {
+                            exception: "com.evil.Exception.TokenException",
+                            msg: "Session expired, please log in again",
+                            execute: () => {
                                 store.dispatch(
                                     logout()
                                 );
 
                                 location.href = "#/login";
-                                reject(new Error("Invalid token"));
-                            } else {
-                                reject(new Error("Teddy is not happy at the moment, try again later"));
                             }
-                        })
-                        .catch(e => {
-                            reject(e);
-                        });
+                        }
+                    ], "An unexpected error occurred, please try again later");
 
                     return;
 
                 case 400:
-                    response.json()
-                        .then(responseBody => {
-                            if (responseBody.exception === "com.evil.Exception.OutOfStockException") {
-                                reject(new Error("Quantity of this product in your shopping cart exceeds stock!"));
-                            } else {
-                                reject(new Error("Bad request!"));
-                            }
-                        })
-                        .catch(e => {
-                            reject(e);
-                        });
+                    parseError(response, reject, [
+                        {
+                            exception: "com.evil.Exception.OutOfStockException",
+                            msg: "Quantity of a product in your shopping cart exceeds stock"
+                        },
+                        {
+                            exception: "com.evil.Exception.DuplicateNotificationException",
+                            msg: "You are already subscribed for this notification"
+                        }
+                    ], "Teddy thought the request tasted bad");
 
                     return;
 
@@ -56,11 +74,17 @@ export default class FlameThrower {
                     return;
 
                 case 403:
-                    reject(new Error("No authorization"));
+                    parseError(response, reject, [
+                        {
+                            exception: "com.evil.Exception.IllegalReviewException",
+                            msg: "You have already submitted review for this product"
+                        }
+                    ], "Please log in to perform this action");
+
                     return;
 
                 case 404:
-                    reject(new Error("Not found"));
+                    reject(new Error("Teddy couldn't find what you were looking for"));
                     return;
 
                 default:

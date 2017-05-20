@@ -3,6 +3,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import RegisterPage from '../containers/RegisterPage';
 import CategoryList from '../containers/CategoryList';
 import CartPage from '../containers/CartPage';
+import LogPage from './LogPage';
 import Navbar from '../containers/Navbar';
 import LoginPage from '../containers/LoginPage';
 import {Provider} from 'react-redux';
@@ -33,11 +34,12 @@ export default class App extends Component {
                     <Router history={ history }>
                         <div>
                             <Navbar/>
-                            <div className="container">
+                            <div className="container after-navbar">
                                 <Switch>
                                     <Route path="/login" component={LoginPage}/>
                                     <Route path="/register" component={RegisterPage}/>
                                     <Route path="/cart" component={CartPage}/>
+                                    <Route path="/log" component={LogPage}/>
                                     <Route path="/" component={CategoryList}/>
                                 </Switch>
                             </div>
