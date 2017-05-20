@@ -1,6 +1,3 @@
-/**
- * Created by vili on 17/05/2017.
- */
 import CartItem from '../ui/CartItem';
 import {connect} from 'react-redux';
 import {modifyCart} from '../../actions';

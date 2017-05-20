@@ -18,7 +18,7 @@ export default class ImageViewer extends Component {
                      alt="Full size product image"/>
             </div>
 
-            <div className="image-viewer-thumbnail-images">
+            <div className="image-viewer-thumbnail-images col-xs-12">
                 {this.props.images.map((img, index) => (
                     <img key={index} onClick={() => {this.setState({activeIndex: index})}} src={img.url} alt="Thumbnail" className="image-viewer-thumbnail"/>
                     ))}
