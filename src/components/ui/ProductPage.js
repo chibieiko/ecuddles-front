@@ -261,7 +261,7 @@ export default class ProductPage extends Component {
                             Are you sure you want to permanently delete this product from the store?
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-default">Cancel</button>
+                            <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
                             <button type="button" className="btn btn-danger" onClick={this.deleteProduct}
                                     data-dismiss="modal">Delete
                             </button>
