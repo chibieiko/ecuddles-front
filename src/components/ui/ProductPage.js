@@ -54,6 +54,14 @@ export default class ProductPage extends Component {
             });
     };
 
+    deleteProduct = () => {
+        connector("/products/" + this.state.product.id, {delete: true, auth: true})
+            .then(response => {
+                this.props.deleteSuccess();
+                this.props.history.push("/");
+            });
+    };
+
     loadProductDetails = productId => {
         this.setState({
             fetching: true
@@ -169,10 +177,17 @@ export default class ProductPage extends Component {
                                         <div>
                                             <span
                                                 className="icon-margin glyphicon glyphicon-shopping-cart"/>
-                                            {this.state.quantity}
-                                            item{this.state.quantity > 1 && "s"}
-                                            in cart
+                                            {this.state.quantity} item{this.state.quantity > 1 && "s"} in cart
                                         </div>
+                                    }
+                                    {
+                                        this.props.role === "ADMIN" &&
+                                        <button className="btn btn-sm btn-danger notify-link"
+                                                data-toggle="modal"
+                                                data-target="#removeModal">
+                                            <span className="icon-margin glyphicon glyphicon-envelope"/>
+                                            Delete
+                                        </button>
                                     }
                                 </div>
                             </div>
@@ -222,6 +237,25 @@ export default class ProductPage extends Component {
                     </div>
                 </div>
             }
+
+            <div className="modal fade" id="removeModal" tabIndex="-1" role="dialog" aria-labelledby="removeModalLabel">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 className="modal-title" id="removeModalLabel">Delete product</h4>
+                        </div>
+                        <div className="modal-body">
+                            Are you sure you want to permanently delete this product from the store?
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-default">Cancel</button>
+                            <button type="button" className="btn btn-danger" onClick={this.deleteProduct} data-dismiss="modal">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>;
     };
 };
