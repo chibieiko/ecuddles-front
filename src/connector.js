@@ -16,6 +16,7 @@ export default (path, options={}) => {
         request: Fetch request object,
         auth: boolean (send token with request when authenticated),
         hideError: do not display error messages,
+        successNotification: msg to display on success
         post: object to post
     }
     */
@@ -45,6 +46,13 @@ export default (path, options={}) => {
         fetch(api + path, request)
             .then(response => FlameThrower.burn(response))
             .then(response => {
+                if (options.successNotification) {
+                    store.dispatch(displayNotification({
+                        message: options.successNotification,
+                        type: C.NOTIFICATION_SUCCESS
+                    }));
+                }
+
                 resolve(response);
             })
             .catch(error => {

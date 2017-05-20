@@ -28,7 +28,6 @@ export default class CartPage extends Component {
     };
 
     checkout = () => {
-        console.log("CHECKOUT HAPPENING");
         this.props.checkout();
     };
 

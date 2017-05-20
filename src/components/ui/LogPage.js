@@ -40,65 +40,87 @@ export default class LoginPage extends Component {
             });
     };
 
+    deleteEntry = (id) => {
+        let notification = "Entry removed successfully!";
+        connector("/purchaseLogEntries/" + id, {
+            delete: true,
+            auth: true,
+            successNotification: notification
+        }).then(response => {
+            this.loadLogs();
+        });
+    };
+
     render() {
         return <div className="row">
-            <div className="col-xs-12 table-responsive">
-                {
-                    this.state.fetching &&
-                    <Spinner margin={true}/>
-                }
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>
-                            Date
-                        </th>
-                        <th>
-                            Quantity
-                        </th>
-                        <th>
-                            Product
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Address
-                        </th>
-                        <th>
-                            Phone
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div className="col-xs-12">
+                <div className="table-responsive">
+                    {
+                        this.state.fetching &&
+                        <Spinner margin={true}/>
+                    }
+                    <table className="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Product
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Phone
+                            </th>
+                            <th>
+                                Delete
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {
                             this.state.log &&
-                                this.state.log.map((entry, index) => {
-                                    let date = new Date(entry.bought);
-                                    return <tr key={index}>
-                                        <td>
-                                            {dateFormat(date, "d.m.yyyy HH:MM")}
-                                        </td>
-                                        <td>
-                                            {entry.quantity}
-                                        </td>
-                                        <td>
-                                            <Link to={"/product/" + entry.productId}>{entry.productName}</Link>
-                                        </td>
-                                        <td>
-                                            {entry.userEmail}
-                                        </td>
-                                        <td>
-                                            {entry.address}, {entry.postalCode} {entry.city}
-                                        </td>
-                                        <td>
-                                            {entry.phone}
-                                        </td>
-                                    </tr>;
-                                })
+                            this.state.log.map(entry => {
+                                let date = new Date(entry.bought);
+                                return <tr key={entry.id}>
+                                    <td>
+                                        {dateFormat(date, "d.m.yyyy HH:MM")}
+                                    </td>
+                                    <td>
+                                        {entry.quantity}
+                                    </td>
+                                    <td>
+                                        <Link to={"/product/" + entry.productId}>{entry.productName}</Link>
+                                    </td>
+                                    <td>
+                                        {entry.userEmail}
+                                    </td>
+                                    <td>
+                                        {entry.address}, {entry.postalCode} {entry.city}
+                                    </td>
+                                    <td>
+                                        {entry.phone}
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-xs btn-danger"
+                                                onClick={() => this.deleteEntry(entry.id)}>
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>;
+                            })
                         }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>;
     };

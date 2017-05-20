@@ -17,18 +17,6 @@ const mapDispatchToProps = dispatch => ({
             entry: entry,
             showNotification: true
         }));
-    },
-    deleteSuccess() {
-        dispatch(displayNotification({
-            type: C.NOTIFICATION_SUCCESS,
-            message: "Product successfully deleted from the store"
-        }));
-    },
-    subscribeSuccess() {
-        dispatch(displayNotification({
-            type: C.NOTIFICATION_SUCCESS,
-            message: "Successfully subscribed to email notification when the product becomes available"
-        }));
     }
 });
 
