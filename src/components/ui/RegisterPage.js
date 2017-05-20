@@ -70,23 +70,33 @@ export default class RegisterPage extends Component {
                 this.state.registerSuccessful &&
                 <Redirect to="/login"/>
             }
+            {
+                this.props.loggedIn &&
+                <Redirect to="/"/>
+            }
             <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Nickname</label>
                 <input type="text" onChange={this.onNameChanged}
                        className="form-control" id="name"
-                       placeholder="Firstname Lastname"/>
+                       placeholder="Nickname"
+                       required
+                />
             </div>
             <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input type="email" onChange={this.onEmailChanged}
                        className="form-control" id="email"
-                       placeholder="example@gmail.com"/>
+                       placeholder="example@gmail.com"
+                       required
+                />
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input type="password" onChange={this.onPasswordChanged}
                        className="form-control" id="password"
-                       placeholder="********"/>
+                       placeholder="********"
+                       required
+                />
             </div>
             <button type="submit" className="btn btn-primary">Register</button>
         </form>

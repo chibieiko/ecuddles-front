@@ -129,8 +129,7 @@ export default class ProductPage extends Component {
                                 {product.name}
                             </h3>
                             <Stars
-                                rating={this.state.stars}/> {this.state.stars ? this.state.stars : 0}
-                            / 5
+                                rating={this.state.stars}/> {this.state.stars ? this.state.stars : 0} / 5
                         </div>
                     </div>
                     <div className="row product-page-row">
