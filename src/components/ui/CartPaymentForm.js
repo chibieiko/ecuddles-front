@@ -13,7 +13,7 @@ export default class CartPaymentForm extends Component {
                 cardNumber: (this.props.content && this.props.content.cardNumber) || "",
                 cardHolder: (this.props.content && this.props.content.cardHolder) || "",
                 expiration: (this.props.content && this.props.content.expiration) || "",
-                cvv: (this.props.content && this.props.content.cvs) || ""
+                cvv: (this.props.content && this.props.content.cvv) || ""
             }
         };
     };

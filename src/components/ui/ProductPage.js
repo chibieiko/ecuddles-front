@@ -48,16 +48,21 @@ export default class ProductPage extends Component {
 
     notifyMe = () => {
         connector("/notifications/" + this.state.product.id,
-            {request: {method: "POST"}, auth: true})
-            .then(() => {
-                this.props.subscribeSuccess();
+            {
+                request: {method: "POST"},
+                auth: true,
+                successNotification: "You will be notified when the product becomes available"
             });
     };
 
     deleteProduct = () => {
-        connector("/products/" + this.state.product.id, {delete: true, auth: true})
+        connector("/products/" + this.state.product.id,
+            {
+                delete: true,
+                auth: true,
+                successNotification: "Product deleted successfully"
+            })
             .then(response => {
-                this.props.deleteSuccess();
                 this.props.history.push("/");
             });
     };
@@ -248,7 +253,8 @@ export default class ProductPage extends Component {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                             <h4 className="modal-title" id="removeModalLabel">Delete product</h4>
                         </div>
                         <div className="modal-body">
@@ -256,7 +262,9 @@ export default class ProductPage extends Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default">Cancel</button>
-                            <button type="button" className="btn btn-danger" onClick={this.deleteProduct} data-dismiss="modal">Delete</button>
+                            <button type="button" className="btn btn-danger" onClick={this.deleteProduct}
+                                    data-dismiss="modal">Delete
+                            </button>
                         </div>
                     </div>
                 </div>
