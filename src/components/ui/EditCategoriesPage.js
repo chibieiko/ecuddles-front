@@ -16,7 +16,8 @@ export default class EditCategoriesPage extends Component {
             categories: null,
             toRemove: null,
             toModify: null,
-            name: ""
+            modifyName: "",
+            addName: ""
         };
     };
 
@@ -67,20 +68,20 @@ export default class EditCategoriesPage extends Component {
     };
 
     modifyCategory = () => {
-        if (this.state.name.length > 0) {
+        if (this.state.modifyName.length > 0) {
             this.setState({
                 fetching: true
             });
 
             connector("/categories/" + this.state.toModify, {
-                patch: {name: this.state.name},
+                patch: {name: this.state.modifyName},
                 auth: true,
                 successNotification: "Category edited successfully"
             }).then(response => {
                 this.setState({
                     categories: this.state.categories.map(category => {
                         if (category.id === this.state.toModify) {
-                            category.name = this.state.name;
+                            category.name = this.state.modifyName;
                         }
 
                         return category;
@@ -97,15 +98,49 @@ export default class EditCategoriesPage extends Component {
         }
     };
 
-    onNameChange = (e) => {
+    addCategory = (e) => {
+        e.preventDefault();
+
+        if (this.state.addName.length > 0) {
+            this.setState({
+                fetching: true
+            });
+
+            connector("/categories/", {
+                post: {name: this.state.addName},
+                auth: true,
+                successNotification: "Category created successfully"
+            }).then(response => {
+                this.setState({
+                    addName: "",
+                    fetching: false
+                });
+
+                this.loadCategories();
+            }).catch(error => {
+                this.setState({
+                    fetching: false
+                });
+            });
+        }
+    };
+
+    onModifyNameChange = (e) => {
         this.setState({
-            name: e.target.value
+            modifyName: e.target.value
+        });
+    };
+
+    onAddNameChange = (e) => {
+        this.setState({
+            addName: e.target.value
         });
     };
 
     render() {
         return <div className="row">
             <div className="col-xs-12">
+                <h2>Manage categories</h2>
                 <div className="table-responsive">
                     {
                         this.state.fetching &&
@@ -134,7 +169,7 @@ export default class EditCategoriesPage extends Component {
                                         <button className="btn btn-xs btn-success"
                                                 data-toggle="modal"
                                                 data-target="#modifyModal"
-                                                onClick={() => this.setState({toModify: category.id, name: category.name})}>
+                                                onClick={() => this.setState({toModify: category.id, modifyName: category.name})}>
                                             Modify
                                         </button> <button className="btn btn-xs btn-danger"
                                                           data-toggle="modal"
@@ -149,6 +184,17 @@ export default class EditCategoriesPage extends Component {
                         </tbody>
                     </table>
                 </div>
+                <h2>Add a category</h2>
+                <form onSubmit={this.addCategory}>
+                <div className="form-group">
+                    <input className="form-control"
+                           placeholder="Name for the category"
+                           type="text"
+                           value={this.state.addName}
+                           onChange={this.onAddNameChange}/>
+                </div>
+                <button className="btn btn-success" type="submit">Submit</button>
+                </form>
             </div>
             <div className="modal fade" id="removeModal" tabIndex="-1" role="dialog" aria-labelledby="removeModalLabel">
                 <div className="modal-dialog" role="document">
@@ -180,7 +226,7 @@ export default class EditCategoriesPage extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="form-group">
-                                <input className="form-control" type="text" value={this.state.name} onChange={this.onNameChange}/>
+                                <input className="form-control" type="text" value={this.state.modifyName} onChange={this.onModifyNameChange}/>
                             </div>
                         </div>
                         <div className="modal-footer">
