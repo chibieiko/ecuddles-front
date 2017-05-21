@@ -32,8 +32,6 @@ export default class AddProductPage extends Component {
 
         this.setState({
             [name]: value
-        }, () => {
-            console.log(this.state);
         })
     };
 
@@ -42,12 +40,13 @@ export default class AddProductPage extends Component {
 
         console.log(this.state);
     };
-
+//for modify give product={product} to fill form with values
     render() {
         return <div>
             <h3>Add a product</h3>
 
-            <ProductForm checkInput={this.checkInput} submitForm={this.submitForm}/>
+            <ProductForm checkInput={this.checkInput}
+                         submitForm={this.submitForm}/>
 
         </div>
     }
