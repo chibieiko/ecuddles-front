@@ -8,14 +8,62 @@ export default class CartPaymentForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            content: {
-                cardNumber: (this.props.content && this.props.content.cardNumber) || "",
-                cardHolder: (this.props.content && this.props.content.cardHolder) || "",
-                expiration: (this.props.content && this.props.content.expiration) || "",
-                cvv: (this.props.content && this.props.content.cvv) || ""
+        let fields = [
+            {
+                name: "cardNumber",
+                label: "Card number",
+                placeholder: "1234 5678 9101 1121"
+            },
+            {
+                name: "cardHolder",
+                label: "Card holder",
+                placeholder: "John Snow"
+            },
+            {
+                name: "expiration",
+                label: "Expiration",
+                placeholder: "10/19"
+            },
+            {
+                name: "cvv",
+                label: "CVV",
+                placeholder: "123"
             }
+        ];
+
+        fields.map(field => {
+            field.value = (this.props.content && this.props.content[field.name]) || "";
+        });
+
+        this.state = {
+            fields: fields
         };
+    };
+
+    onValueChange = (e) => {
+        let fields = this.state.fields;
+
+        fields.map(field => {
+            if (field.name === e.target.name) {
+                field.value = e.target.value;
+            }
+
+            return field;
+        });
+
+        this.setState({
+            fields: fields
+        });
+    };
+
+    getContent = () => {
+        let content = {};
+
+        this.state.fields.forEach(field => {
+            content[field.name] = field.value;
+        });
+
+        return content;
     };
 
     onCheckout = (e) => {
@@ -24,103 +72,33 @@ export default class CartPaymentForm extends Component {
     };
 
     onPrevious = () => {
-        this.props.onPrevious(this.state.content);
+        this.props.onPrevious(this.getContent());
     };
 
     saveState = () => {
-        this.props.onSave(this.state.content);
-    };
-
-    onChangeCardNumber = (e) => {
-        let content = this.state.content;
-        content.cardNumber = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangeCardHolder = (e) => {
-        let content = this.state.content;
-        content.cardHolder = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangeExpiration = (e) => {
-        let content = this.state.content;
-        content.expiration = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangeCvv = (e) => {
-        let content = this.state.content;
-        content.cvv = e.target.value;
-
-        this.setState({
-            content: content
-        });
+        this.props.onSave(this.getContent());
     };
 
     render() {
         return <div>
             <form onSubmit={this.onCheckout}>
-                <div>
-
-                    <div className="form-group">
-                        <label htmlFor="cardNumber">Card number</label>
-                        <input type="text"
-                               placeholder="1234 5678 9101 1121"
-                               value={this.state.content.cardNumber}
-                               onChange={this.onChangeCardNumber}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="cardNumber"
-                               required/>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="expiration">Expiration</label>
-                        <input type="text"
-                               placeholder="Month/Year"
-                               value={this.state.content.expiration}
-                               onChange={this.onChangeExpiration}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="expiration"
-                               required/>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="cardHolder">Card holder</label>
-                        <input type="text"
-                               placeholder="John Snow"
-                               value={this.state.content.cardHolder}
-                               onChange={this.onChangeCardHolder}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="cardHolder"
-                               required/>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="cvv">CVV</label>
-                        <input type="text"
-                               placeholder="123"
-                               value={this.state.content.cvv}
-                               onChange={this.onChangeCvv}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="cvv"
-                               required/>
-                    </div>
-
-                </div>
+                {
+                    this.state.fields.map(field => {
+                        return <div key={field.name} className="form-group">
+                            <label htmlFor={field.name}>{field.label}</label>
+                            <input type="text"
+                                   name={field.name}
+                                   value={field.value}
+                                   onChange={this.onValueChange}
+                                   onBlur={this.saveState}
+                                   className="form-control"
+                                   placeholder={field.placeholder ? field.placeholder : ""}
+                                   id={field.name}
+                                   required
+                            />
+                        </div>
+                    })
+                }
                 <hr/>
                 <div className="row">
                     <div className="col-xs-6">

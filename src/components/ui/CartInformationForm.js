@@ -8,140 +8,97 @@ export default class CartInformationForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            content: {
-                name: (this.props.content && this.props.content.name) || "",
-                address: (this.props.content && this.props.content.address) || "",
-                postalCode: (this.props.content && this.props.content.postalCode) || "",
-                city: (this.props.content && this.props.content.city) || "",
-                phone: (this.props.content && this.props.content.phone) || ""
+        let fields = [
+            {
+                name: "name",
+                label: "Name"
+            },
+            {
+                name: "address",
+                label: "Address"
+            },
+            {
+                name: "postalCode",
+                label: "Postal code"
+            },
+            {
+                name: "city",
+                label: "City"
+            },
+            {
+                name: "phone",
+                label: "Phone number"
             }
+        ];
+
+        fields.map(field => {
+            field.value = (this.props.content && this.props.content[field.name]) || "";
+        });
+
+        this.state = {
+            fields: fields
         };
+    };
+
+    onValueChange = (e) => {
+        let fields = this.state.fields;
+
+        fields.map(field => {
+            if (field.name === e.target.name) {
+                field.value = e.target.value;
+            }
+
+            return field;
+        });
+
+        this.setState({
+            fields: fields
+        });
+    };
+
+    getContent = () => {
+        let content = {};
+
+        this.state.fields.forEach(field => {
+            content[field.name] = field.value;
+        });
+
+        return content;
     };
 
     onNext = (e) => {
         e.preventDefault();
-        this.props.onNext(this.state.content);
+        this.props.onNext(this.getContent());
     };
 
     onPrevious = () => {
-        this.props.onPrevious(this.state.content);
+        this.props.onPrevious(this.getContent());
     };
 
     saveState = () => {
-        this.props.onSave(this.state.content);
-    };
-
-    onChangeName = (e) => {
-        let content = this.state.content;
-        content.name = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangeAddress = (e) => {
-        let content = this.state.content;
-        content.address = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangePostalCode = (e) => {
-        let content = this.state.content;
-        content.postalCode = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangeCity = (e) => {
-        let content = this.state.content;
-        content.city = e.target.value;
-
-        this.setState({
-            content: content
-        });
-    };
-
-    onChangePhone = (e) => {
-        let content = this.state.content;
-        content.phone = e.target.value;
-
-        this.setState({
-            content: content
-        });
+        this.props.onSave(this.getContent());
     };
 
     render() {
         return <div>
             <form onSubmit={this.onNext}>
-            <div>
-
-                    <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input type="text"
-                               value={this.state.content.name}
-                               onChange={this.onChangeName}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="name"
-                               required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="address">Address</label>
-                        <input type="text"
-                               value={this.state.content.address}
-                               onChange={this.onChangeAddress}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="address"
-                               required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="postalCode">Postal code</label>
-                        <input type="text"
-                               value={this.state.content.postalCode}
-                               onChange={this.onChangePostalCode}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="postalCode"
-                               required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="city">City</label>
-                        <input type="text"
-                               value={this.state.content.city}
-                               onChange={this.onChangeCity}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="city"
-                               required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="phone">Phone number</label>
-                        <input type="text"
-                               value={this.state.content.phone}
-                               onChange={this.onChangePhone}
-                               onBlur={this.saveState}
-                               className="form-control"
-                               id="phone"
-                               required
-                        />
-                    </div>
-            </div>
+                {
+                    this.state.fields.map(field => {
+                        return <div key={field.name} className="form-group">
+                            <label htmlFor={field.name}>{field.label}</label>
+                            <input type="text"
+                                   name={field.name}
+                                   value={field.value}
+                                   onChange={this.onValueChange}
+                                   onBlur={this.saveState}
+                                   className="form-control"
+                                   placeholder={field.placeholder ? field.placeholder : ""}
+                                   id={field.name}
+                                   required
+                            />
+                        </div>
+                    })
+                }
             <hr/>
             <div className="row">
                 <div className="col-xs-6">
