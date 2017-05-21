@@ -14,19 +14,6 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    clearCart() {
-        console.log("clearing");
-        dispatch(modifyCart({
-            entry: {
-                product: -1,
-                quantity: 0
-            },
-            showNotification: true
-        }));
-    },
-    changeQuantity(product, quantity) {
-        console.log("Product: " + product + " | Quantity: " + quantity);
-    },
     saveProgress(index) {
         dispatch(saveProgress(index));
     },
@@ -36,8 +23,8 @@ const mapDispatchToProps = dispatch => ({
             content: content ? content : {}
         }))
     },
-    checkout() {
-        dispatch(checkout());
+    checkout(start, stop) {
+        dispatch(checkout(start, stop));
     }
 });
 
