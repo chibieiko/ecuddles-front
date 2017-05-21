@@ -31,11 +31,23 @@ export default class ProductPage extends Component {
         };
     };
 
+    stopFetching = () => {
+        this.setState({
+            fetching: false
+        });
+    };
+
+    startFetching = () => {
+        this.setState({
+            fetching: true
+        });
+    };
+
     buyProduct = () => {
         this.props.addToCart({
             product: this.state.product.id,
             quantity: this.state.quantity + 1
-        });
+        }, this.startFetching, this.stopFetching);
     };
 
     componentWillMount() {
@@ -43,13 +55,17 @@ export default class ProductPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.loadProductDetails(nextProps.match.params.id);
+        if (nextProps.match.params.id !== this.props.match.params.id) {
+            this.loadProductDetails(nextProps.match.params.id);
+        }
     }
 
     notifyMe = () => {
         connector("/notifications/" + this.state.product.id,
             {
                 request: {method: "POST"},
+                start: this.startFetching,
+                stop: this.stopFetching,
                 auth: true,
                 successNotification: "You will be notified when the product becomes available"
             });
@@ -60,6 +76,8 @@ export default class ProductPage extends Component {
             {
                 delete: true,
                 auth: true,
+                start: this.startFetching,
+                stop: this.stopFetching,
                 successNotification: "Product deleted successfully"
             })
             .then(response => {
@@ -68,11 +86,11 @@ export default class ProductPage extends Component {
     };
 
     loadProductDetails = productId => {
-        this.setState({
-            fetching: true
-        });
-
-        connector("/products/" + productId + "?projection=inspect")
+        connector("/products/" + productId + "?projection=inspect",
+            {
+                start: this.startFetching,
+                stop: this.stopFetching
+            })
             .then(response => {
                 let quantity = 0;
 
@@ -91,15 +109,9 @@ export default class ProductPage extends Component {
                 let starAverage = starsTotal / response.reviews.length;
 
                 this.setState({
-                    fetching: false,
                     product: response,
                     quantity: quantity,
                     stars: starAverage
-                });
-            })
-            .catch(() => {
-                this.setState({
-                    fetching: false
                 });
             });
     };
@@ -117,7 +129,7 @@ export default class ProductPage extends Component {
 
             {
                 this.state.fetching &&
-                <Spinner margin={true} delay={500}/>
+                <Spinner margin={true} delay={0}/>
             }
 
             {
@@ -142,9 +154,9 @@ export default class ProductPage extends Component {
                                     <span
                                         className="product-price">{product.price}€</span>
                                     <button onClick={this.buyProduct}
-                                            disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
+                                            disabled={this.state.fetching || !(product.stock > 0 && product.stock > this.state.quantity)}
                                             className={
-                                                product.stock > 0 && product.stock > this.state.quantity ?
+                                                !this.state.fetching && (product.stock > 0 && product.stock > this.state.quantity) ?
                                                     "btn-buy center-block btn btn-lg btn-success"
                                                     :
                                                     "btn-buy center-block btn btn-lg btn-success disabled"

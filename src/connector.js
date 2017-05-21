@@ -50,9 +50,17 @@ export default (path, options={}) => {
             request.body = JSON.stringify(options.patch);
         }
 
+        if (options.start) {
+            options.start();
+        }
+
         fetch(api + path, request)
             .then(response => FlameThrower.burn(response))
             .then(response => {
+                if (options.stop) {
+                    options.stop();
+                }
+
                 if (options.successNotification) {
                     store.dispatch(displayNotification({
                         message: options.successNotification,
@@ -63,6 +71,10 @@ export default (path, options={}) => {
                 resolve(response);
             })
             .catch(error => {
+                if (options.stop) {
+                    options.stop();
+                }
+
                 if (!options.hideError) {
                     store.dispatch(displayNotification({
                         message: error.message,

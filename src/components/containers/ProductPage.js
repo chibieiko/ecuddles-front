@@ -12,11 +12,11 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    addToCart(entry) {
+    addToCart(entry, start, stop) {
         dispatch(modifyCart({
             entry: entry,
             showNotification: true
-        }));
+        }, start, stop));
     }
 });
 

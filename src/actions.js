@@ -126,9 +126,17 @@ export const updateCart = () => (dispatch, getState) => {
     }
 };
 
-export const modifyCart = ({entry, showNotification}) => dispatch => {
+export const modifyCart = ({entry, showNotification}, start, stop) => dispatch => {
+    if (start) {
+        start();
+    }
+
     connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
         .then(response => {
+            if (stop) {
+                stop();
+            }
+
             dispatch({
                 type: C.RESET_PROGRESS
             });
@@ -148,6 +156,11 @@ export const modifyCart = ({entry, showNotification}) => dispatch => {
                     message: msg,
                     type: C.NOTIFICATION_SUCCESS
                 }));
+            }
+        })
+        .catch(() => {
+            if (stop) {
+                stop();
             }
         });
 };
