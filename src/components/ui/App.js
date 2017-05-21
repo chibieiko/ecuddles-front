@@ -7,6 +7,7 @@ import CartPage from '../containers/CartPage';
 import LogPage from './LogPage';
 import Navbar from '../containers/Navbar';
 import LoginPage from '../containers/LoginPage';
+import AddProductPage from '../containers/AddProductPage';
 import {Provider} from 'react-redux';
 import {createBrowserHistory} from 'history';
 import {syncHistoryWithStore} from 'react-router-redux';
@@ -42,6 +43,7 @@ export default class App extends Component {
                                     <Route path="/cart" component={CartPage}/>
                                     <Route path="/log" component={LogPage}/>
                                     <Route path="/edit-categories" component={EditCategoriesPage}/>
+                                    <Route path="/add-product" component={AddProductPage}/>
                                     <Route path="/" component={CategoryList}/>
                                 </Switch>
                             </div>
