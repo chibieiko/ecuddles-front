@@ -73,7 +73,7 @@ export default class ReviewPage extends Component {
 
             {
                 this.state.fetching ?
-                    <Spinner margin={true}/> :
+                    <Spinner delay={500} margin={true}/> :
                     <div>
                         <div className="row">
                             <div className="col-xs-6">

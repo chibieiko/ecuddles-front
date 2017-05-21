@@ -60,7 +60,7 @@ export default class ReviewForm extends Component {
         return <div>
             {
                 this.state.fetching &&
-                <Spinner delay={0} margin={true}/>
+                <Spinner delay={500} margin={true}/>
             }
             <h3>Add review for {this.props.match.params.name}</h3>
             <br/>
