@@ -102,7 +102,11 @@ export const checkout = (start, stop) => (dispatch, getState) => {
             }));
         })
         .catch(error => {
-            dispatch(updateCart(stop));
+            if (stop) {
+                stop();
+            }
+
+            dispatch(updateCart());
             dispatch(saveProgress(0));
         });
 };
@@ -119,26 +123,14 @@ export const updateCart = (stop) => (dispatch, getState) => {
                     type: C.UPDATE_CART,
                     payload: response
                 });
-
-                if (stop) {
-                    stop();
-                }
             })
             .catch(() => {
                 dispatch({
                     type: C.UPDATE_CART,
                     payload: []
                 });
-
-                if (stop) {
-                    stop();
-                }
             });
     } else {
-        if (stop) {
-            stop();
-        }
-
         dispatch({
             type: C.UPDATE_CART,
             payload: []
@@ -146,18 +138,14 @@ export const updateCart = (stop) => (dispatch, getState) => {
     }
 };
 
-export const modifyCart = ({entry, showNotification}, start, stop) => dispatch => {
-    if (start) {
-        start();
-    }
-
+export const modifyCart = ({entry, showNotification}) => dispatch => {
     connector('/cart/modify/?product=' + entry.product + '&quantity=' + entry.quantity, {auth: true})
         .then(response => {
             dispatch({
                 type: C.RESET_PROGRESS
             });
 
-            dispatch(updateCart(stop));
+            dispatch(updateCart());
 
             if (showNotification) {
                 let msg = entry.product === -1 ?
@@ -172,11 +160,6 @@ export const modifyCart = ({entry, showNotification}, start, stop) => dispatch =
                     message: msg,
                     type: C.NOTIFICATION_SUCCESS
                 }));
-            }
-        })
-        .catch(() => {
-            if (stop) {
-                stop();
             }
         });
 };

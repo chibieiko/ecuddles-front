@@ -47,7 +47,7 @@ export default class ProductPage extends Component {
         this.props.addToCart({
             product: this.state.product.id,
             quantity: this.state.quantity + 1
-        }, this.startFetching, this.stopFetching);
+        });
     };
 
     componentWillMount() {
@@ -55,7 +55,7 @@ export default class ProductPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.match.params.id !== this.props.match.params.id) {
+        if (nextProps !== this.props) {
             this.loadProductDetails(nextProps.match.params.id);
         }
     }
@@ -154,9 +154,9 @@ export default class ProductPage extends Component {
                                     <span
                                         className="product-price">{product.price}€</span>
                                     <button onClick={this.buyProduct}
-                                            disabled={this.state.fetching || !(product.stock > 0 && product.stock > this.state.quantity)}
+                                            disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
                                             className={
-                                                !this.state.fetching && (product.stock > 0 && product.stock > this.state.quantity) ?
+                                                product.stock > 0 && product.stock > this.state.quantity ?
                                                     "btn-buy center-block btn btn-lg btn-success"
                                                     :
                                                     "btn-buy center-block btn btn-lg btn-success disabled"

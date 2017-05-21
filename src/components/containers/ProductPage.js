@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(modifyCart({
             entry: entry,
             showNotification: true
-        }, start, stop));
+        }));
     }
 });
 
