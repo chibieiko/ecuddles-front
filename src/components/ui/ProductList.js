@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import connector from '../../connector';
 import ProductCard from '../containers/ProductCard';
-import ProductListSort from './ProductListSort';
+import ProductListSort from '../containers/ProductListSort';
 import Spinner from './Spinner';
 import Pagination from './Pagination';
 

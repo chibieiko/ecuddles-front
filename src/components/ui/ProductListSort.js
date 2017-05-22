@@ -25,16 +25,38 @@ export default class ProductListSort extends Component {
 
     render() {
         return <div className="col-xs-12" id="sort-button">
-            <div className="btn-group pull-right">
-                <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {this.checkName()} <span className="caret"/>
-                </button>
-                <ul className="dropdown-menu">
-                    <li><Link to={'?sort=date,desc'}>Newest first</Link></li>
-                    <li><Link to={'?sort=price,asc'}>Cheapest first</Link></li>
-                    <li><Link to={'?sort=price,desc'}>Most expensive first</Link></li>
-                </ul>
+            <div className="row">
+                {
+                    this.props.authentication.user.role === "ADMIN" &&
+                    <div className="col-xs-6">
+                        <div className="btn btn-success"
+                             onClick={() => this.props.history.push('/add-product')}>
+                            <span className="glyphicon glyphicon-plus"/> Add
+                            product
+                        </div>
+                    </div>
+                }
+                <div className="col-xs-6">
+                    <div className="btn-group pull-right">
+                        <button className="btn btn-default dropdown-toggle"
+                                type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            {this.checkName()} <span className="caret"/>
+                        </button>
+                        <ul className="dropdown-menu">
+                            <li><Link to={'?sort=date,desc'}>Newest
+                                first</Link>
+                            </li>
+                            <li><Link to={'?sort=price,asc'}>Cheapest
+                                first</Link>
+                            </li>
+                            <li><Link to={'?sort=price,desc'}>Most expensive
+                                first</Link></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>;
+        </div>
+            ;
     };
 };
