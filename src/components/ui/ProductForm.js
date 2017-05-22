@@ -117,7 +117,9 @@ export default class ProductForm extends Component {
         product.pictures.push(picture);
 
         this.setState({
-            product: product
+            product: product,
+            modalUrl: "",
+            modalCaption: ""
         });
     };
 
