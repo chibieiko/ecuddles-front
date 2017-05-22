@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import ProductForm from './ProductForm';
+import ProductForm from '../containers/ProductForm';
 
 export default class AddProductPage extends Component {
     constructor(props) {

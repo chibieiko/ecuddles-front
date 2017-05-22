@@ -1,5 +1,7 @@
 import {Component} from 'react';
 import PictureBox from './PictureBox';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 import '../../stylesheets/productForm.scss';
 
 export default class ProductForm extends Component {
@@ -68,10 +70,30 @@ export default class ProductForm extends Component {
                 field.defaultValue ? field.defaultValue : "";
         });
 
+        let categories = this.props.categories.map((category) => {
+            return {
+                value: category.name,
+                label: category.name
+            }
+        });
+
+        let selectedCategories = [];
+        if (this.props.product) {
+            selectedCategories = this.props.product.categories.map((category) => {
+                    return {
+                        value: category,
+                        label: category
+                    }
+                }
+            )
+        }
+
         this.state = {
             product: state,
             modalUrl: "",
-            modalCaption: ""
+            modalCaption: "",
+            categories: categories,
+            selectedCategories: selectedCategories
         };
     }
 
@@ -99,6 +121,10 @@ export default class ProductForm extends Component {
         });
     };
 
+    onCategoryChange = (newValue) => {
+        this.setState({selectedCategories: newValue})
+    };
+
     onChange = (event) => {
         let product = this.state.product;
         product[event.target.name] = event.target.value;
@@ -108,10 +134,16 @@ export default class ProductForm extends Component {
         });
     };
 
-    submitForm = (e) => {
-        e.preventDefault();
+    submitForm = (event) => {
+        event.preventDefault();
 
-        this.props.onSubmit(this.state.product);
+        let product = this.state.product;
+        product.categories = this.state.selectedCategories.map((category) => {
+            return category.label
+        });
+
+        console.log(product);
+        this.props.onSubmit(product);
     };
 
     removePicture = (index) => {
@@ -127,6 +159,9 @@ export default class ProductForm extends Component {
         let product = this.state.product;
         return <div>
             <form onSubmit={this.submitForm}>
+
+                {/* ######### BASIC INFO ######## */}
+
                 <div className="row">
                     <div className="form-group col-xs-12 col-sm-6">
                         <label htmlFor="name">Name</label>
@@ -153,13 +188,15 @@ export default class ProductForm extends Component {
                     <textarea className="form-control" id="description"
                               name="description"
                               placeholder="Describe the product (max 10 000 letters)"
-                              rows="7" maxLength="10 000"
+                              rows="7" maxLength="10000"
                               onChange={this.onChange}
                               value={product.description}
                               required/>
                 </div>
 
                 <hr/>
+
+                {/* ######### PICTURES ######## */}
 
                 <div className="row">
                     <div className="col-xs-3">
@@ -172,7 +209,8 @@ export default class ProductForm extends Component {
                         product.pictures.length > 0 &&
                         product.pictures.map((picture, index) => {
                             return <div key={index} className="col-xs-3">
-                                <PictureBox picture={picture} onRemove={() => this.removePicture(index)}/>
+                                <PictureBox picture={picture}
+                                            onRemove={() => this.removePicture(index)}/>
                             </div>
                         })
                     }
@@ -180,20 +218,20 @@ export default class ProductForm extends Component {
 
                 <hr/>
 
-                <label className="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox1"
-                           value="option1"/> 1
-                </label>
-                <label className="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox2"
-                           value="option2"/> 2
-                </label>
-                <label className="checkbox-inline">
-                    <input type="checkbox" id="inlineCheckbox3"
-                           value="option3"/> 3
-                </label>
+                {/* ######### CATEGORIES ######## */}
+
+                <Select name="categories"
+                        multi={true}
+                        joinValues={true}
+                        clearable={false}
+                        onChange={this.onCategoryChange}
+                        options={this.state.categories}
+                        value={this.state.selectedCategories}
+                        placeholder="Select appropriate categories"/>
 
                 <hr/>
+
+                {/* ######### FABRIC & FILLING ######## */}
 
                 <div className="row">
                     <div className="form-group col-xs-12 col-sm-6">
@@ -216,6 +254,8 @@ export default class ProductForm extends Component {
                                required/>
                     </div>
                 </div>
+
+                {/* ######### SIZES ######## */}
 
                 <div className="row">
                     <div className="form-group col-xs-12 col-sm-6 col-md-3">
@@ -264,6 +304,8 @@ export default class ProductForm extends Component {
 
                 <hr/>
 
+                {/* ######### INSTRUCTIONS ######## */}
+
                 <div className="form-group">
                     <label htmlFor="careInstructions">Care Instructions</label>
                     <textarea className="form-control" id="careInstructions"
@@ -286,6 +328,8 @@ export default class ProductForm extends Component {
                               value={product.disposeInstructions}
                               required/>
                 </div>
+
+                {/* ######### STOCK, COLOR & DESIGNER ######## */}
 
                 <div className="row">
                     <div className="form-group col-xs-12 col-sm-4">
@@ -317,11 +361,13 @@ export default class ProductForm extends Component {
                     </div>
                 </div>
 
+
                 <button type="submit" className="btn btn-success">Submit
                     product
                 </button>
             </form>
 
+            {/* ######### PICTURE MODAL ######## */}
             <div className="modal fade" id="pictureModal" tabIndex="-1"
                  role="dialog" aria-labelledby="removeModalLabel">
                 <div className="modal-dialog" role="document">
@@ -363,7 +409,8 @@ export default class ProductForm extends Component {
                                         className="btn btn-default"
                                         data-dismiss="modal">Cancel
                                 </button>
-                                <button type="submit" className="btn btn-success">
+                                <button type="submit"
+                                        className="btn btn-success">
                                     Add
                                 </button>
                             </div>

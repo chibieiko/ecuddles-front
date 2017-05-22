@@ -1,4 +1,4 @@
-import AddProductPage from '../ui/AddProductPage';
+import ProductForm from '../ui/ProductForm';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 
@@ -11,6 +11,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => ({
 });
 
-const Container = connect(mapStateToProps, mapDispatchToProps)(AddProductPage);
+const Container = connect(mapStateToProps, mapDispatchToProps)(ProductForm);
 
 export default withRouter(Container);

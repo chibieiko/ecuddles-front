@@ -7,7 +7,7 @@ import CartPage from '../containers/CartPage';
 import LogPage from './LogPage';
 import Navbar from '../containers/Navbar';
 import LoginPage from '../containers/LoginPage';
-import AddProductPage from '../containers/AddProductPage';
+import AddProductPage from './AddProductPage';
 import {Provider} from 'react-redux';
 import {createBrowserHistory} from 'history';
 import {syncHistoryWithStore} from 'react-router-redux';
