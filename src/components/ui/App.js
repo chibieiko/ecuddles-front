@@ -14,6 +14,7 @@ import {syncHistoryWithStore} from 'react-router-redux';
 import store from '../../store';
 import Footer from './Footer';
 import {updateCart} from '../../actions';
+import ModifyProductPage from './ModifyProductPage';
 
 export default class App extends Component {
     constructor(props) {
@@ -44,6 +45,7 @@ export default class App extends Component {
                                     <Route path="/log" component={LogPage}/>
                                     <Route path="/edit-categories" component={EditCategoriesPage}/>
                                     <Route path="/add-product" component={AddProductPage}/>
+                                    <Route path="/modify-product/:id/:name" component={ModifyProductPage}/>
                                     <Route path="/" component={CategoryList}/>
                                 </Switch>
                             </div>

@@ -141,7 +141,8 @@ export default class ProductPage extends Component {
                                 {product.name}
                             </h3>
                             <Stars
-                                rating={this.state.stars}/> {this.state.stars ? this.state.stars : 0} / 5
+                                rating={this.state.stars}/> {this.state.stars ? this.state.stars : 0}
+                            / 5
                         </div>
                     </div>
                     <div className="row product-page-row">
@@ -193,17 +194,29 @@ export default class ProductPage extends Component {
                                         <div>
                                             <span
                                                 className="icon-margin glyphicon glyphicon-shopping-cart"/>
-                                            {this.state.quantity} item{this.state.quantity > 1 && "s"} in cart
+                                            {this.state.quantity}
+                                            item{this.state.quantity > 1 && "s"}
+                                            in cart
                                         </div>
                                     }
                                     {
                                         this.props.role === "ADMIN" &&
-                                        <button className="btn btn-sm btn-danger notify-link"
+                                        <div>
+                                            <button
+                                                className="btn btn-sm btn-default notify-link"
+                                            onClick={() => this.props.history.push('/modify-product/' + product.id + "/" + product.name)}>
+                                                <span className="icon-margin glyphicon glyphicon-edit"/>
+                                                Modify
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-danger notify-link"
                                                 data-toggle="modal"
                                                 data-target="#removeModal">
-                                            <span className="icon-margin glyphicon glyphicon-envelope"/>
-                                            Delete
-                                        </button>
+                                                <span
+                                                    className="icon-margin glyphicon glyphicon-trash"/>
+                                                Delete
+                                            </button>
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -231,7 +244,7 @@ export default class ProductPage extends Component {
                         <div className="col-sm-6">
                             <Detail name="Color" value={product.color}/>
                             <Detail name="Height"
-                                        value={product.height + " cm"}/>
+                                    value={product.height + " cm"}/>
                             <Detail name="Width" value={product.width + " cm"}/>
                             <Detail name="Length"
                                     value={product.length + " cm"}/>
@@ -241,9 +254,9 @@ export default class ProductPage extends Component {
 
                         <div className="col-sm-6">
                             <Detail name="Fabric"
-                                        value={product.fabric}/>
+                                    value={product.fabric}/>
                             <Detail name="Filling"
-                                        value={product.filling}/>
+                                    value={product.filling}/>
                             <Detail name="Care instructions"
                                     value={product.careInstructions}/>
                             <Detail name="Dispose instructions"
@@ -260,20 +273,28 @@ export default class ProductPage extends Component {
                 </div>
             }
 
-            <div className="modal fade" id="removeModal" tabIndex="-1" role="dialog" aria-labelledby="removeModalLabel">
+            <div className="modal fade" id="removeModal" tabIndex="-1"
+                 role="dialog" aria-labelledby="removeModalLabel">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span
+                            <button type="button" className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                            <h4 className="modal-title" id="removeModalLabel">Delete product</h4>
+                            <h4 className="modal-title" id="removeModalLabel">
+                                Delete product</h4>
                         </div>
                         <div className="modal-body">
-                            Are you sure you want to permanently delete this product from the store?
+                            Are you sure you want to permanently delete this
+                            product from the store?
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" className="btn btn-danger" onClick={this.deleteProduct}
+                            <button type="button" className="btn btn-default"
+                                    data-dismiss="modal">Cancel
+                            </button>
+                            <button type="button" className="btn btn-danger"
+                                    onClick={this.deleteProduct}
                                     data-dismiss="modal">Delete
                             </button>
                         </div>

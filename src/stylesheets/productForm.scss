@@ -1,8 +1,12 @@
 @import 'variables';
 
-button.btn.btn-default.add-picture-button {
+div.btn.btn-default.add-picture-button {
   height: 230px;
   width: 100%;
   background-color: $color_light_orange;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 

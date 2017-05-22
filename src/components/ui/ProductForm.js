@@ -76,6 +76,8 @@ export default class ProductForm extends Component {
             }
         });
 
+        console.log(this.props.product);
+
         let selectedCategories = [];
         if (this.props.product) {
             selectedCategories = this.props.product.categories.map((category) => {
@@ -210,10 +212,10 @@ export default class ProductForm extends Component {
 
                 <div className="row">
                     <div className="col-xs-3">
-                        <button className="btn btn-default add-picture-button"
+                        <div className="btn btn-default add-picture-button"
                                 data-toggle="modal" data-target="#pictureModal">
                             Add picture
-                        </button>
+                        </div>
                     </div>
                     {
                         product.pictures.length > 0 &&
@@ -371,9 +373,8 @@ export default class ProductForm extends Component {
                     </div>
                 </div>
 
-
-                <button type="submit" className="btn btn-success">Submit
-                    product
+                <button type="submit" className="btn btn-success">
+                    Submit
                 </button>
             </form>
 
