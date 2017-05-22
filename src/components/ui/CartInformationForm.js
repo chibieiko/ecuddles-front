@@ -41,9 +41,7 @@ export default class CartInformationForm extends Component {
     };
 
     onValueChange = (e) => {
-        let fields = this.state.fields;
-
-        fields.map(field => {
+        let fields = this.state.fields.map(field => {
             if (field.name === e.target.name) {
                 field.value = e.target.value;
             }
