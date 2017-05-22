@@ -7,7 +7,6 @@ import '../../stylesheets/productForm.scss';
 export default class ProductForm extends Component {
     constructor(props) {
         super(props);
-
         let fields = [
             {
                 name: "name"
@@ -72,7 +71,7 @@ export default class ProductForm extends Component {
 
         let categories = this.props.categories.map((category) => {
             return {
-                value: category.name,
+                value: category.id,
                 label: category.name
             }
         });
@@ -81,8 +80,8 @@ export default class ProductForm extends Component {
         if (this.props.product) {
             selectedCategories = this.props.product.categories.map((category) => {
                     return {
-                        value: category,
-                        label: category
+                        value: category.id,
+                        label: category.name
                     }
                 }
             )
@@ -115,7 +114,6 @@ export default class ProductForm extends Component {
         let product = this.state.product;
         product.pictures.push(picture);
 
-        console.log(product);
         this.setState({
             product: product
         });
@@ -138,12 +136,24 @@ export default class ProductForm extends Component {
         event.preventDefault();
 
         let product = this.state.product;
-        product.categories = this.state.selectedCategories.map((category) => {
-            return category.label
-        });
 
-        console.log(product);
-        this.props.onSubmit(product);
+        product.categories = this.state.selectedCategories
+            .map((category) => {
+                let fullCategory = this.props.categories.find(c => {
+                    return c.id === category.value;
+                });
+
+                return fullCategory ? fullCategory._links.self.href : false;
+            })
+            .filter(category => {
+                return category;
+            });
+
+        if (product.pictures.length === 0) {
+            this.props.noPictureError();
+        } else {
+            this.props.onSubmit(product);
+        }
     };
 
     removePicture = (index) => {
