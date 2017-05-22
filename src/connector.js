@@ -7,7 +7,7 @@ import store from './store';
 import C from './constants';
 import {displayNotification} from './actions'
 
-const api = "http://localhost/api";
+const api = "http://localhost:8080/api";
 
 export default (path, options={}) => {
     /*
