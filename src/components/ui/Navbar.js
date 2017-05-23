@@ -38,8 +38,7 @@ export default class Navbar extends Component {
 
     render() {
         return <span>
-                <div className="navbar-fixed-top">
-                <nav className="navbar navbar-default" id="ecuddles-navbar">
+                <nav className="navbar navbar-default navbar-fixed-top" id="ecuddles-navbar">
                 <div className="container">
                     <div className="navbar-header">
                         <button type="button" id="hamburger-button"
@@ -75,7 +74,8 @@ export default class Navbar extends Component {
                                         <li>
                                             <Link to="/"
                                                   onClick={this.props.onLogout}>
-                                                Logout
+                                                <span className="hidden-xs">Logout</span>
+                                                <span className="hidden-sm hidden-md hidden-lg glyphicon glyphicon-log-out"/>
                                             </Link>
                                         </li>
                                         {
@@ -83,7 +83,8 @@ export default class Navbar extends Component {
                                                 <li className={this.props.location.pathname === "/log" && "active"}>
                                                     <Link to="/log">
                                                         <div className="navbar-cart">
-                                                            Purchases
+                                                            <span className="hidden-xs">Purchases</span>
+                                                            <span className="hidden-sm hidden-md hidden-lg glyphicon glyphicon-list"/>
                                                         </div>
                                                     </Link>
                                                 </li>
@@ -91,7 +92,8 @@ export default class Navbar extends Component {
                                                 <li className={this.props.location.pathname === "/cart" && "active"}>
                                                     <Link to="/cart">
                                                         <div className="navbar-cart">
-                                                            Cart
+                                                            <span className="hidden-xs">Cart</span>
+                                                            <span className="hidden-sm hidden-md hidden-lg glyphicon glyphicon-shopping-cart"/>
                                                             {
                                                                 this.props.cart.length > 0 &&
                                                                 <span className="badge"
@@ -107,11 +109,6 @@ export default class Navbar extends Component {
                                         <li className={this.props.location.pathname === "/login" && "active"}>
                                             <Link to="/login">
                                                 Login
-                                            </Link>
-                                        </li>
-                                        <li className={this.props.location.pathname === "/register" && "active"}>
-                                            <Link to="/register">
-                                                Register
                                             </Link>
                                         </li>
                                     </ul>
@@ -136,14 +133,11 @@ export default class Navbar extends Component {
                             }
                         </ul>
                     </div>
-                </div>
+                </div><NotificationBar/>
             </nav>
-            <NotificationBar/>
-            </div>
-
             {
                 this.displaySearchBar() ?
-                    <div className="row">
+                    <div className="row remove-margin">
                         <div className="col-xs-12">
                             <form
                                 className="hidden-sm hidden-md hidden-lg breather after-navbar-search"

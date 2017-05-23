@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import Spinner from './Spinner';
+import {Link} from 'react-router-dom';
 
 export default class LoginPage extends Component {
     constructor(props) {
@@ -65,6 +66,12 @@ export default class LoginPage extends Component {
                 />
             </div>
             <button type="submit" className="btn btn-success">Login</button>
+            <div>
+                <br/>
+                <Link to="/register">
+                    Don't have an account yet? Register here
+                </Link>
+            </div>
         </form>;
     };
 };
