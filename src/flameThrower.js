@@ -50,6 +50,10 @@ export default class FlameThrower {
 
                                 location.href = "#/login";
                             }
+                        },
+                        {
+                            exception: "org.springframework.dao.DataIntegrityViolationException",
+                            msg: "The email address is already in use."
                         }
                     ], "An unexpected error occurred, please try again later");
 

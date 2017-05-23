@@ -16,6 +16,10 @@ export default class Navbar extends Component {
     submitForm = (event) => {
         event.preventDefault();
         this.props.history.push("/search/" + this.state.search);
+
+        this.setState({
+            search: ""
+        });
     };
 
     onSearchChanged = (event) => {

@@ -160,7 +160,7 @@ export default class ProductPage extends Component {
                                                     :
                                                     "btn-buy center-block btn btn-lg btn-success disabled"
                                             }>
-                                        Add to cart
+                                        Add&nbsp;to&nbsp;cart
                                     </button>
                                     <br/>
                                     {
@@ -168,13 +168,13 @@ export default class ProductPage extends Component {
                                             <div>
                                                     <span
                                                         className="icon-margin icon-green glyphicon glyphicon-ok"/>
-                                                {product.stock} available
+                                                {product.stock}&nbsp;available
                                             </div>
                                             :
                                             <div>
                                                 <span
                                                     className="icon-margin icon-red glyphicon glyphicon-remove"/>
-                                                Out of stock
+                                                Out&nbsp;of&nbsp;stock
                                             </div>
                                     }
                                     {
@@ -183,8 +183,7 @@ export default class ProductPage extends Component {
                                             className="btn btn-sm btn-success notify-link"
                                             onClick={this.notifyMe}>
                                             <span
-                                                className="icon-margin glyphicon glyphicon-envelope"/>Notify
-                                            me
+                                                className="icon-margin glyphicon glyphicon-envelope"/>Notify&nbsp;me
                                         </button>
                                     }
                                     {
@@ -192,9 +191,7 @@ export default class ProductPage extends Component {
                                         <div>
                                             <span
                                                 className="icon-margin glyphicon glyphicon-shopping-cart"/>
-                                            {this.state.quantity}
-                                            item{this.state.quantity > 1 && "s"}
-                                            in cart
+                                            {this.state.quantity}&nbsp;item{this.state.quantity > 1 && "s"}&nbsp;in&nbsp;cart
                                         </div>
                                     }
                                     {
