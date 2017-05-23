@@ -140,7 +140,10 @@ export default class ProductPage extends Component {
                             <h3>
                                 {product.name}
                             </h3>
-                            <Stars rating={this.state.stars}/> {this.state.stars ? this.state.stars + " / 5" : "No reviews"}
+                            <Link to={'/product/' + product.id + "/" + product.name + "/reviews"} >
+                                <Stars
+                                    rating={this.state.stars}/> {this.state.stars ? this.state.stars + " / 5" : "No reviews"}
+                            </Link>
                         </div>
                     </div>
                     <div className="row product-page-row">
@@ -151,7 +154,8 @@ export default class ProductPage extends Component {
                             <div className="panel panel-default buy-panel">
                                 <div className="panel-body">
                                     <span
-                                        className="product-price">{product.price} €</span>
+                                        className="product-price">{product.price}
+                                        €</span>
                                     <button onClick={this.buyProduct}
                                             disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
                                             className={
@@ -202,8 +206,9 @@ export default class ProductPage extends Component {
                                         <div>
                                             <button
                                                 className="btn btn-sm btn-default notify-link"
-                                            onClick={() => this.props.history.push('/modify-product/' + product.id + "/" + product.name)}>
-                                                <span className="icon-margin glyphicon glyphicon-edit"/>
+                                                onClick={() => this.props.history.push('/modify-product/' + product.id + "/" + product.name)}>
+                                                <span
+                                                    className="icon-margin glyphicon glyphicon-edit"/>
                                                 Modify
                                             </button>
                                             <button

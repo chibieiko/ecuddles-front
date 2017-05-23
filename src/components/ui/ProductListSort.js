@@ -32,8 +32,7 @@ export default class ProductListSort extends Component {
                         this.props.authentication.user && this.props.authentication.user.role === "ADMIN" &&
                         <div className="btn btn-success"
                              onClick={() => this.props.history.push('/add-product')}>
-                            <span className="glyphicon glyphicon-plus"/> Add
-                            product
+                            <span className="glyphicon glyphicon-plus"/>&nbsp;Add&nbsp;a&nbsp;product
                         </div>
                     }
                 </div>
