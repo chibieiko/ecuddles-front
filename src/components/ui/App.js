@@ -20,8 +20,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
 
-        // todo remove when app is ready
-        window.store = store;
+        //window.store = store;
     }
 
     componentDidMount() {

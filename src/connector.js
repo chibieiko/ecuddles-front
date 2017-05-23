@@ -1,13 +1,10 @@
-/**
- * Created by vili on 13/05/2017.
- */
 import fetch from 'isomorphic-fetch';
 import FlameThrower from './flameThrower';
 import store from './store';
 import C from './constants';
 import {displayNotification} from './actions'
 
-const api = "http://localhost:8080/api";
+const api = "/api";
 
 export default (path, options={}) => {
     /*

@@ -77,8 +77,6 @@ export default class ProductList extends Component {
     };
 
     getProducts = (url) => {
-       // console.log("getting products with url: ", url);
-
         connector(url)
             .then(response => {
                 let products = response._embedded.products;

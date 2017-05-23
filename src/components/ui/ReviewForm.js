@@ -13,8 +13,6 @@ export default class ReviewForm extends Component {
             star: 3,
             fetching: false
         };
-
-        console.log(this.props);
     }
 
     onTitleChange = (event) => {

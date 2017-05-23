@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import {Redirect} from 'react-router-dom';
 import Spinner from './Spinner';
 
 export default class LoginPage extends Component {

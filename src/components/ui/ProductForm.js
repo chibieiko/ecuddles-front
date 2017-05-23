@@ -76,8 +76,6 @@ export default class ProductForm extends Component {
             }
         });
 
-        console.log(this.props.product);
-
         let selectedCategories = [];
         if (this.props.product) {
             selectedCategories = this.props.product.categories.map((category) => {

@@ -8,8 +8,6 @@ export default class AddProductPage extends Component {
     }
 
     submitForm = (product) => {
-        console.log(product);
-
         connector('/products',
             {
                 post: product,

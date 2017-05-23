@@ -15,7 +15,6 @@ export default class ModifyProductPage extends Component {
     componentDidMount() {
         connector('/products/' + this.props.match.params.id + "?projection=inspect")
             .then((result) => {
-                console.log(result);
                 this.setState({
                     product: result
                 })
@@ -23,8 +22,6 @@ export default class ModifyProductPage extends Component {
     }
 
     submitForm = (product) => {
-        console.log("product", product);
-
         connector('/products/' + this.props.match.params.id,
             {
                 patch: product,

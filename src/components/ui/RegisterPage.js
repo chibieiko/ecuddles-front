@@ -1,7 +1,6 @@
 import {Component} from 'react';
 import connector from '../../connector';
 import {Redirect} from 'react-router-dom';
-import FlameThrower from '../../flameThrower';
 import Spinner from './Spinner';
 
 
