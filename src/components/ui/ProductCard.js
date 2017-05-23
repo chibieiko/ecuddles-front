@@ -59,9 +59,9 @@ export default class ProductCard extends Component {
                             }>
                         {
                             this.props.product.stock > 0 && this.props.product.stock > this.state.quantity ?
-                                <span><span className="glyphicon glyphicon-shopping-cart"/> Add to cart</span>
+                                <span><span className="glyphicon glyphicon-shopping-cart"/>&nbsp;Add&nbsp;to&nbsp;cart</span>
                                 :
-                                <span><span className="glyphicon glyphicon-remove"/> Out of stock</span>
+                                <span><span className="glyphicon glyphicon-remove"/>&nbsp;Out&nbsp;of&nbsp;stock</span>
                         }
                     </button>
                 </div>
