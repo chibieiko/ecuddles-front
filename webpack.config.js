@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: "./src/index.js",
     output: {
-        path: "/Users/vili/Documents/DynVerkkopalvelu/ecuddles/src/main/resources/static/assets",
+        path: "C:\\Users\\vilik\\Documents\\ecuddles-backend\\src\\main\\resources\\static\\assets",
         filename: "bundle.js",
         publicPath: "assets/"
     },

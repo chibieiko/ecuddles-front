@@ -88,7 +88,7 @@ export default class ReviewPage extends Component {
                                     this.props.authentication.loggedIn ?
                                         <button
                                             className="btn btn-success pull-right bottom-breather"
-                                            onClick={() => this.props.history.push("add")}>
+                                            onClick={() => this.props.history.push("reviews/add")}>
                                             Add review
                                         </button>
                                         :
