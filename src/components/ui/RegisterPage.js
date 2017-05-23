@@ -9,8 +9,7 @@ export default class RegisterPage extends Component {
         super(props);
 
         this.state = {
-            fetching: false,
-            registerSuccessful: false
+            fetching: false
         };
     };
 
@@ -47,9 +46,9 @@ export default class RegisterPage extends Component {
 
         connector("/register", {post: body})
             .then(() => {
-                this.setState({
-                    fetching: false,
-                    registerSuccessful: true
+                this.props.login({
+                    email: this.state.email,
+                    password: this.state.password
                 });
             })
             .catch(() => {
@@ -64,10 +63,6 @@ export default class RegisterPage extends Component {
             {
                 this.state.fetching &&
                 <Spinner delay={500} margin={true}/>
-            }
-            {
-                this.state.registerSuccessful &&
-                <Redirect to="/login"/>
             }
             {
                 this.props.loggedIn &&
@@ -86,6 +81,7 @@ export default class RegisterPage extends Component {
                 <input type="email" onChange={this.onEmailChanged}
                        className="form-control" id="email"
                        placeholder="example@gmail.com"
+                       autoComplete="off"
                        required
                 />
             </div>
@@ -94,10 +90,11 @@ export default class RegisterPage extends Component {
                 <input type="password" onChange={this.onPasswordChanged}
                        className="form-control" id="password"
                        placeholder="********"
+                       autoComplete="off"
                        required
                 />
             </div>
-            <button type="submit" className="btn btn-primary">Register</button>
+            <button type="submit" className="btn btn-success">Register</button>
         </form>
     };
 };

@@ -64,7 +64,7 @@ export default class LoginPage extends Component {
                        required
                 />
             </div>
-            <button type="submit" className="btn btn-primary">Login</button>
+            <button type="submit" className="btn btn-success">Login</button>
         </form>;
     };
 };

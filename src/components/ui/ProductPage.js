@@ -4,6 +4,7 @@ import ImageViewer from './ImageViewer';
 import Stars from './Stars';
 import connector from '../../connector';
 import ProductReview from '../containers/ProductReview';
+import {Link} from 'react-router-dom';
 import '../../stylesheets/product.scss';
 
 const ListDetail = (props) => (
