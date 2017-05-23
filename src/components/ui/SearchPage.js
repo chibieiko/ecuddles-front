@@ -13,7 +13,6 @@ export default class SearchPage extends Component {
                 <ProductList search=""/>
             )}/>
             <Route path="/search/:search" render={props => {
-                console.log(props);
                 return <ProductList search={props.match.params.search}/>;
             }}/>
         </div>;

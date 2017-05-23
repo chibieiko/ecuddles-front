@@ -1,6 +1,3 @@
-/**
- * Created by vili on 17/05/2017.
- */
 import {Component} from 'react';
 import {Link} from 'react-router-dom';
 import CartItem from '../containers/CartItem';

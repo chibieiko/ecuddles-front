@@ -73,7 +73,7 @@ export const saveProgress = (index) => ({
     payload: index
 });
 
-export const checkout = () => (dispatch, getState) => {
+export const checkout = (start, stop) => (dispatch, getState) => {
     let content = getState().cartPhases[1];
 
     let url = "?name=" + content.name +
@@ -82,8 +82,16 @@ export const checkout = () => (dispatch, getState) => {
             "&city=" + content.city +
             "&phone=" + content.phone;
 
+    if (start) {
+        start();
+    }
+
     connector("/cart/checkout" + url, {auth: true})
         .then(response => {
+            if (stop) {
+                stop();
+            }
+
             dispatch({
                 type: C.CHECKOUT
             });
@@ -94,6 +102,10 @@ export const checkout = () => (dispatch, getState) => {
             }));
         })
         .catch(error => {
+            if (stop) {
+                stop();
+            }
+
             dispatch(updateCart());
             dispatch(saveProgress(0));
         });
@@ -103,7 +115,7 @@ export const hideNotification = () => ({
     type: C.HIDE_NOTIFICATION
 });
 
-export const updateCart = () => (dispatch, getState) => {
+export const updateCart = (stop) => (dispatch, getState) => {
     if (getState().authentication.loggedIn) {
         connector("/cart", {auth: true})
             .then((response = []) => {

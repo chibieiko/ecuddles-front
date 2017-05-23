@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import connector from '../../connector';
 import ProductCard from '../containers/ProductCard';
-import ProductListSort from './ProductListSort';
+import ProductListSort from '../containers/ProductListSort';
 import Spinner from './Spinner';
 import Pagination from './Pagination';
 
@@ -15,7 +15,8 @@ export default class ProductList extends Component {
                 pages: []
             },
             fetching: false,
-            products: []
+            products: [],
+            header: ""
         };
     };
 
@@ -48,6 +49,10 @@ export default class ProductList extends Component {
         let url;
 
         if (this.props.search) {
+            this.setState({
+                header: "Search results for \"" + this.props.search + "\""
+            });
+
             url = "/products/search/contains/?name=" + this.props.search +
                 "&page=" + this.state.page.number;
 
@@ -72,8 +77,6 @@ export default class ProductList extends Component {
     };
 
     getProducts = (url) => {
-       // console.log("getting products with url: ", url);
-
         connector(url)
             .then(response => {
                 let products = response._embedded.products;
@@ -138,7 +141,10 @@ export default class ProductList extends Component {
                     <Spinner margin={true}/>
                     :
                     <div>
-
+                        {
+                            this.state.header &&
+                            <div className="col-xs-12"><h4>{this.state.header}</h4></div>
+                        }
                         <ProductListSort location={this.props.location}/>
 
                         {
@@ -146,8 +152,15 @@ export default class ProductList extends Component {
                                 key={product.id} product={product}/>)
                         }
 
-                        <Pagination jumpToPage={this.jumpToPage} previousPage={this.previousPage}
-                                    nextPage={this.nextPage} page={this.state.page}/>
+                        {
+                            this.state.products.length === 0 ?
+                                <div className="col-xs-12">
+                                    No products found with the specified criteria.
+                                </div>
+                                :
+                                <Pagination jumpToPage={this.jumpToPage} previousPage={this.previousPage}
+                                            nextPage={this.nextPage} page={this.state.page}/>
+                        }
                     </div>
             }
         </div>;

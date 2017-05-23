@@ -1,6 +1,3 @@
-/**
- * Created by vili on 07/05/2017.
- */
 import '../../stylesheets/spinner.scss';
 import {Component} from 'react';
 

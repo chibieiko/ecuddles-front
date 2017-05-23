@@ -12,22 +12,10 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    addToCart(entry) {
+    addToCart(entry, start, stop) {
         dispatch(modifyCart({
             entry: entry,
             showNotification: true
-        }));
-    },
-    deleteSuccess() {
-        dispatch(displayNotification({
-            type: C.NOTIFICATION_SUCCESS,
-            message: "Product successfully deleted from the store"
-        }));
-    },
-    subscribeSuccess() {
-        dispatch(displayNotification({
-            type: C.NOTIFICATION_SUCCESS,
-            message: "Successfully subscribed to email notification when the product becomes available"
         }));
     }
 });

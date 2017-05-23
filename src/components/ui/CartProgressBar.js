@@ -1,6 +1,3 @@
-/**
- * Created by vili on 15/05/2017.
- */
 import {Component} from 'react';
 import '../../stylesheets/cart.scss';
 

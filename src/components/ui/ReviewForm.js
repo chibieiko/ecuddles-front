@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import '../../stylesheets/reviewForm.scss';
 import connector from '../../connector';
+import Spinner from './Spinner';
 
 export default class ReviewForm extends Component {
     constructor(props) {
@@ -9,10 +10,9 @@ export default class ReviewForm extends Component {
         this.state = {
             title: "",
             body: "",
-            star: 3
+            star: 3,
+            fetching: false
         };
-
-        console.log(this.props);
     }
 
     onTitleChange = (event) => {
@@ -42,14 +42,13 @@ export default class ReviewForm extends Component {
             stars: this.state.star
         };
 
-        console.log(review);
-
         connector("/products/" + this.props.match.params.id + "/reviews", {
             auth: true,
-            post: review
+            post: review,
+            start: () => this.setState({fetching: true}),
+            stop: () => this.setState({fetching: false})
         })
             .then(response => {
-                console.log(response);
                 this.props.onReviewAdd();
                 this.props.history.goBack();
             })
@@ -57,6 +56,10 @@ export default class ReviewForm extends Component {
 
     render() {
         return <div>
+            {
+                this.state.fetching &&
+                <Spinner delay={500} margin={true}/>
+            }
             <h3>Add review for {this.props.match.params.name}</h3>
             <br/>
             <form onSubmit={this.onFormSubmit}>

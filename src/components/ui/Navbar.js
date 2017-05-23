@@ -16,6 +16,10 @@ export default class Navbar extends Component {
     submitForm = (event) => {
         event.preventDefault();
         this.props.history.push("/search/" + this.state.search);
+
+        this.setState({
+            search: ""
+        });
     };
 
     onSearchChanged = (event) => {
@@ -76,7 +80,7 @@ export default class Navbar extends Component {
                                         </li>
                                         {
                                             this.props.user.role === "ADMIN" ?
-                                                <li>
+                                                <li className={this.props.location.pathname === "/log" && "active"}>
                                                     <Link to="/log">
                                                         <div className="navbar-cart">
                                                             Purchases
@@ -84,7 +88,7 @@ export default class Navbar extends Component {
                                                     </Link>
                                                 </li>
                                                 :
-                                                <li>
+                                                <li className={this.props.location.pathname === "/cart" && "active"}>
                                                     <Link to="/cart">
                                                         <div className="navbar-cart">
                                                             Cart

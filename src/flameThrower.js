@@ -50,6 +50,10 @@ export default class FlameThrower {
 
                                 location.href = "#/login";
                             }
+                        },
+                        {
+                            exception: "org.springframework.dao.DataIntegrityViolationException",
+                            msg: "The email address is already in use."
                         }
                     ], "An unexpected error occurred, please try again later");
 
@@ -81,6 +85,10 @@ export default class FlameThrower {
                         }
                     ], "Please log in to perform this action");
 
+                    return;
+
+                case 409:
+                    reject(new Error("This product is currently in someones shopping cart or all purchases of this product have not been handled."));
                     return;
 
                 case 404:

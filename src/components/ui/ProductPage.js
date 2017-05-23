@@ -4,6 +4,7 @@ import ImageViewer from './ImageViewer';
 import Stars from './Stars';
 import connector from '../../connector';
 import ProductReview from '../containers/ProductReview';
+import {Link} from 'react-router-dom';
 import '../../stylesheets/product.scss';
 
 const ListDetail = (props) => (
@@ -31,6 +32,18 @@ export default class ProductPage extends Component {
         };
     };
 
+    stopFetching = () => {
+        this.setState({
+            fetching: false
+        });
+    };
+
+    startFetching = () => {
+        this.setState({
+            fetching: true
+        });
+    };
+
     buyProduct = () => {
         this.props.addToCart({
             product: this.state.product.id,
@@ -43,31 +56,42 @@ export default class ProductPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.loadProductDetails(nextProps.match.params.id);
+        if (nextProps !== this.props) {
+            this.loadProductDetails(nextProps.match.params.id);
+        }
     }
 
     notifyMe = () => {
         connector("/notifications/" + this.state.product.id,
-            {request: {method: "POST"}, auth: true})
-            .then(() => {
-                this.props.subscribeSuccess();
+            {
+                request: {method: "POST"},
+                start: this.startFetching,
+                stop: this.stopFetching,
+                auth: true,
+                successNotification: "You will be notified when the product becomes available"
             });
     };
 
     deleteProduct = () => {
-        connector("/products/" + this.state.product.id, {delete: true, auth: true})
+        connector("/products/" + this.state.product.id,
+            {
+                delete: true,
+                auth: true,
+                start: this.startFetching,
+                stop: this.stopFetching,
+                successNotification: "Product deleted successfully"
+            })
             .then(response => {
-                this.props.deleteSuccess();
                 this.props.history.push("/");
             });
     };
 
     loadProductDetails = productId => {
-        this.setState({
-            fetching: true
-        });
-
-        connector("/products/" + productId + "?projection=inspect")
+        connector("/products/" + productId + "?projection=inspect",
+            {
+                start: this.startFetching,
+                stop: this.stopFetching
+            })
             .then(response => {
                 let quantity = 0;
 
@@ -86,15 +110,9 @@ export default class ProductPage extends Component {
                 let starAverage = starsTotal / response.reviews.length;
 
                 this.setState({
-                    fetching: false,
                     product: response,
                     quantity: quantity,
                     stars: starAverage
-                });
-            })
-            .catch(() => {
-                this.setState({
-                    fetching: false
                 });
             });
     };
@@ -112,7 +130,7 @@ export default class ProductPage extends Component {
 
             {
                 this.state.fetching &&
-                <Spinner margin={true} delay={500}/>
+                <Spinner margin={true} delay={0}/>
             }
 
             {
@@ -123,9 +141,10 @@ export default class ProductPage extends Component {
                             <h3>
                                 {product.name}
                             </h3>
-                            <Stars
-                                rating={this.state.stars}/> {this.state.stars ? this.state.stars : 0}
-                            / 5
+                            <Link to={'/product/' + product.id + "/" + product.name + "/reviews"} >
+                                <Stars
+                                    rating={this.state.stars}/> {this.state.stars ? this.state.stars + " / 5" : "No reviews"}
+                            </Link>
                         </div>
                     </div>
                     <div className="row product-page-row">
@@ -136,7 +155,8 @@ export default class ProductPage extends Component {
                             <div className="panel panel-default buy-panel">
                                 <div className="panel-body">
                                     <span
-                                        className="product-price">{product.price}€</span>
+                                        className="product-price">{product.price}
+                                        €</span>
                                     <button onClick={this.buyProduct}
                                             disabled={!(product.stock > 0 && product.stock > this.state.quantity)}
                                             className={
@@ -145,7 +165,7 @@ export default class ProductPage extends Component {
                                                     :
                                                     "btn-buy center-block btn btn-lg btn-success disabled"
                                             }>
-                                        Add to cart
+                                        Add&nbsp;to&nbsp;cart
                                     </button>
                                     <br/>
                                     {
@@ -153,13 +173,13 @@ export default class ProductPage extends Component {
                                             <div>
                                                     <span
                                                         className="icon-margin icon-green glyphicon glyphicon-ok"/>
-                                                {product.stock} available
+                                                {product.stock}&nbsp;available
                                             </div>
                                             :
                                             <div>
                                                 <span
                                                     className="icon-margin icon-red glyphicon glyphicon-remove"/>
-                                                Out of stock
+                                                Out&nbsp;of&nbsp;stock
                                             </div>
                                     }
                                     {
@@ -168,8 +188,7 @@ export default class ProductPage extends Component {
                                             className="btn btn-sm btn-success notify-link"
                                             onClick={this.notifyMe}>
                                             <span
-                                                className="icon-margin glyphicon glyphicon-envelope"/>Notify
-                                            me
+                                                className="icon-margin glyphicon glyphicon-envelope"/>Notify&nbsp;me
                                         </button>
                                     }
                                     {
@@ -177,17 +196,28 @@ export default class ProductPage extends Component {
                                         <div>
                                             <span
                                                 className="icon-margin glyphicon glyphicon-shopping-cart"/>
-                                            {this.state.quantity} item{this.state.quantity > 1 && "s"} in cart
+                                            {this.state.quantity}&nbsp;item{this.state.quantity > 1 && "s"}&nbsp;in&nbsp;cart
                                         </div>
                                     }
                                     {
                                         this.props.role === "ADMIN" &&
-                                        <button className="btn btn-sm btn-danger notify-link"
+                                        <div>
+                                            <button
+                                                className="btn btn-sm btn-default notify-link"
+                                                onClick={() => this.props.history.push('/modify-product/' + product.id + "/" + product.name)}>
+                                                <span
+                                                    className="icon-margin glyphicon glyphicon-edit"/>
+                                                Modify
+                                            </button>
+                                            <button
+                                                className="btn btn-sm btn-danger notify-link"
                                                 data-toggle="modal"
                                                 data-target="#removeModal">
-                                            <span className="icon-margin glyphicon glyphicon-envelope"/>
-                                            Delete
-                                        </button>
+                                                <span
+                                                    className="icon-margin glyphicon glyphicon-trash"/>
+                                                Delete
+                                            </button>
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -215,7 +245,7 @@ export default class ProductPage extends Component {
                         <div className="col-sm-6">
                             <Detail name="Color" value={product.color}/>
                             <Detail name="Height"
-                                        value={product.height + " cm"}/>
+                                    value={product.height + " cm"}/>
                             <Detail name="Width" value={product.width + " cm"}/>
                             <Detail name="Length"
                                     value={product.length + " cm"}/>
@@ -225,9 +255,9 @@ export default class ProductPage extends Component {
 
                         <div className="col-sm-6">
                             <Detail name="Fabric"
-                                        value={product.fabric}/>
+                                    value={product.fabric}/>
                             <Detail name="Filling"
-                                        value={product.filling}/>
+                                    value={product.filling}/>
                             <Detail name="Care instructions"
                                     value={product.careInstructions}/>
                             <Detail name="Dispose instructions"
@@ -244,19 +274,30 @@ export default class ProductPage extends Component {
                 </div>
             }
 
-            <div className="modal fade" id="removeModal" tabIndex="-1" role="dialog" aria-labelledby="removeModalLabel">
+            <div className="modal fade" id="removeModal" tabIndex="-1"
+                 role="dialog" aria-labelledby="removeModalLabel">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 className="modal-title" id="removeModalLabel">Delete product</h4>
+                            <button type="button" className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                            <h4 className="modal-title" id="removeModalLabel">
+                                Delete product</h4>
                         </div>
                         <div className="modal-body">
-                            Are you sure you want to permanently delete this product from the store?
+                            Are you sure you want to permanently delete this
+                            product from the store?
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-default">Cancel</button>
-                            <button type="button" className="btn btn-danger" onClick={this.deleteProduct} data-dismiss="modal">Delete</button>
+                            <button type="button" className="btn btn-default"
+                                    data-dismiss="modal">Cancel
+                            </button>
+                            <button type="button" className="btn btn-danger"
+                                    onClick={this.deleteProduct}
+                                    data-dismiss="modal">Delete
+                            </button>
                         </div>
                     </div>
                 </div>

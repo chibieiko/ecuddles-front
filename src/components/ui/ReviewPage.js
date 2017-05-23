@@ -27,13 +27,12 @@ export default class ReviewPage extends Component {
 
     // Defines a proper url and gets reviews from server.
     loadReviews = () => {
-        this.setState({
-            fetching: true
-        });
-
         let url = "/products/" + this.props.match.params.id + "?projection=inspect";
 
-        connector(url)
+        connector(url, {
+                start: () => this.setState({fetching: true}),
+                stop: () => this.setState({fetching: false}),
+            })
             .then(response => {
                 let product = response;
                 let reviews = product.reviews;
@@ -44,15 +43,9 @@ export default class ReviewPage extends Component {
                 }
 
                 this.setState({
-                    fetching: false,
                     reviews: product.reviews ? product.reviews : []
                 });
             })
-            .catch(() => {
-                this.setState({
-                    fetching: false
-                });
-            });
     };
 
     deleteReview = (event) => {
@@ -60,7 +53,9 @@ export default class ReviewPage extends Component {
 
         connector("/products/" + this.props.match.params.id + "/reviews", {
             auth: true,
-            delete: true
+            delete: true,
+            start: () => this.setState({fetching: true}),
+            stop: () => this.setState({fetching: false})
         })
             .then(response => {
                 let reviews = this.state.reviews.filter((review) => {
@@ -78,7 +73,7 @@ export default class ReviewPage extends Component {
 
             {
                 this.state.fetching ?
-                    <Spinner margin={true}/> :
+                    <Spinner delay={500} margin={true}/> :
                     <div>
                         <div className="row">
                             <div className="col-xs-6">

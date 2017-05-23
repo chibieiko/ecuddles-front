@@ -1,7 +1,6 @@
 import {Component} from 'react';
 import connector from '../../connector';
 import {Redirect} from 'react-router-dom';
-import FlameThrower from '../../flameThrower';
 import Spinner from './Spinner';
 
 
@@ -10,8 +9,7 @@ export default class RegisterPage extends Component {
         super(props);
 
         this.state = {
-            fetching: false,
-            registerSuccessful: false
+            fetching: false
         };
     };
 
@@ -48,9 +46,9 @@ export default class RegisterPage extends Component {
 
         connector("/register", {post: body})
             .then(() => {
-                this.setState({
-                    fetching: false,
-                    registerSuccessful: true
+                this.props.login({
+                    email: this.state.email,
+                    password: this.state.password
                 });
             })
             .catch(() => {
@@ -67,28 +65,36 @@ export default class RegisterPage extends Component {
                 <Spinner delay={500} margin={true}/>
             }
             {
-                this.state.registerSuccessful &&
-                <Redirect to="/login"/>
+                this.props.loggedIn &&
+                <Redirect to="/"/>
             }
             <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Nickname</label>
                 <input type="text" onChange={this.onNameChanged}
                        className="form-control" id="name"
-                       placeholder="Firstname Lastname"/>
+                       placeholder="Nickname"
+                       required
+                />
             </div>
             <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input type="email" onChange={this.onEmailChanged}
                        className="form-control" id="email"
-                       placeholder="example@gmail.com"/>
+                       placeholder="example@gmail.com"
+                       autoComplete="off"
+                       required
+                />
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input type="password" onChange={this.onPasswordChanged}
                        className="form-control" id="password"
-                       placeholder="********"/>
+                       placeholder="********"
+                       autoComplete="off"
+                       required
+                />
             </div>
-            <button type="submit" className="btn btn-primary">Register</button>
+            <button type="submit" className="btn btn-success">Register</button>
         </form>
     };
 };
