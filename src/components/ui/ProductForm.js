@@ -178,7 +178,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-6">
                         <label htmlFor="name">Name</label>
                         <input type="text" className="form-control" id="name"
-                               name="name" placeholder="Teddy"
+                               name="name" placeholder="Name of the toy"
                                onChange={this.onChange}
                                value={product.name}
                                required/>
@@ -187,7 +187,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-6">
                         <label htmlFor="price">Price €</label>
                         <input type="number" className="form-control" id="price"
-                               name="price" placeholder="8.99" min="1"
+                               name="price" placeholder="Price in euros" min="1"
                                step="0.01"
                                onChange={this.onChange}
                                value={product.price}
@@ -199,7 +199,7 @@ export default class ProductForm extends Component {
                     <label htmlFor="description">Description</label>
                     <textarea className="form-control" id="description"
                               name="description"
-                              placeholder="Describe the product (max 10 000 letters)"
+                              placeholder="Describe the toy (max 10 000 letters)"
                               rows="7" maxLength="10000"
                               onChange={this.onChange}
                               value={product.description}
@@ -249,7 +249,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-6">
                         <label htmlFor="fabric">Fabric</label>
                         <input type="text" className="form-control" id="fabric"
-                               name="fabric" placeholder="100% Cotton"
+                               name="fabric" placeholder="Which fabrics is the toy made of"
                                max="100"
                                onChange={this.onChange}
                                value={product.fabric}
@@ -259,7 +259,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-6">
                         <label htmlFor="filling">Filling</label>
                         <input type="text" className="form-control" id="filling"
-                               name="filling" placeholder="Air"
+                               name="filling" placeholder="What is the toy filled with"
                                max="100"
                                onChange={this.onChange}
                                value={product.filling}
@@ -274,7 +274,7 @@ export default class ProductForm extends Component {
                         <label htmlFor="height">Height (cm)</label>
                         <input type="number" className="form-control"
                                id="height"
-                               name="height" placeholder="8.5" min="1"
+                               name="height" placeholder="Height" min="0.1"
                                step="0.01"
                                onChange={this.onChange}
                                value={product.height}
@@ -284,7 +284,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-6 col-md-3">
                         <label htmlFor="width">Width (cm)</label>
                         <input type="number" className="form-control" id="width"
-                               name="width" placeholder="8.3" min="1"
+                               name="width" placeholder="Width" min="0.1"
                                step="0.01"
                                onChange={this.onChange}
                                value={product.width}
@@ -295,7 +295,7 @@ export default class ProductForm extends Component {
                         <label htmlFor="length">Length (cm)</label>
                         <input type="number" className="form-control"
                                id="length"
-                               name="length" placeholder="8.99" min="1"
+                               name="length" placeholder="Length" min="0.1"
                                step="0.01"
                                onChange={this.onChange}
                                value={product.length}
@@ -306,7 +306,7 @@ export default class ProductForm extends Component {
                         <label htmlFor="weight">Weight (kg)</label>
                         <input type="number" className="form-control"
                                id="weight"
-                               name="weight" placeholder="0.5" min="1"
+                               name="weight" placeholder="Weight" min="0.01"
                                step="0.01"
                                onChange={this.onChange}
                                value={product.weight}
@@ -322,7 +322,7 @@ export default class ProductForm extends Component {
                     <label htmlFor="careInstructions">Care Instructions</label>
                     <textarea className="form-control" id="careInstructions"
                               name="careInstructions"
-                              placeholder="How to take care of the product (max 250 letters)"
+                              placeholder="How to take care of the toy (max 250 letters)"
                               rows="3" maxLength="250"
                               onChange={this.onChange}
                               value={product.careInstructions}
@@ -334,7 +334,7 @@ export default class ProductForm extends Component {
                         Instructions</label>
                     <textarea className="form-control" id="disposeInstructions"
                               name="disposeInstructions"
-                              placeholder="How to dispose the product responsibly (max 250 letters)"
+                              placeholder="How to dispose the toy responsibly (max 250 letters)"
                               rows="3" maxLength="250"
                               onChange={this.onChange}
                               value={product.disposeInstructions}
@@ -347,7 +347,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-4">
                         <label htmlFor="stock">Stock</label>
                         <input type="number" className="form-control" id="stock"
-                               name="stock" placeholder="5" min="1"
+                               name="stock" placeholder="How many toys are in stock" min="1"
                                onChange={this.onChange}
                                value={product.stock}
                                required/>
@@ -356,7 +356,7 @@ export default class ProductForm extends Component {
                     <div className="form-group col-xs-12 col-sm-4">
                         <label htmlFor="color">Color</label>
                         <input type="text" className="form-control" id="color"
-                               name="color" placeholder="Brown"
+                               name="color" placeholder="Primary color of the toy"
                                onChange={this.onChange}
                                value={product.color}
                                required/>
@@ -366,7 +366,7 @@ export default class ProductForm extends Component {
                         <label htmlFor="designer">Designer</label>
                         <input type="text" className="form-control"
                                id="designer"
-                               name="designer" placeholder="Vili Kinnunen"
+                               name="designer" placeholder="Who designed the toy"
                                onChange={this.onChange}
                                value={product.designer}
                                required/>

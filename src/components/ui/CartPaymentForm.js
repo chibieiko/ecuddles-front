@@ -9,22 +9,22 @@ export default class CartPaymentForm extends Component {
             {
                 name: "cardNumber",
                 label: "Card number",
-                placeholder: "1234 5678 9101 1121"
+                placeholder: "Credit card number"
             },
             {
                 name: "cardHolder",
                 label: "Card holder",
-                placeholder: "John Snow"
+                placeholder: "The card holder's name"
             },
             {
                 name: "expiration",
                 label: "Expiration",
-                placeholder: "10/19"
+                placeholder: "Card expiration date"
             },
             {
                 name: "cvv",
                 label: "CVV",
-                placeholder: "123"
+                placeholder: "Three numbers on the back of the card"
             }
         ];
 

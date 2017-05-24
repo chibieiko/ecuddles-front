@@ -8,23 +8,28 @@ export default class CartInformationForm extends Component {
         let fields = [
             {
                 name: "name",
-                label: "Name"
+                label: "Name",
+                placeholder: "Recipient's name"
             },
             {
                 name: "address",
-                label: "Address"
+                label: "Address",
+                placeholder: "Recipient's address"
             },
             {
                 name: "postalCode",
-                label: "Postal code"
+                label: "Postal code",
+                placeholder: "Recipient's postal code"
             },
             {
                 name: "city",
-                label: "City"
+                label: "City",
+                placeholder: "Recipient's city"
             },
             {
                 name: "phone",
-                label: "Phone number"
+                label: "Phone number",
+                placeholder: "Recipient's phone number for delivery purposes"
             }
         ];
 
